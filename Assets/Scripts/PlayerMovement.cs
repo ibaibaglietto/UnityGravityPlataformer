@@ -117,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
         gravityLeft = 0.0f;
         gravityRight = 0.0f;
         cam = Camera.main;
+        //Initialize all the variables we are going to use to manage the actions of the player
         hasMana = true;
         rotated = false;
         rotating = false;
@@ -132,6 +133,23 @@ public class PlayerMovement : MonoBehaviour
         isAbsorbing = false;
         fullMana = true;
         tryAbsorb = false;
+        //Check if the levels are initialized
+        //The health level 
+        if (!PlayerPrefs.HasKey("healthLevel")) PlayerPrefs.SetInt("healthLevel", 1);
+        //The mana level
+        if (!PlayerPrefs.HasKey("manaLevel")) PlayerPrefs.SetInt("manaLevel", 1);
+        //The dealt damage level
+        if (!PlayerPrefs.HasKey("dealtDamageLevel")) PlayerPrefs.SetInt("dealtDamageLevel", 1);
+        //The dash level
+        if (!PlayerPrefs.HasKey("dashLevel")) PlayerPrefs.SetInt("dashLevel", 1);
+        //The healing level
+        if (!PlayerPrefs.HasKey("healingLevel")) PlayerPrefs.SetInt("healingLevel", 1);
+        //The gravity damage level
+        if (!PlayerPrefs.HasKey("gravityDamageLevel")) PlayerPrefs.SetInt("gravityDamageLevel", 1);
+        //The damage resistance level
+        if (!PlayerPrefs.HasKey("damageResistanceLevel")) PlayerPrefs.SetInt("damageResistanceLevel", 1);
+        //The exp gaining level
+        if (!PlayerPrefs.HasKey("expGainingLevel")) PlayerPrefs.SetInt("expGainingLevel", 1);
     }
     
     void Update(){

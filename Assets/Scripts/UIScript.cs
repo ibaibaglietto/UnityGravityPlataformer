@@ -12,6 +12,8 @@ public class UIScript : MonoBehaviour
     private GameObject g3;
     //The gameobject of the player
     private GameObject player;
+    //The gameobject of the lvl up interface
+    private GameObject lvlUp;
 
     private void Start()
     {
@@ -21,11 +23,13 @@ public class UIScript : MonoBehaviour
         g2 = GameObject.Find("g2");
         g3 = GameObject.Find("g3");
         player = GameObject.Find("Player");
+        lvlUp = GameObject.Find("Upgrade player");
     }
 
 
     void Update()
     {
+        lvlUp.SetActive(player.GetComponent<PlayerMovement>().sleeping);
         //Check if we are changing gravity and if so make the gameobjects active
         g0.SetActive(player.GetComponent<PlayerMovement>().changingGravity && !player.GetComponent<PlayerMovement>().rotating);
         g1.SetActive(player.GetComponent<PlayerMovement>().changingGravity && !player.GetComponent<PlayerMovement>().rotating);

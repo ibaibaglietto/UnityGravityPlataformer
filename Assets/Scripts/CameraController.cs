@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     //The player
-    public GameObject player;    
+    private GameObject player;    
     //The offset we are going to apply
     private Vector3 offset;
     //The shake duration
@@ -31,6 +31,7 @@ public class CameraController : MonoBehaviour
    //We initialize the offset
     void Start()
     {
+        player = GameObject.Find("Player");
         offset = transform.position - player.transform.position;
     }
 
