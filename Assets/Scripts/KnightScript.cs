@@ -65,8 +65,16 @@ public class KnightScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f) fighting = true;
-        else fighting = false;
+        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f && !fighting)
+        {
+            fighting = true;
+            player.GetComponent<PlayerMovement>().attacked += 1;
+        }
+        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && fighting)
+        {
+            fighting = false;
+            player.GetComponent<PlayerMovement>().attacked -= 1;
+        }
 
         if (!moving)
         {
@@ -78,10 +86,11 @@ public class KnightScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (health <= 0.0f)
+        if (health <= 0.0f && !gameObject.GetComponent<Animator>().GetBool("isDead"))
         {
             gameObject.GetComponent<Animator>().SetBool("isDead", true);
             combo = 0;
+            if(fighting) player.GetComponent<PlayerMovement>().attacked -= 1;
         }
         if (damage > 0.0f)
         {
@@ -214,5 +223,11 @@ public class KnightScript : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("isAttacking", false);
         attacking = false;
         moving = false;
+    }
+
+    //function to give exp to the player
+    public void giveExp()
+    {
+        PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + 60);
     }
 }

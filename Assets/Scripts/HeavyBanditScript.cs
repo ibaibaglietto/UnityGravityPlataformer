@@ -52,8 +52,16 @@ public class HeavyBanditScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f) gameObject.GetComponent<Animator>().SetBool("IsFighting", true);
-        else gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
+        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f && !gameObject.GetComponent<Animator>().GetBool("IsFighting"))
+        {
+            gameObject.GetComponent<Animator>().SetBool("IsFighting", true);
+            player.GetComponent<PlayerMovement>().attacked += 1;
+        }
+        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && gameObject.GetComponent<Animator>().GetBool("IsFighting"))
+        {
+            gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
+            player.GetComponent<PlayerMovement>().attacked -= 1;
+        }
 
         if (!moving)
         {
@@ -65,10 +73,11 @@ public class HeavyBanditScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (health <= 0.0f)
+        if (health <= 0.0f && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
         {
             gameObject.GetComponent<Animator>().SetBool("IsDead", true);
             combo = 0;
+            if (gameObject.GetComponent<Animator>().GetBool("IsFighting")) player.GetComponent<PlayerMovement>().attacked -= 1;
         }
         if (gameObject.GetComponent<Animator>().GetBool("IsJumping") && gameObject.GetComponent<Rigidbody2D>().velocity.x == 0.0f && gameObject.GetComponent<Rigidbody2D>().velocity.y == 0.0f)
         {
@@ -173,5 +182,11 @@ public class HeavyBanditScript : MonoBehaviour
     public void endDamage()
     {
         gameObject.GetComponent<Animator>().SetBool("TakeDamage", false);
+    }
+
+    //function to give exp to the player
+    public void giveExp()
+    {
+        PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + 30);
     }
 }

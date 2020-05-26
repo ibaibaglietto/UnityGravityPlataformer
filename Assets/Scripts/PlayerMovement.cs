@@ -107,6 +107,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isAbsorbing;
     //A boolean to see if the player is trying to absorb
     private bool tryAbsorb;
+    //An int to see how many enemies are attacking the player
+    public int attacked;
 
 
     private void Start()
@@ -133,6 +135,8 @@ public class PlayerMovement : MonoBehaviour
         isAbsorbing = false;
         fullMana = true;
         tryAbsorb = false;
+        attacked = 0;
+        PlayerPrefs.DeleteAll();
         //Check if the levels are initialized
         //The health level 
         if (!PlayerPrefs.HasKey("healthLevel")) PlayerPrefs.SetInt("healthLevel", 1);
@@ -144,12 +148,16 @@ public class PlayerMovement : MonoBehaviour
         if (!PlayerPrefs.HasKey("dashLevel")) PlayerPrefs.SetInt("dashLevel", 1);
         //The healing level
         if (!PlayerPrefs.HasKey("healingLevel")) PlayerPrefs.SetInt("healingLevel", 1);
-        //The gravity damage level
-        if (!PlayerPrefs.HasKey("gravityDamageLevel")) PlayerPrefs.SetInt("gravityDamageLevel", 1);
         //The damage resistance level
         if (!PlayerPrefs.HasKey("damageResistanceLevel")) PlayerPrefs.SetInt("damageResistanceLevel", 1);
         //The exp gaining level
         if (!PlayerPrefs.HasKey("expGainingLevel")) PlayerPrefs.SetInt("expGainingLevel", 1);
+        //The total lvl of the player
+        if (!PlayerPrefs.HasKey("lvl")) PlayerPrefs.SetInt("lvl", 1);
+        //The needed exp to lvl up
+        if (!PlayerPrefs.HasKey("needExp")) PlayerPrefs.SetInt("needExp", 50);
+        //The exp 
+        if (!PlayerPrefs.HasKey("exp")) PlayerPrefs.SetInt("exp", 100000);
     }
     
     void Update(){
@@ -158,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
             Application.Quit();
             Debug.Log("Closing game");
         }
-        if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(0);
+        if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(1);
         //stop throwing shurikens when the player is damaged or is dead
         if (animator.GetBool("isDead") || animator.GetBool("takeDamage"))
         {
@@ -172,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
             rotating = false;
             rotated = false;
         }
-        if(canRest && !changingGravity && Input.GetKeyDown(KeyCode.S) && animator.GetFloat("Speed")<0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) && !tryAbsorb)
+        if(canRest && !changingGravity && Input.GetKeyDown(KeyCode.S) && animator.GetFloat("Speed")<0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) && !tryAbsorb && attacked == 0)
         {
             if (!gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
             resting = true;
