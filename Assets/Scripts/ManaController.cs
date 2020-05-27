@@ -17,7 +17,7 @@ public class ManaController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxMana = 100.0f;
+        maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
         player = GameObject.Find("Player");
         manaBar = GameObject.Find("Playermana");
         mana = maxMana;
@@ -42,9 +42,9 @@ public class ManaController : MonoBehaviour
             player.GetComponent<PlayerMovement>().healing = false;
             player.GetComponent<PlayerMovement>().normalGravity();           
         }
-        if (mana < 100.0f && player.GetComponent<PlayerMovement>().sleeping) mana += 0.2f;
-        if (mana > 100.0f) mana = 100.0f;
-        if (mana > 99.8f) player.GetComponent<PlayerMovement>().fullMana = true;
+        if (mana < maxMana && player.GetComponent<PlayerMovement>().sleeping) mana += 0.2f;
+        if (mana > maxMana) mana = maxMana;
+        if (mana > (maxMana-0.2f)) player.GetComponent<PlayerMovement>().fullMana = true;
         else player.GetComponent<PlayerMovement>().fullMana = false;
     }
 }

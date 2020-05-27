@@ -10,12 +10,15 @@ public class SlashScript : MonoBehaviour
     private GameObject player;
     //The time the enemy parried
     public float parryTime;
+    //The damage of the player
+    private float damageDealt;
 
     private void Start()
     {
         king = GameObject.Find("King");
         player = GameObject.Find("Player");
         parryTime = Time.fixedTime - 0.6f;
+        damageDealt = Mathf.Sqrt(100 * PlayerPrefs.GetInt("dealtDamageLevel")) + 10;
     }
 
     public void endSlash()
@@ -26,10 +29,11 @@ public class SlashScript : MonoBehaviour
     {
         if (collision == king.GetComponent<Collider2D>())
         {
-            king.GetComponent<KingScript>().damage = 20.0f;
+            king.GetComponent<KingScript>().damage = damageDealt;
         }
         if (collision.tag == "HeavyBandit")
         {
+            Debug.Log(damageDealt);
             if(Time.fixedTime - collision.GetComponent<HeavyBanditScript>().firstDamage < 3.0f)
             {
                 collision.GetComponent<HeavyBanditScript>().combo += 1;
@@ -40,14 +44,15 @@ public class SlashScript : MonoBehaviour
                 collision.GetComponent<HeavyBanditScript>().combo = 1;
             }
             if(!collision.GetComponent<Animator>().GetBool("IsJumping")) collision.GetComponent<Animator>().SetBool("TakeDamage", true);
-            collision.GetComponent<HeavyBanditScript>().damage = 20.0f;
+            collision.GetComponent<HeavyBanditScript>().damage = damageDealt;
         }
         if (collision.tag == "Knight")
         {
+            Debug.Log(damageDealt);
             if (!collision.GetComponent<Animator>().GetBool("isShielding") && !collision.GetComponent<Animator>().GetBool("isRolling") && Time.fixedTime - parryTime > 0.5f)
             {
                 collision.GetComponent<Animator>().SetBool("isTakingDamage", true);
-                collision.GetComponent<KnightScript>().damage = 20.0f;
+                collision.GetComponent<KnightScript>().damage = damageDealt;
                 if (Time.fixedTime - collision.GetComponent<KnightScript>().firstDamage < 3.0f)
                 {
                     collision.GetComponent<KnightScript>().combo += 1;
@@ -62,7 +67,7 @@ public class SlashScript : MonoBehaviour
             {
                 collision.GetComponent<Animator>().SetBool("isTakingDamage", true);
                 collision.GetComponent<Animator>().SetBool("isShielding", false);
-                collision.GetComponent<KnightScript>().damage = 20.0f;
+                collision.GetComponent<KnightScript>().damage = damageDealt;
                 if (Time.fixedTime - collision.GetComponent<KnightScript>().firstDamage < 3.0f)
                 {
                     collision.GetComponent<KnightScript>().combo += 1;
@@ -77,7 +82,7 @@ public class SlashScript : MonoBehaviour
             {
                 collision.GetComponent<Animator>().SetBool("isTakingDamage", true);
                 collision.GetComponent<Animator>().SetBool("isShielding", false);
-                collision.GetComponent<KnightScript>().damage = 20.0f;
+                collision.GetComponent<KnightScript>().damage = damageDealt;
                 if (Time.fixedTime - collision.GetComponent<KnightScript>().firstDamage < 3.0f)
                 {
                     collision.GetComponent<KnightScript>().combo += 1;

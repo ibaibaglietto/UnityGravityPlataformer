@@ -50,6 +50,24 @@ public class UIScript : MonoBehaviour
     private GameObject damageResistanceLevelMinus;
     //The exp gaining level minus button
     private GameObject expGainingLevelMinus;
+    //The next maximum health
+    private Text healthLevelNext;
+    //The next maximum mana
+    private Text manaLevelNext;
+    //The next dealt damage
+    private Text dealtDamageLevelNext;
+    //The next dash cooldown
+    private Text dashLevelNext;
+    //The next healing per second
+    private Text healingLevelNext;
+    //The next damage resistance
+    private Text damageResistanceLevelNext;
+    //The next exp multiplier
+    private Text expGainingLevelNext;
+    //The healthbar
+    private GameObject healthBar;
+    //The manabar
+    private GameObject manaBar;
 
     private void Start()
     {
@@ -78,6 +96,13 @@ public class UIScript : MonoBehaviour
         lvl = GameObject.Find("PlayerLevelNumb").GetComponent<Text>();
         needExp = GameObject.Find("UpgradeNumb").GetComponent<Text>();
         lvlUpExp = GameObject.Find("LightLeftNumb").GetComponent<Text>();
+        healthLevelNext = GameObject.Find("HealthDescrpitionNumb").GetComponent<Text>();
+        manaLevelNext = GameObject.Find("ManaDescrpitionNumb").GetComponent<Text>();
+        dealtDamageLevelNext = GameObject.Find("DamageDealtDescrpitionNumb").GetComponent<Text>();
+        dashLevelNext = GameObject.Find("DashDescrpitionNumb").GetComponent<Text>();
+        healingLevelNext = GameObject.Find("HealingDescrpitionNumb").GetComponent<Text>();
+        healthBar = GameObject.Find("Healthbar");
+        manaBar = GameObject.Find("Manabar");
         lvlUp.SetActive(false);
     }
 
@@ -97,6 +122,11 @@ public class UIScript : MonoBehaviour
             lvl.text = PlayerPrefs.GetInt("lvl").ToString();
             needExp.text = PlayerPrefs.GetInt("needExp").ToString();
             lvlUpExp.text = PlayerPrefs.GetInt("exp").ToString();
+            healthLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(healthLevel.text)) + 55).ToString("F0");
+            manaLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(manaLevel.text)) + 5).ToString("F0");
+            dealtDamageLevelNext.text = (Mathf.Sqrt(100 * int.Parse(dealtDamageLevel.text)) + 10).ToString("F0");
+            dashLevelNext.text = (1 / Mathf.Sqrt(int.Parse(dashLevel.text))).ToString("F2");
+            healingLevelNext.text = (Mathf.Sqrt(2 * int.Parse(healingLevel.text)) + 1.1f).ToString("F1");
             lvlUp.SetActive(true);
             healthLevelMinus.SetActive(false);
             manaLevelMinus.SetActive(false);
@@ -128,26 +158,31 @@ public class UIScript : MonoBehaviour
             {
                 healthLevel.text = (int.Parse(healthLevel.text) + 1).ToString();
                 healthLevelMinus.SetActive(true);
+                healthLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(healthLevel.text)) + 55).ToString("F0");
             }
             else if (atrib == 2)
             {
                 manaLevel.text = (int.Parse(manaLevel.text) + 1).ToString();
                 manaLevelMinus.SetActive(true);
+                manaLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(manaLevel.text)) + 5).ToString("F0");
             }
             else if (atrib == 3)
             {
                 dealtDamageLevel.text = (int.Parse(dealtDamageLevel.text) + 1).ToString();
                 dealtDamageLevelMinus.SetActive(true);
+                dealtDamageLevelNext.text = (Mathf.Sqrt(100 * int.Parse(dealtDamageLevel.text)) + 10).ToString("F0");
             }
             else if (atrib == 4)
             {
                 dashLevel.text = (int.Parse(dashLevel.text) + 1).ToString();
                 dashLevelMinus.SetActive(true);
+                dashLevelNext.text = (1 / Mathf.Sqrt(int.Parse(dashLevel.text))).ToString("F2");
             }
             else if (atrib == 5)
             {
                 healingLevel.text = (int.Parse(healingLevel.text) + 1).ToString();
                 healingLevelMinus.SetActive(true);
+                healingLevelNext.text = (Mathf.Sqrt(2 * int.Parse(healingLevel.text)) + 1.1f).ToString("F1");
             }
             else if (atrib == 6)
             {
@@ -169,22 +204,27 @@ public class UIScript : MonoBehaviour
         if (atrib == 1)
         {
             healthLevel.text = (int.Parse(healthLevel.text) - 1).ToString();
-            if(int.Parse(healthLevel.text) == PlayerPrefs.GetInt("healthLevel")) healthLevelMinus.SetActive(false);
+            healthLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(healthLevel.text)) + 55).ToString("F0");
+            if (int.Parse(healthLevel.text) == PlayerPrefs.GetInt("healthLevel")) healthLevelMinus.SetActive(false);
         }
         else if (atrib == 2)
         {
             manaLevel.text = (int.Parse(manaLevel.text) - 1).ToString();
-            if(int.Parse(manaLevel.text) == PlayerPrefs.GetInt("manaLevel")) manaLevelMinus.SetActive(false);
+            manaLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(manaLevel.text)) + 5).ToString("F0");
+            if (int.Parse(manaLevel.text) == PlayerPrefs.GetInt("manaLevel")) manaLevelMinus.SetActive(false);
         }
         else if (atrib == 3)
         {
             dealtDamageLevel.text = (int.Parse(dealtDamageLevel.text) - 1).ToString();
-            if(int.Parse(dealtDamageLevel.text) == PlayerPrefs.GetInt("dealtDamageLevel")) dealtDamageLevelMinus.SetActive(false);
+            dealtDamageLevelNext.text = (Mathf.Sqrt(100 * int.Parse(dealtDamageLevel.text)) + 10).ToString("F0");
+            if (int.Parse(dealtDamageLevel.text) == PlayerPrefs.GetInt("dealtDamageLevel")) dealtDamageLevelMinus.SetActive(false);
         }
         else if (atrib == 4)
         {
             dashLevel.text = (int.Parse(dashLevel.text) - 1).ToString();
-            if(int.Parse(dashLevel.text) == PlayerPrefs.GetInt("dashLevel")) dashLevelMinus.SetActive(false);
+            dashLevelNext.text = (1 / Mathf.Sqrt(int.Parse(dashLevel.text))).ToString("F2");
+            healingLevelNext.text = (Mathf.Sqrt(2 * int.Parse(healingLevel.text)) + 1.1f).ToString("F1");
+            if (int.Parse(dashLevel.text) == PlayerPrefs.GetInt("dashLevel")) dashLevelMinus.SetActive(false);
         }
         else if (atrib == 5)
         {
@@ -219,6 +259,14 @@ public class UIScript : MonoBehaviour
         PlayerPrefs.SetInt("needExp", int.Parse(needExp.text));
         PlayerPrefs.SetInt("exp", int.Parse(lvlUpExp.text));
         player.GetComponent<PlayerMovement>().sleeping = false;
+        healthBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(healthLevel.text)) + 55)*0.002f+0.034f, 0.9644875f);
+        healthBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        healthBar.GetComponent<PlayerLifeController>().maxHealth = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55;
+        healthBar.GetComponent<PlayerLifeController>().health = healthBar.GetComponent<PlayerLifeController>().maxHealth;
+        manaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(manaLevel.text)) + 5) * 0.002f + 0.034f, 0.9196156f);
+        manaBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        manaBar.GetComponent<ManaController>().maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
+        manaBar.GetComponent<ManaController>().mana = manaBar.GetComponent<ManaController>().maxMana;
         player.GetComponent<Animator>().SetBool("isResting", false);
         lvlUp.SetActive(false);
     }

@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
         //The total lvl of the player
         if (!PlayerPrefs.HasKey("lvl")) PlayerPrefs.SetInt("lvl", 1);
         //The needed exp to lvl up
-        if (!PlayerPrefs.HasKey("needExp")) PlayerPrefs.SetInt("needExp", 50);
+        if (!PlayerPrefs.HasKey("needExp")) PlayerPrefs.SetInt("needExp", 30);
         //The exp 
         if (!PlayerPrefs.HasKey("exp")) PlayerPrefs.SetInt("exp", 100000);
     }
@@ -308,8 +308,8 @@ public class PlayerMovement : MonoBehaviour
                 rotated = false;
             }
         }
-        if (Time.fixedTime - lastDash <= 0.5f && gameObject.GetComponent<CharacterController2D>().m_Grounded) wasGround = true;
-        if (Time.fixedTime - lastDash > 0.5f && (gameObject.GetComponent<CharacterController2D>().m_Grounded || wasGround)) canDash = true;
+        if (Time.fixedTime - lastDash <= (1 / Mathf.Sqrt(PlayerPrefs.GetInt("dashLevel"))) && gameObject.GetComponent<CharacterController2D>().m_Grounded) wasGround = true;
+        if (Time.fixedTime - lastDash > (1 / Mathf.Sqrt(PlayerPrefs.GetInt("dashLevel"))) && (gameObject.GetComponent<CharacterController2D>().m_Grounded || wasGround)) canDash = true;
         //We activate/deactivate the healing using the R button
         if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb) healing = !healing;
         //We dash using the right button of the mouse

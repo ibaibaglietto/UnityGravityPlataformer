@@ -10,7 +10,7 @@ public class PlayerLifeController : MonoBehaviour
     //The healthbar
     private GameObject healthBar;
     //The current health of the player
-    private float health;
+    public float health;
     //The maximum health the player can have
     public float maxHealth;
     //The animator of the player
@@ -21,7 +21,7 @@ public class PlayerLifeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 100.0f;
+        maxHealth = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55;
         player = GameObject.Find("Player");
         healthBar = GameObject.Find("Playerhealth");
         manaBar = GameObject.Find("Manabar");
@@ -41,13 +41,13 @@ public class PlayerLifeController : MonoBehaviour
             health -= player.GetComponent<PlayerMovement>().gravityDamage + player.GetComponent<PlayerMovement>().trapDamage + player.GetComponent<PlayerMovement>().enemyDamage;
             player.GetComponent<PlayerMovement>().trapDamage = 0.0f;
             player.GetComponent<PlayerMovement>().enemyDamage = 0.0f;
-            if (health < 100.0f && player.GetComponent<PlayerMovement>().hasMana && player.GetComponent<PlayerMovement>().healing)
+            if (health < maxHealth && player.GetComponent<PlayerMovement>().hasMana && player.GetComponent<PlayerMovement>().healing)
             {
-                manaBar.GetComponent<ManaController>().mana -= 0.05f;
-                health += 0.05f;
+                manaBar.GetComponent<ManaController>().mana -= (Mathf.Sqrt(2 * PlayerPrefs.GetInt("healingLevel")) + 1.1f)/50f;
+                health += (Mathf.Sqrt(2 * PlayerPrefs.GetInt("healingLevel")) + 1.1f) / 50f;
             }
-            else if (health < 100.0f && player.GetComponent<PlayerMovement>().sleeping) health += 0.2f;
-            if (health > 100.0f) health = 100.0f;
+            else if (health < maxHealth && player.GetComponent<PlayerMovement>().sleeping) health += 0.2f;
+            if (health > maxHealth) health = maxHealth;
         }
         else
         {
