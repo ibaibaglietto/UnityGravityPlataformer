@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class UIScript : MonoBehaviour
 {
@@ -68,6 +69,8 @@ public class UIScript : MonoBehaviour
     private GameObject healthBar;
     //The manabar
     private GameObject manaBar;
+    //The light of the player
+    private Light2D playerLight;
 
     private void Start()
     {
@@ -101,8 +104,11 @@ public class UIScript : MonoBehaviour
         dealtDamageLevelNext = GameObject.Find("DamageDealtDescrpitionNumb").GetComponent<Text>();
         dashLevelNext = GameObject.Find("DashDescrpitionNumb").GetComponent<Text>();
         healingLevelNext = GameObject.Find("HealingDescrpitionNumb").GetComponent<Text>();
+        damageResistanceLevelNext = GameObject.Find("DamageResistanceDescrpitionNumb").GetComponent<Text>();
+        expGainingLevelNext = GameObject.Find("ExpGainDescrpitionNumb").GetComponent<Text>();
         healthBar = GameObject.Find("Healthbar");
         manaBar = GameObject.Find("Manabar");
+        playerLight = player.transform.GetChild(1).gameObject.GetComponent<Light2D>();
         lvlUp.SetActive(false);
     }
 
@@ -127,6 +133,8 @@ public class UIScript : MonoBehaviour
             dealtDamageLevelNext.text = (Mathf.Sqrt(100 * int.Parse(dealtDamageLevel.text)) + 10).ToString("F0");
             dashLevelNext.text = (1 / Mathf.Sqrt(int.Parse(dashLevel.text))).ToString("F2");
             healingLevelNext.text = (Mathf.Sqrt(2 * int.Parse(healingLevel.text)) + 1.1f).ToString("F1");
+            damageResistanceLevelNext.text = (Mathf.Sqrt(150 * int.Parse(damageResistanceLevel.text)) - 12.247f).ToString("F0");
+            expGainingLevelNext.text = (1.0f + (int.Parse(expGainingLevel.text)-1.0f)*0.1f).ToString("F1");
             lvlUp.SetActive(true);
             healthLevelMinus.SetActive(false);
             manaLevelMinus.SetActive(false);
@@ -148,6 +156,8 @@ public class UIScript : MonoBehaviour
         g3.GetComponent<Text>().text = player.GetComponent<PlayerMovement>().prevGravityRight.ToString("F1");
         //Show the light number on the interface
         exp.text = PlayerPrefs.GetInt("exp").ToString();
+        if (PlayerPrefs.GetInt("needExp") > PlayerPrefs.GetInt("exp")) playerLight.pointLightOuterRadius = (float)PlayerPrefs.GetInt("exp") / (float)PlayerPrefs.GetInt("needExp") * 3.0f;
+        else playerLight.pointLightOuterRadius = 3.0f;
     }
     public void lvlUpPlayer(int atrib)
     {
@@ -188,11 +198,13 @@ public class UIScript : MonoBehaviour
             {
                 damageResistanceLevel.text = (int.Parse(damageResistanceLevel.text) + 1).ToString();
                 damageResistanceLevelMinus.SetActive(true);
+                damageResistanceLevelNext.text = (Mathf.Sqrt(150 * int.Parse(damageResistanceLevel.text)) - 12.247f).ToString("F0");
             }
             else if (atrib == 7)
             {
                 expGainingLevel.text = (int.Parse(expGainingLevel.text) + 1).ToString();
                 expGainingLevelMinus.SetActive(true);
+                expGainingLevelNext.text = (1.0f + (int.Parse(expGainingLevel.text) - 1.0f) * 0.1f).ToString("F1");
             }
             lvl.text = (int.Parse(lvl.text) + 1).ToString();
             lvlUpExp.text = (int.Parse(lvlUpExp.text) - int.Parse(needExp.text)).ToString();
@@ -223,22 +235,24 @@ public class UIScript : MonoBehaviour
         {
             dashLevel.text = (int.Parse(dashLevel.text) - 1).ToString();
             dashLevelNext.text = (1 / Mathf.Sqrt(int.Parse(dashLevel.text))).ToString("F2");
-            healingLevelNext.text = (Mathf.Sqrt(2 * int.Parse(healingLevel.text)) + 1.1f).ToString("F1");
             if (int.Parse(dashLevel.text) == PlayerPrefs.GetInt("dashLevel")) dashLevelMinus.SetActive(false);
         }
         else if (atrib == 5)
         {
             healingLevel.text = (int.Parse(healingLevel.text) - 1).ToString();
-            if(int.Parse(healingLevel.text) == PlayerPrefs.GetInt("healingLevel")) healingLevelMinus.SetActive(false);
+            healingLevelNext.text = (Mathf.Sqrt(2 * int.Parse(healingLevel.text)) + 1.1f).ToString("F1");
+            if (int.Parse(healingLevel.text) == PlayerPrefs.GetInt("healingLevel")) healingLevelMinus.SetActive(false);
         }
         else if (atrib == 6)
         {
             damageResistanceLevel.text = (int.Parse(damageResistanceLevel.text) - 1).ToString();
-            if(int.Parse(damageResistanceLevel.text) == PlayerPrefs.GetInt("damageResistanceLevel")) damageResistanceLevelMinus.SetActive(false);
+            damageResistanceLevelNext.text = (Mathf.Sqrt(150 * int.Parse(damageResistanceLevel.text))-12.247f).ToString("F0");
+            if (int.Parse(damageResistanceLevel.text) == PlayerPrefs.GetInt("damageResistanceLevel")) damageResistanceLevelMinus.SetActive(false);
         }
         else if (atrib == 7)
         {
             expGainingLevel.text = (int.Parse(expGainingLevel.text) - 1).ToString();
+            expGainingLevelNext.text = (1.0f + (int.Parse(expGainingLevel.text) - 1.0f) * 0.1f).ToString("F1");
             if (int.Parse(expGainingLevel.text) == PlayerPrefs.GetInt("expGainingLevel")) expGainingLevelMinus.SetActive(false);
         }
         lvl.text = (int.Parse(lvl.text) - 1).ToString();

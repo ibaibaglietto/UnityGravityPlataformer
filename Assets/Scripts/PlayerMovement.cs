@@ -157,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
         //The needed exp to lvl up
         if (!PlayerPrefs.HasKey("needExp")) PlayerPrefs.SetInt("needExp", 30);
         //The exp 
-        if (!PlayerPrefs.HasKey("exp")) PlayerPrefs.SetInt("exp", 100000);
+        if (!PlayerPrefs.HasKey("exp")) PlayerPrefs.SetInt("exp", 0);
     }
     
     void Update(){
@@ -166,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
             Application.Quit();
             Debug.Log("Closing game");
         }
-        if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(1);
+        if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(0);
         //stop throwing shurikens when the player is damaged or is dead
         if (animator.GetBool("isDead") || animator.GetBool("takeDamage"))
         {

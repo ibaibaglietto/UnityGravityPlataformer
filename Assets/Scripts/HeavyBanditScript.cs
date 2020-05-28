@@ -187,6 +187,7 @@ public class HeavyBanditScript : MonoBehaviour
     //function to give exp to the player
     public void giveExp()
     {
-        PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + 30);
+        Debug.Log((int)(30.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
+        PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + (int)(30.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
     }
 }
