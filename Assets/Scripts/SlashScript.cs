@@ -27,7 +27,7 @@ public class SlashScript : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision == king.GetComponent<Collider2D>())
+        if (collision.tag == "King")
         {
             king.GetComponent<KingScript>().damage = damageDealt;
         }
