@@ -20,7 +20,7 @@ public class ManaController : MonoBehaviour
         maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
         player = GameObject.Find("Player");
         manaBar = GameObject.Find("Playermana");
-        mana = maxMana;
+        mana = 0.0f;
     }
 
     // Update is called once per frame

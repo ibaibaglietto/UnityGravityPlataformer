@@ -19,7 +19,10 @@ public class TorchScript : MonoBehaviour
     public GameObject energyPrefab;
     //The variable we are going to use to store the energy
     private GameObject energy;
-
+    //The time the torch got copletely absorbed
+    private float absorbed;
+    //A bool to see if the torch is blue
+    public bool blueTorch;
 
     void Start()
     {
@@ -28,6 +31,7 @@ public class TorchScript : MonoBehaviour
         torchLight = gameObject.transform.GetChild(2).gameObject.GetComponent<Light2D>();
         playerNear = false;
         manaBar = GameObject.Find("Manabar");
+        absorbed = 0.0f;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -69,11 +73,21 @@ public class TorchScript : MonoBehaviour
             dir.Normalize();
             energy.GetComponent<Rigidbody2D>().velocity = dir * 5.0f;
         }
-        if (flame.transform.localScale.x <= 0.0f)
+        if (flame.transform.localScale.x <= 0.0f && absorbed == 0.0f)
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             flame.SetActive(false);
             torchLight.enabled = false;
+            absorbed = Time.fixedTime;
+        }
+        else if (absorbed != 0.0f && (Time.fixedTime-absorbed > 15.0f) && blueTorch)
+        {
+            torchLight.pointLightOuterRadius = 4.5f;
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            flame.SetActive(true);
+            torchLight.enabled = true;
+            flame.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            absorbed = 0.0f;
         }
     }
 }

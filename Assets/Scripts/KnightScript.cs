@@ -70,7 +70,7 @@ public class KnightScript : MonoBehaviour
             fighting = true;
             player.GetComponent<PlayerMovement>().attacked += 1;
         }
-        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && fighting)
+        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && fighting && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
         {
             fighting = false;
             player.GetComponent<PlayerMovement>().attacked -= 1;

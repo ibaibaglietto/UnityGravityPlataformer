@@ -52,12 +52,12 @@ public class HeavyBanditScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f && !gameObject.GetComponent<Animator>().GetBool("IsFighting"))
+        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 1.0f && !gameObject.GetComponent<Animator>().GetBool("IsFighting"))
         {
             gameObject.GetComponent<Animator>().SetBool("IsFighting", true);
             player.GetComponent<PlayerMovement>().attacked += 1;
         }
-        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && gameObject.GetComponent<Animator>().GetBool("IsFighting"))
+        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 1.0f && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
         {
             gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
             player.GetComponent<PlayerMovement>().attacked -= 1;
@@ -187,7 +187,6 @@ public class HeavyBanditScript : MonoBehaviour
     //function to give exp to the player
     public void giveExp()
     {
-        Debug.Log((int)(30.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
         PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + (int)(30.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
     }
 }

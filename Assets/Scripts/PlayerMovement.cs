@@ -184,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
             resting = true;
-            healing = false;            
+            healing = false;
             gameObject.transform.position = new Vector2(restPos, gameObject.transform.position.y);
             animator.SetBool("isResting", true);
         }
