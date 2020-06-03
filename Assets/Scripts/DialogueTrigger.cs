@@ -8,6 +8,9 @@ public class DialogueTrigger : MonoBehaviour
     public Dialogue dialogue;
     //the player
     private GameObject player;
+    //The gravities the player can have during the dialogue
+    public int gravity1;
+    public int gravity2;
 
 
     void Start()
@@ -19,7 +22,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (collision == player.GetComponent<Collider2D>())
         {
-            FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue,gravity1,gravity2);
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }

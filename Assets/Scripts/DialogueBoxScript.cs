@@ -21,13 +21,15 @@ public class DialogueBoxScript : MonoBehaviour
     {
         nameText.enabled = true;
         dialogueText.enabled = true;
-        next.SetActive(true);
+        next.GetComponent<Button>().interactable = true;
+        next.transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public void disappear()
     {
         nameText.enabled = false;
         dialogueText.enabled = false;
-        next.SetActive(false);
+        next.GetComponent<Button>().interactable = false;
+        next.transform.GetChild(0).gameObject.SetActive(false);
     }
 }

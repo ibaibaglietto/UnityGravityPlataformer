@@ -109,6 +109,8 @@ public class PlayerMovement : MonoBehaviour
     private bool tryAbsorb;
     //An int to see how many enemies are attacking the player
     public int attacked;
+    //A boolean to see if the player is talking
+    public bool talking;
 
 
     private void Start()
@@ -136,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
         fullMana = true;
         tryAbsorb = false;
         attacked = 0;
+        talking = false;
         PlayerPrefs.DeleteAll();
         //Check if the levels are initialized
         //The health level 
@@ -174,12 +177,6 @@ public class PlayerMovement : MonoBehaviour
             attacking = false;
             animator.SetBool("isSpinning", false);
         }
-        //set the gravity to normal in case the player has not mana
-        if (!hasMana && rotated)
-        {
-            rotating = false;
-            rotated = false;
-        }
         if(canRest && !changingGravity && Input.GetKeyDown(KeyCode.S) && animator.GetFloat("Speed")<0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) && !tryAbsorb && attacked == 0)
         {
             if (!gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
@@ -193,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isResting", false);
             sleeping = false;
         }
-        if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f))
+        if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking)
         {
             if (canAbsorb && !fullMana) isAbsorbing = true;
             else isAbsorbing = false;
@@ -206,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isAbsorbing", false);
         }
         //Activate gravity change when player presses Q
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb && !talking)
         {
             //Time will slow down while changing the gravity
             Time.timeScale = 0.05f;
@@ -220,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
         else if (changingGravity)
         {
             //Return to normal when Q is pressed again
-            if(Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 gravityDown = prevGravityDown;
                 gravityUp = prevGravityUp;
@@ -298,22 +295,22 @@ public class PlayerMovement : MonoBehaviour
                 else if (gravity == 1) rotation = 180.0f;
                 else if (gravity == 2) rotation = 270.0f;
                 else if (gravity == 3) rotation = 90.0f;
-            }            
-            if (rotated)
-            {
-                GetComponent<Rigidbody2D>().velocity = prevVelocity;
-                changingGravity = false;
-                spendingMana = ((gravityUp) + Mathf.Abs(gravityDown - 1.0f) + gravityLeft + gravityRight) / 50.0f;
-                rotating = false;
-                rotated = false;
             }
+        }
+        if (rotated)
+        {
+            GetComponent<Rigidbody2D>().velocity = prevVelocity;
+            changingGravity = false;
+            spendingMana = ((gravityUp) + Mathf.Abs(gravityDown - 1.0f) + gravityLeft + gravityRight) / 50.0f;
+            rotating = false;
+            rotated = false;
         }
         if (Time.fixedTime - lastDash <= (1 / Mathf.Sqrt(PlayerPrefs.GetInt("dashLevel"))) && gameObject.GetComponent<CharacterController2D>().m_Grounded) wasGround = true;
         if (Time.fixedTime - lastDash > (1 / Mathf.Sqrt(PlayerPrefs.GetInt("dashLevel"))) && (gameObject.GetComponent<CharacterController2D>().m_Grounded || wasGround)) canDash = true;
         //We activate/deactivate the healing using the R button
-        if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb) healing = !healing;
+        if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb && !talking) healing = !healing;
         //We dash using the right button of the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking)
         {
             animator.SetBool("isDashing", true);
             if (gravity == 0 && gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(3200f, 0));
@@ -331,14 +328,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //We attack using the left button of the mouse, choosing the side of the attack depending on where is the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking)
         {            
             attacking = true;
             animator.SetBool("isAttacking", true);
             animator.SetBool("isSpinning", false);
         }
         //We throw shurikens using the right click of the mouse. 
-        if (!changingGravity && Input.GetKey(KeyCode.E) && !dashing && !animator.GetBool("isDead") && gameObject.GetComponent<CharacterController2D>().m_Grounded && !resting && !tryAbsorb)
+        if (!changingGravity && Input.GetKey(KeyCode.E) && !dashing && !animator.GetBool("isDead") && gameObject.GetComponent<CharacterController2D>().m_Grounded && !resting && !tryAbsorb && !talking)
         {
             attacking = true;
             animator.SetBool("isSpinning", true);
@@ -349,7 +346,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isSpinning", false);
         }       
 
-        //We'll save the movement if the player is not dead nor is attacking nor is changing gravity
+        //We'll save the movement if the player is not dead or is attacking or is changing gravity or trying to absorb or talking
         if (!changingGravity)
         {           
             if (!attacking)
@@ -357,11 +354,11 @@ public class PlayerMovement : MonoBehaviour
                 if (gravity < 2) horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
                 else horizontalMove = Input.GetAxisRaw("Vertical") * runSpeed;
             }
-            if (animator.GetBool("isDead") || takingDamage || resting || tryAbsorb) horizontalMove = 0.0f;
+            if (animator.GetBool("isDead") || takingDamage || resting || tryAbsorb || talking) horizontalMove = 0.0f;
 
             animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
-            if (Input.GetButtonDown("Jump") && !animator.GetBool("isDead") && !takingDamage && !resting && !attacking && !tryAbsorb)
+            if (Input.GetButtonDown("Jump") && !animator.GetBool("isDead") && !takingDamage && !resting && !attacking && !tryAbsorb && !talking)
             {
                 jump = true;
             }
@@ -724,16 +721,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //function to return to normal gravity when the player runs out of mana
-    public void normalGravity()
+    public void changeGravity(bool mana, float g0, float g1, float g2, float g3)
     {
-        gameObject.GetComponent<PlayerMovement>().hasMana = false;
-        gameObject.GetComponent<PlayerMovement>().gravityDown = 1.0f;
-        gameObject.GetComponent<PlayerMovement>().gravityUp = 0.0f;
-        gameObject.GetComponent<PlayerMovement>().gravityLeft = 0.0f;
-        gameObject.GetComponent<PlayerMovement>().gravityRight = 0.0f;
-        gameObject.GetComponent<PlayerMovement>().rotating = true;
-        gameObject.GetComponent<PlayerMovement>().spendingMana = 0.0f;
-        gameObject.GetComponent<PlayerMovement>().prevVelocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+        hasMana = mana;
+        gravityDown = g0;
+        gravityUp = g1;
+        gravityLeft = g2;
+        gravityRight = g3;
+        rotating = true;
+        spendingMana = ((gravityUp) + Mathf.Abs(gravityDown - 1.0f) + gravityLeft + gravityRight) / 50.0f;
+        prevVelocity = gameObject.GetComponent<Rigidbody2D>().velocity;
         //We'll check what is the gravity now and we will save it.
         if (gravityDown > gravityUp)
         {

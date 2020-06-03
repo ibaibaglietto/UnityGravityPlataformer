@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 506902741528235988}
   - component: {fileID: 506902741528235979}
   - component: {fileID: 6750142718999368606}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: torch(blueflame)_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 506902741938637359}
   - component: {fileID: 506902741938637358}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: torch(no flame)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,8 +195,8 @@ GameObject:
   - component: {fileID: 506902742037400576}
   - component: {fileID: 506902742050321717}
   - component: {fileID: 506902742050321718}
-  m_Layer: 0
-  m_Name: Bluetorch (1)
+  m_Layer: 12
+  m_Name: Bluetorch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 506902742757293832}
   - component: {fileID: 506902742757293839}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
