@@ -8,7 +8,7 @@ public class HeavyBanditScript : MonoBehaviour
     //The player
     private GameObject player;
     //The side the king is looking
-    private bool lookingRight;
+    public bool lookingLeft;
     //A boolean to see if the enemy is moving
     public bool moving;
     //A vector to see the position of the enemy the previous frame
@@ -40,7 +40,6 @@ public class HeavyBanditScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        lookingRight = true;
         moving = false;
         prevPos = gameObject.transform.position;
         lastAttack = -1.0f;
@@ -52,12 +51,17 @@ public class HeavyBanditScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 1.0f && !gameObject.GetComponent<Animator>().GetBool("IsFighting"))
+        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 1.0f && !gameObject.GetComponent<Animator>().GetBool("IsFighting") && !player.GetComponent<PlayerMovement>().talking)
         {
             gameObject.GetComponent<Animator>().SetBool("IsFighting", true);
             player.GetComponent<PlayerMovement>().attacked += 1;
         }
-        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 1.0f && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
+        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 1.0f && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead") && !player.GetComponent<PlayerMovement>().talking)
+        {
+            gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
+            player.GetComponent<PlayerMovement>().attacked -= 1;
+        }
+        else if (player.GetComponent<PlayerMovement>().talking && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
         {
             gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
             player.GetComponent<PlayerMovement>().attacked -= 1;
@@ -115,7 +119,7 @@ public class HeavyBanditScript : MonoBehaviour
         {
             if (player.transform.position.x < gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.5f))
             {
-                if (!lookingRight) Flip();
+                if (!lookingLeft) Flip();
                 if (gameObject.transform.position.x - player.transform.position.x > 1.25f)
                 {
                     moving = true;
@@ -131,7 +135,7 @@ public class HeavyBanditScript : MonoBehaviour
             }
             else if (player.transform.position.x >= gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.5f))
             {
-                if (lookingRight) Flip();
+                if (lookingLeft) Flip();
                 if (player.transform.position.x - gameObject.transform.position.x > 1.25f)
                 {
                     moving = true;
@@ -155,7 +159,7 @@ public class HeavyBanditScript : MonoBehaviour
     private void Flip()
     {
         // Switch the way the player is labelled as facing.
-        lookingRight = !lookingRight;
+        lookingLeft = !lookingLeft;
 
         // Multiply the player's x local scale by -1.
         Vector3 theScale = transform.localScale;
@@ -166,7 +170,7 @@ public class HeavyBanditScript : MonoBehaviour
     //function to instantiate the damage collider
     public void startAttack()
     {
-        if(!lookingRight) attack = Instantiate(attackPrefab, new Vector2(transform.position.x + 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
+        if(!lookingLeft) attack = Instantiate(attackPrefab, new Vector2(transform.position.x + 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
         else attack = Instantiate(attackPrefab, new Vector2(transform.position.x - 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
     }
 
@@ -188,5 +192,6 @@ public class HeavyBanditScript : MonoBehaviour
     public void giveExp()
     {
         PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + (int)(30.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
+        if(PlayerPrefs.GetInt("expTutorial") == 0) PlayerPrefs.SetInt("expTutorial", 1);
     }
 }

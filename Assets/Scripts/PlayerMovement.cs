@@ -161,6 +161,20 @@ public class PlayerMovement : MonoBehaviour
         if (!PlayerPrefs.HasKey("needExp")) PlayerPrefs.SetInt("needExp", 30);
         //The exp 
         if (!PlayerPrefs.HasKey("exp")) PlayerPrefs.SetInt("exp", 0);
+        //An int to see if the exp tutorial has been shown
+        if (!PlayerPrefs.HasKey("expTutorial")) PlayerPrefs.SetInt("expTutorial", 0);
+        //A float to save the x of the respawn point
+        if (!PlayerPrefs.HasKey("respawnx")) PlayerPrefs.SetFloat("respawnx", -49.826f);
+        //A float to save the y of the respawn point
+        if (!PlayerPrefs.HasKey("respawny")) PlayerPrefs.SetFloat("respawny", -3.367f);
+        //A float to save the side the player is facin on the respawn point. 0-> left, 1-> right
+        if (!PlayerPrefs.HasKey("respawnface")) PlayerPrefs.SetFloat("respawnface", 1);
+        //An int to save the scene of the respawn point
+        if (!PlayerPrefs.HasKey("respawnscene")) PlayerPrefs.SetInt("respawnscene", 0);
+        //An int to save the number of the las dialogue
+        if (!PlayerPrefs.HasKey("lastDialogue")) PlayerPrefs.SetInt("lastDialogue", 0);
+        cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"), -10.0f);
+        gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
     }
     
     void Update(){
@@ -169,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
             Application.Quit();
             Debug.Log("Closing game");
         }
-        if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(0);
+        if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(PlayerPrefs.GetInt("respawnscene"));
         //stop throwing shurikens when the player is damaged or is dead
         if (animator.GetBool("isDead") || animator.GetBool("takeDamage"))
         {
@@ -183,6 +197,8 @@ public class PlayerMovement : MonoBehaviour
             resting = true;
             healing = false;
             gameObject.transform.position = new Vector2(restPos, gameObject.transform.position.y);
+            PlayerPrefs.SetFloat("respawnx", restPos);
+            PlayerPrefs.SetFloat("respawny", gameObject.transform.position.y);
             animator.SetBool("isResting", true);
         }
         if (resting && animator.GetBool("isResting") && Input.GetKeyDown(KeyCode.S) && sleeping && !tryAbsorb)
@@ -440,7 +456,38 @@ public class PlayerMovement : MonoBehaviour
                     }
                 }
             }
-            else
+            else if (Input.GetKey(KeyCode.LeftControl))
+            {
+                if (Input.GetKey(KeyCode.W) && !rotating)
+                {
+                    prevGravityDown = 0.0f;
+                    prevGravityUp = 1.0f;
+                    prevGravityLeft = 0.0f;
+                    prevGravityRight = 0.0f;
+                }
+                else if (Input.GetKey(KeyCode.S) && !rotating)
+                {
+                    prevGravityDown = 1.0f;
+                    prevGravityUp = 0.0f;
+                    prevGravityLeft = 0.0f;
+                    prevGravityRight = 0.0f;
+                }
+                else if (Input.GetKey(KeyCode.A) && !rotating)
+                {
+                    prevGravityDown = 0.0f;
+                    prevGravityUp = 0.0f;
+                    prevGravityLeft = 1.0f;
+                    prevGravityRight = 0.0f;
+                }
+                else if (Input.GetKey(KeyCode.D) && !rotating)
+                {
+                    prevGravityDown = 0.0f;
+                    prevGravityUp = 0.0f;
+                    prevGravityLeft = 0.0f;
+                    prevGravityRight = 1.0f;
+                }
+            }
+            else 
             {
                 if (Input.GetKey(KeyCode.W) && !rotating)
                 {

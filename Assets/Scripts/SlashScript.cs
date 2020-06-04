@@ -30,10 +30,10 @@ public class SlashScript : MonoBehaviour
         if (collision.tag == "King")
         {
             king.GetComponent<KingScript>().damage = damageDealt;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
         if (collision.tag == "HeavyBandit")
         {
-            Debug.Log(damageDealt);
             if(Time.fixedTime - collision.GetComponent<HeavyBanditScript>().firstDamage < 3.0f)
             {
                 collision.GetComponent<HeavyBanditScript>().combo += 1;
@@ -45,10 +45,10 @@ public class SlashScript : MonoBehaviour
             }
             if(!collision.GetComponent<Animator>().GetBool("IsJumping")) collision.GetComponent<Animator>().SetBool("TakeDamage", true);
             collision.GetComponent<HeavyBanditScript>().damage = damageDealt;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
         if (collision.tag == "Knight")
         {
-            Debug.Log(damageDealt);
             if (!collision.GetComponent<Animator>().GetBool("isShielding") && !collision.GetComponent<Animator>().GetBool("isRolling") && Time.fixedTime - parryTime > 0.5f)
             {
                 collision.GetComponent<Animator>().SetBool("isTakingDamage", true);
@@ -101,6 +101,7 @@ public class SlashScript : MonoBehaviour
                 collision.GetComponent<Animator>().SetBool("isShielding", false);
                 collision.GetComponent<Animator>().SetBool("isAttacking", true);                
             }
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 }

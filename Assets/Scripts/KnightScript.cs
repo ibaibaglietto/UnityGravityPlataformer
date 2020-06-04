@@ -65,16 +65,17 @@ public class KnightScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f && !fighting)
+        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f && !fighting && !player.GetComponent<PlayerMovement>().talking)
         {
             fighting = true;
             player.GetComponent<PlayerMovement>().attacked += 1;
         }
-        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && fighting && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
+        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && fighting && !gameObject.GetComponent<Animator>().GetBool("IsDead") && !player.GetComponent<PlayerMovement>().talking)
         {
             fighting = false;
             player.GetComponent<PlayerMovement>().attacked -= 1;
         }
+        else if (player.GetComponent<PlayerMovement>().talking) fighting = false;
 
         if (!moving)
         {

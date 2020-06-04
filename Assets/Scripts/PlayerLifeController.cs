@@ -51,13 +51,7 @@ public class PlayerLifeController : MonoBehaviour
         }
         else
         {
-            player.GetComponent<PlayerMovement>().gravityDown = 1.0f;
-            player.GetComponent<PlayerMovement>().gravityUp = 0.0f;
-            player.GetComponent<PlayerMovement>().gravityLeft = 0.0f;
-            player.GetComponent<PlayerMovement>().gravityRight = 0.0f;
-            player.GetComponent<PlayerMovement>().rotating = true;
-            player.GetComponent<PlayerMovement>().prevVelocity = player.GetComponent<Rigidbody2D>().velocity;
-            player.GetComponent<PlayerMovement>().spendingMana = 0.0f;
+            player.GetComponent<PlayerMovement>().changeGravity(false, 1.0f, 0.0f, 0.0f, 0.0f);
             playerAnimator.SetBool("isDead", true);
         }
     }
