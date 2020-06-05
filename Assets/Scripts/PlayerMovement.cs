@@ -168,13 +168,16 @@ public class PlayerMovement : MonoBehaviour
         //A float to save the y of the respawn point
         if (!PlayerPrefs.HasKey("respawny")) PlayerPrefs.SetFloat("respawny", -3.367f);
         //A float to save the side the player is facin on the respawn point. 0-> left, 1-> right
-        if (!PlayerPrefs.HasKey("respawnface")) PlayerPrefs.SetFloat("respawnface", 1);
+        if (!PlayerPrefs.HasKey("respawnface")) PlayerPrefs.SetInt("respawnface", 1);
         //An int to save the scene of the respawn point
         if (!PlayerPrefs.HasKey("respawnscene")) PlayerPrefs.SetInt("respawnscene", 0);
         //An int to save the number of the las dialogue
         if (!PlayerPrefs.HasKey("lastDialogue")) PlayerPrefs.SetInt("lastDialogue", 0);
         cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"), -10.0f);
         gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
+        animator.SetTrigger("isSpawning");
+        resting = true;
+        if (PlayerPrefs.GetInt("respawnface") == 0) gameObject.GetComponent<CharacterController2D>().Flip();
     }
     
     void Update(){
@@ -193,19 +196,20 @@ public class PlayerMovement : MonoBehaviour
         }
         if(canRest && !changingGravity && Input.GetKeyDown(KeyCode.S) && animator.GetFloat("Speed")<0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) && !tryAbsorb && attacked == 0)
         {
-            if (!gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
+            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
             resting = true;
             healing = false;
             gameObject.transform.position = new Vector2(restPos, gameObject.transform.position.y);
             PlayerPrefs.SetFloat("respawnx", restPos);
             PlayerPrefs.SetFloat("respawny", gameObject.transform.position.y);
+            PlayerPrefs.SetInt("respawnface", 0);
             animator.SetBool("isResting", true);
         }
         if (resting && animator.GetBool("isResting") && Input.GetKeyDown(KeyCode.S) && sleeping && !tryAbsorb)
         {
             animator.SetBool("isResting", false);
             sleeping = false;
-        }
+        }        
         if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking)
         {
             if (canAbsorb && !fullMana) isAbsorbing = true;
@@ -218,6 +222,7 @@ public class PlayerMovement : MonoBehaviour
             isAbsorbing = false;
             animator.SetBool("isAbsorbing", false);
         }
+        if (sleeping && !fullMana) isAbsorbing = true;
         //Activate gravity change when player presses Q
         if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb && !talking)
         {
@@ -414,6 +419,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
+        //We apply the gravity
+        gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(gravityRight - gravityLeft, gravityUp - gravityDown);
         if (changingGravity)
         {
             //We'll change gravity with the movement keys. If we press left shift while doping it it will grow 5 times more in that direction.
@@ -528,9 +535,7 @@ public class PlayerMovement : MonoBehaviour
             dir.Normalize();
             shuriken.GetComponent<Rigidbody2D>().velocity = dir * 10.0f;
             lastShuriken = Time.fixedTime;
-        }
-        //We apply the gravity
-        gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(gravityRight - gravityLeft, gravityUp - gravityDown);
+        }        
         //We set a maximum velocity to fall
         if (!changingGravity || rotating)
         {                        

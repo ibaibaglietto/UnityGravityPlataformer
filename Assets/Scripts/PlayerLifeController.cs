@@ -49,7 +49,7 @@ public class PlayerLifeController : MonoBehaviour
             else if (health < maxHealth && player.GetComponent<PlayerMovement>().sleeping) health += 0.2f;
             if (health > maxHealth) health = maxHealth;
         }
-        else
+        else if(!playerAnimator.GetBool("isDead"))
         {
             player.GetComponent<PlayerMovement>().changeGravity(false, 1.0f, 0.0f, 0.0f, 0.0f);
             playerAnimator.SetBool("isDead", true);

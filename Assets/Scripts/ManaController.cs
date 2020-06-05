@@ -20,7 +20,7 @@ public class ManaController : MonoBehaviour
         maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
         player = GameObject.Find("Player");
         manaBar = GameObject.Find("Playermana");
-        mana = maxMana;
+        mana = 0.0f;
     }
 
     // Update is called once per frame
@@ -42,7 +42,7 @@ public class ManaController : MonoBehaviour
             player.GetComponent<PlayerMovement>().healing = false;
             player.GetComponent<PlayerMovement>().changeGravity(false, 1.0f,0.0f,0.0f,0.0f);           
         }
-        if (mana < maxMana && player.GetComponent<PlayerMovement>().sleeping) mana += 0.2f;
+        //if (mana < maxMana && player.GetComponent<PlayerMovement>().sleeping) mana += 0.2f;
         if (mana > maxMana) mana = maxMana;
         if (mana > (maxMana-0.2f)) player.GetComponent<PlayerMovement>().fullMana = true;
         else player.GetComponent<PlayerMovement>().fullMana = false;

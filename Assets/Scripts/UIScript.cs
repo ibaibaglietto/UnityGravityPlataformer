@@ -275,12 +275,18 @@ public class UIScript : MonoBehaviour
         player.GetComponent<PlayerMovement>().sleeping = false;
         healthBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(healthLevel.text)) + 55)*0.002f+0.034f, 0.9644875f);
         healthBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        healthBar.GetComponent<PlayerLifeController>().maxHealth = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55;
-        healthBar.GetComponent<PlayerLifeController>().health = healthBar.GetComponent<PlayerLifeController>().maxHealth;
+        if(healthBar.GetComponent<PlayerLifeController>().maxHealth != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55)
+        {
+            healthBar.GetComponent<PlayerLifeController>().health += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55) - healthBar.GetComponent<PlayerLifeController>().maxHealth;
+            healthBar.GetComponent<PlayerLifeController>().maxHealth = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55;
+        }        
         manaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(manaLevel.text)) + 5) * 0.002f + 0.034f, 0.9196156f);
         manaBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        manaBar.GetComponent<ManaController>().maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
-        manaBar.GetComponent<ManaController>().mana = manaBar.GetComponent<ManaController>().maxMana;
+        if(manaBar.GetComponent<ManaController>().maxMana != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5)
+        {
+            manaBar.GetComponent<ManaController>().mana += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5) - manaBar.GetComponent<ManaController>().maxMana;
+            manaBar.GetComponent<ManaController>().maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
+        }        
         player.GetComponent<Animator>().SetBool("isResting", false);
         lvlUp.SetActive(false);
     }
