@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SlashScript : MonoBehaviour
 {
-    //The boss
-    private GameObject king;
     //The player
     private GameObject player;
     //The time the enemy parried
@@ -15,7 +13,6 @@ public class SlashScript : MonoBehaviour
 
     private void Start()
     {
-        king = GameObject.Find("King");
         player = GameObject.Find("Player");
         parryTime = Time.fixedTime - 0.6f;
         damageDealt = Mathf.Sqrt(100 * PlayerPrefs.GetInt("dealtDamageLevel")) + 10;
@@ -29,7 +26,7 @@ public class SlashScript : MonoBehaviour
     {
         if (collision.tag == "King")
         {
-            king.GetComponent<KingScript>().damage = damageDealt;
+            collision.GetComponent<KingScript>().damage = damageDealt;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
         if (collision.tag == "HeavyBandit")

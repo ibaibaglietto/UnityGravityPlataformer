@@ -7,6 +7,8 @@ TagManager:
   - King
   - HeavyBandit
   - Knight
+  - Button
+  - Wall
   layers:
   - Default
   - TransparentFX

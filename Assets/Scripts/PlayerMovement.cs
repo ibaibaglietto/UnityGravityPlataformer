@@ -111,6 +111,8 @@ public class PlayerMovement : MonoBehaviour
     public int attacked;
     //A boolean to see if the player is talking
     public bool talking;
+    //A boolean to see if we changed the gravity because of a conversation
+    public bool convGravity;
 
 
     private void Start()
@@ -139,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
         tryAbsorb = false;
         attacked = 0;
         talking = false;
+        convGravity = false;
         PlayerPrefs.DeleteAll();
         //Check if the levels are initialized
         //The health level 
@@ -173,11 +176,26 @@ public class PlayerMovement : MonoBehaviour
         if (!PlayerPrefs.HasKey("respawnscene")) PlayerPrefs.SetInt("respawnscene", 0);
         //An int to save the number of the las dialogue
         if (!PlayerPrefs.HasKey("lastDialogue")) PlayerPrefs.SetInt("lastDialogue", 0);
-        cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"), -10.0f);
-        gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
-        animator.SetTrigger("isSpawning");
-        resting = true;
-        if (PlayerPrefs.GetInt("respawnface") == 0) gameObject.GetComponent<CharacterController2D>().Flip();
+        //Am int to know if the player died or only moved from one scene to another
+        if (!PlayerPrefs.HasKey("hasDied")) PlayerPrefs.SetInt("hasDied", 1);
+        //A float to save the x of the spawn point (when we move from one scene to another without dieing)
+        if (!PlayerPrefs.HasKey("respawnx")) PlayerPrefs.SetFloat("respawnx", -49.826f);
+        //A float to save the y of the spawn point (when we move from one scene to another without dieing)
+        if (!PlayerPrefs.HasKey("respawny")) PlayerPrefs.SetFloat("respawny", -3.367f);
+        //We put the player and the camera on their starting position
+        if (PlayerPrefs.GetInt("hasDied") == 1)
+        {
+            cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"), -10.0f);
+            gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
+            animator.SetTrigger("isSpawning");
+            resting = true;
+            if (PlayerPrefs.GetInt("respawnface") == 0) gameObject.GetComponent<CharacterController2D>().Flip();
+        }
+        else
+        {
+
+        }
+        PlayerPrefs.SetInt("hasDied", 0);
     }
     
     void Update(){
@@ -194,6 +212,15 @@ public class PlayerMovement : MonoBehaviour
             attacking = false;
             animator.SetBool("isSpinning", false);
         }
+        if(gameObject.GetComponent<CharacterController2D>().m_Grounded && convGravity)
+        {
+            convGravity = false;
+            if (gravity == 0) gravityDown = 1.0f;
+            else if (gravity == 1) gravityUp = 1.0f;
+            else if (gravity == 2) gravityLeft = 1.0f;
+            else if (gravity == 3) gravityRight = 1.0f;
+        }
+        //We check if the player can rest, and if so it startes to rest when we press the S button
         if(canRest && !changingGravity && Input.GetKeyDown(KeyCode.S) && animator.GetFloat("Speed")<0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) && !tryAbsorb && attacked == 0)
         {
             if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
@@ -205,11 +232,7 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetInt("respawnface", 0);
             animator.SetBool("isResting", true);
         }
-        if (resting && animator.GetBool("isResting") && Input.GetKeyDown(KeyCode.S) && sleeping && !tryAbsorb)
-        {
-            animator.SetBool("isResting", false);
-            sleeping = false;
-        }        
+        //We check if the player can absorb, if so it tries to absorb pressing F
         if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking)
         {
             if (canAbsorb && !fullMana) isAbsorbing = true;
@@ -222,6 +245,7 @@ public class PlayerMovement : MonoBehaviour
             isAbsorbing = false;
             animator.SetBool("isAbsorbing", false);
         }
+        //The player tries to absorb automatically when sleeping
         if (sleeping && !fullMana) isAbsorbing = true;
         //Activate gravity change when player presses Q
         if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb && !talking)
@@ -292,7 +316,7 @@ public class PlayerMovement : MonoBehaviour
                             gravity = 3;
                         }
                     }
-                    else
+                    else if (gravityUp <= gravityLeft)
                     {
                         if (gravityLeft > gravityRight)
                         {
@@ -304,7 +328,9 @@ public class PlayerMovement : MonoBehaviour
                             lastGravity = gravity;
                             gravity = 3;
                         }
+                        else lastGravity = gravity;
                     }
+                    
                 }
                 //We'll change the facing component depending on the last gravity
                 if ((lastGravity == 0 && gravity == 1) || (lastGravity == 1 && gravity == 0) || (lastGravity == 0 && gravity == 2) || (lastGravity == 2 && gravity == 0) || (lastGravity == 3 && gravity == 1) || (lastGravity == 1 && gravity == 3) || (lastGravity == 3 && gravity == 2) || (lastGravity == 2 && gravity == 3))
@@ -322,7 +348,7 @@ public class PlayerMovement : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().velocity = prevVelocity;
             changingGravity = false;
-            spendingMana = ((gravityUp) + Mathf.Abs(gravityDown - 1.0f) + gravityLeft + gravityRight) / 50.0f;
+            if(!talking) spendingMana = ((gravityUp) + Mathf.Abs(gravityDown - 1.0f) + gravityLeft + gravityRight) / 50.0f;
             rotating = false;
             rotated = false;
         }
@@ -781,7 +807,6 @@ public class PlayerMovement : MonoBehaviour
         gravityLeft = g2;
         gravityRight = g3;
         rotating = true;
-        spendingMana = ((gravityUp) + Mathf.Abs(gravityDown - 1.0f) + gravityLeft + gravityRight) / 50.0f;
         prevVelocity = gameObject.GetComponent<Rigidbody2D>().velocity;
         //We'll check what is the gravity now and we will save it.
         if (gravityDown > gravityUp)

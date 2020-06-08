@@ -6,15 +6,12 @@ public class ShurikenScript : MonoBehaviour
 {
     //The gameobject of the player
     private GameObject player;
-    //The boss
-    private GameObject king;
 
 
     void Start()
     {
         //Save the gameobject of the player
         player = GameObject.Find("Player");
-        king = GameObject.Find("King");
     }
 
     void Update()
@@ -25,13 +22,10 @@ public class ShurikenScript : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "King")
+        if (collision.tag == "Button")
         {
-            king.GetComponent<KingScript>().damage = 1.0f;
+            collision.transform.parent.gameObject.GetComponent<Animator>().SetTrigger("Open");
         }
-        if (collision.tag == "HeavyBandit")
-        {
-            collision.GetComponent<HeavyBanditScript>().damage = 10.0f;
-        }
+        else if (collision.tag == "Wall") Destroy(gameObject);
     }
 }
