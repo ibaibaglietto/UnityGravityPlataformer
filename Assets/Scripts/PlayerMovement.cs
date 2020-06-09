@@ -113,7 +113,12 @@ public class PlayerMovement : MonoBehaviour
     public bool talking;
     //A boolean to see if we changed the gravity because of a conversation
     public bool convGravity;
-
+    //A boolean to see if the player is changing scene
+    public bool changingScene;
+    //A boolean to see if the player is entering a scene
+    public bool enteringScene;
+    //The gameobject of the black image to fade in and out
+    private GameObject fadeInOut;
 
     private void Start()
     {
@@ -142,7 +147,11 @@ public class PlayerMovement : MonoBehaviour
         attacked = 0;
         talking = false;
         convGravity = false;
-        PlayerPrefs.DeleteAll();
+        changingScene = false;
+        enteringScene = false;
+        //Save the gameobject of the fadeInOut
+        fadeInOut = GameObject.Find("FadeInOut");
+        //PlayerPrefs.DeleteAll();
         //Check if the levels are initialized
         //The health level 
         if (!PlayerPrefs.HasKey("healthLevel")) PlayerPrefs.SetInt("healthLevel", 1);
@@ -164,13 +173,15 @@ public class PlayerMovement : MonoBehaviour
         if (!PlayerPrefs.HasKey("needExp")) PlayerPrefs.SetInt("needExp", 30);
         //The exp 
         if (!PlayerPrefs.HasKey("exp")) PlayerPrefs.SetInt("exp", 0);
+        //A float to save the current mana
+        if (!PlayerPrefs.HasKey("mana")) PlayerPrefs.SetFloat("mana", 0.0f);
         //An int to see if the exp tutorial has been shown
         if (!PlayerPrefs.HasKey("expTutorial")) PlayerPrefs.SetInt("expTutorial", 0);
         //A float to save the x of the respawn point
         if (!PlayerPrefs.HasKey("respawnx")) PlayerPrefs.SetFloat("respawnx", -49.826f);
         //A float to save the y of the respawn point
         if (!PlayerPrefs.HasKey("respawny")) PlayerPrefs.SetFloat("respawny", -3.367f);
-        //A float to save the side the player is facin on the respawn point. 0-> left, 1-> right
+        //A float to save the side the player is facing on the respawn point. 0-> left, 1-> right
         if (!PlayerPrefs.HasKey("respawnface")) PlayerPrefs.SetInt("respawnface", 1);
         //An int to save the scene of the respawn point
         if (!PlayerPrefs.HasKey("respawnscene")) PlayerPrefs.SetInt("respawnscene", 0);
@@ -179,25 +190,41 @@ public class PlayerMovement : MonoBehaviour
         //Am int to know if the player died or only moved from one scene to another
         if (!PlayerPrefs.HasKey("hasDied")) PlayerPrefs.SetInt("hasDied", 1);
         //A float to save the x of the spawn point (when we move from one scene to another without dieing)
-        if (!PlayerPrefs.HasKey("respawnx")) PlayerPrefs.SetFloat("respawnx", -49.826f);
+        if (!PlayerPrefs.HasKey("spawnx")) PlayerPrefs.SetFloat("spawnx", -49.826f);
         //A float to save the y of the spawn point (when we move from one scene to another without dieing)
-        if (!PlayerPrefs.HasKey("respawny")) PlayerPrefs.SetFloat("respawny", -3.367f);
+        if (!PlayerPrefs.HasKey("spawny")) PlayerPrefs.SetFloat("spawny", -3.367f);
+        //A float to save the side the player is facing on the spawn point. 0-> left, 1-> right
+        if (!PlayerPrefs.HasKey("spawnface")) PlayerPrefs.SetInt("spawnface", 0);
         //We put the player and the camera on their starting position
         if (PlayerPrefs.GetInt("hasDied") == 1)
         {
-            cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"), -10.0f);
+            cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny") + 1.381f, -10.0f);
             gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
             animator.SetTrigger("isSpawning");
             resting = true;
-            if (PlayerPrefs.GetInt("respawnface") == 0) gameObject.GetComponent<CharacterController2D>().Flip();
+            if (PlayerPrefs.GetInt("respawnface") == 0 && controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
+            else if (PlayerPrefs.GetInt("respawnface") == 1 && !controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
         }
         else
         {
-
+            if (PlayerPrefs.GetInt("spawnface") == 0 && controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
+            else if (PlayerPrefs.GetInt("spawnface") == 1 && !controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
+            if (controller.m_FacingRight)
+            {
+                cam.transform.position = new Vector3(PlayerPrefs.GetFloat("spawnx") - 4.4f, PlayerPrefs.GetFloat("spawny") + 1.381f, -10.0f);
+                gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("spawnx") - 4.4f, PlayerPrefs.GetFloat("spawny"));
+            }
+            else
+            {
+                cam.transform.position = new Vector3(PlayerPrefs.GetFloat("spawnx") + 4.4f, PlayerPrefs.GetFloat("spawny") + 1.381f, -10.0f);
+                gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("spawnx") + 4.4f, PlayerPrefs.GetFloat("spawny"));
+            }
+            
+            enteringScene = true;
+            PlayerPrefs.SetInt("hasDied", 1);
         }
-        PlayerPrefs.SetInt("hasDied", 0);
+        fadeInOut.GetComponent<Animator>().SetBool("Clear", true);
     }
-    
     void Update(){
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -220,9 +247,20 @@ public class PlayerMovement : MonoBehaviour
             else if (gravity == 2) gravityLeft = 1.0f;
             else if (gravity == 3) gravityRight = 1.0f;
         }
-        //We check if the player can rest, and if so it startes to rest when we press the S button
-        if(canRest && !changingGravity && Input.GetKeyDown(KeyCode.S) && animator.GetFloat("Speed")<0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) && !tryAbsorb && attacked == 0)
+        if (controller.m_Grounded && changingScene)
         {
+            gravityDown = 1.0f;
+            fadeInOut.GetComponent<Animator>().SetBool("Clear",false);
+        }
+        if (enteringScene)
+        {
+            if (controller.m_FacingRight && PlayerPrefs.GetFloat("spawnx") <= gameObject.transform.position.x) enteringScene = false;
+            else if (!controller.m_FacingRight && PlayerPrefs.GetFloat("spawnx") >= gameObject.transform.position.x) enteringScene = false;
+        }
+        //We check if the player can rest, and if so it startes to rest when we press the S button
+        if (canRest && !changingGravity && Input.GetKeyDown(KeyCode.S) && animator.GetFloat("Speed")<0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) && !tryAbsorb && attacked == 0 && !changingScene && !enteringScene)
+        {
+            gameObject.GetComponent<PlayerMovement>().changeGravity(true, 1.0f, 0.0f, 0.0f, 0.0f);
             if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
             resting = true;
             healing = false;
@@ -233,7 +271,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isResting", true);
         }
         //We check if the player can absorb, if so it tries to absorb pressing F
-        if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking)
+        if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking && !changingScene && !enteringScene)
         {
             if (canAbsorb && !fullMana) isAbsorbing = true;
             else isAbsorbing = false;
@@ -248,7 +286,7 @@ public class PlayerMovement : MonoBehaviour
         //The player tries to absorb automatically when sleeping
         if (sleeping && !fullMana) isAbsorbing = true;
         //Activate gravity change when player presses Q
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb && !talking)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene)
         {
             //Time will slow down while changing the gravity
             Time.timeScale = 0.05f;
@@ -355,9 +393,9 @@ public class PlayerMovement : MonoBehaviour
         if (Time.fixedTime - lastDash <= (1 / Mathf.Sqrt(PlayerPrefs.GetInt("dashLevel"))) && gameObject.GetComponent<CharacterController2D>().m_Grounded) wasGround = true;
         if (Time.fixedTime - lastDash > (1 / Mathf.Sqrt(PlayerPrefs.GetInt("dashLevel"))) && (gameObject.GetComponent<CharacterController2D>().m_Grounded || wasGround)) canDash = true;
         //We activate/deactivate the healing using the R button
-        if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb && !talking) healing = !healing;
+        if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene) healing = !healing;
         //We dash using the right button of the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene)
         {
             animator.SetBool("isDashing", true);
             if (gravity == 0 && gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(3200f, 0));
@@ -375,14 +413,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //We attack using the left button of the mouse, choosing the side of the attack depending on where is the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene)
         {            
             attacking = true;
             animator.SetBool("isAttacking", true);
             animator.SetBool("isSpinning", false);
         }
         //We throw shurikens using the right click of the mouse. 
-        if (!changingGravity && Input.GetKey(KeyCode.E) && !dashing && !animator.GetBool("isDead") && gameObject.GetComponent<CharacterController2D>().m_Grounded && !resting && !tryAbsorb && !talking)
+        if (!changingGravity && Input.GetKey(KeyCode.E) && !dashing && !animator.GetBool("isDead") && gameObject.GetComponent<CharacterController2D>().m_Grounded && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene)
         {
             attacking = true;
             animator.SetBool("isSpinning", true);
@@ -402,10 +440,14 @@ public class PlayerMovement : MonoBehaviour
                 else horizontalMove = Input.GetAxisRaw("Vertical") * runSpeed;
             }
             if (animator.GetBool("isDead") || takingDamage || resting || tryAbsorb || talking) horizontalMove = 0.0f;
-
+            if ((changingScene && gravityDown == 1.0f) || enteringScene)
+            {
+                if (controller.m_FacingRight) horizontalMove = runSpeed;
+                else horizontalMove = -runSpeed;
+            }
             animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
-            if (Input.GetButtonDown("Jump") && !animator.GetBool("isDead") && !takingDamage && !resting && !attacking && !tryAbsorb && !talking)
+            if (Input.GetButtonDown("Jump") && !animator.GetBool("isDead") && !takingDamage && !resting && !attacking && !tryAbsorb && !talking && !changingScene && !enteringScene)
             {
                 jump = true;
             }

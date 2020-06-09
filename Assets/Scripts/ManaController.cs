@@ -15,12 +15,18 @@ public class ManaController : MonoBehaviour
     public float maxMana;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
         player = GameObject.Find("Player");
         manaBar = GameObject.Find("Playermana");
-        mana = 0.0f;
+        if (PlayerPrefs.GetInt("hasDied") == 0)
+        {
+            mana = PlayerPrefs.GetFloat("mana");
+        }
+        else if (PlayerPrefs.GetInt("hasDied") == 1 && PlayerPrefs.GetInt("lastDialogue") >= 7) mana = maxMana;
+        else mana = 0.0f;
+
     }
 
     // Update is called once per frame
