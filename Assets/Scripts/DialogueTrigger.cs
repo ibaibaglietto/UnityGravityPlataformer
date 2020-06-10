@@ -27,6 +27,11 @@ public class DialogueTrigger : MonoBehaviour
             PlayerPrefs.SetInt("expTutorial", 2);
             FindObjectOfType<DialogueManager>().StartDialogue(dialogue,0,0);
         }
+        if (PlayerPrefs.GetInt("trap") == 1 && gravity1 == 5)
+        {
+            PlayerPrefs.SetInt("trap", 2);
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0);
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

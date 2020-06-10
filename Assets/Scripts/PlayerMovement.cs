@@ -195,6 +195,8 @@ public class PlayerMovement : MonoBehaviour
         if (!PlayerPrefs.HasKey("spawny")) PlayerPrefs.SetFloat("spawny", -3.367f);
         //A float to save the side the player is facing on the spawn point. 0-> left, 1-> right
         if (!PlayerPrefs.HasKey("spawnface")) PlayerPrefs.SetInt("spawnface", 0);
+        //A float to see if the player has fallen into the trap of level 1-2
+        if (!PlayerPrefs.HasKey("trap")) PlayerPrefs.SetInt("trap", 0);
         //We put the player and the camera on their starting position
         if (PlayerPrefs.GetInt("hasDied") == 1)
         {
@@ -226,6 +228,8 @@ public class PlayerMovement : MonoBehaviour
         fadeInOut.GetComponent<Animator>().SetBool("Clear", true);
     }
     void Update(){
+        //we set the trap int to make the doors to be opened
+        if (PlayerPrefs.GetInt("trap") == 2 && PlayerPrefs.GetFloat("respawnx") == -62.63f) PlayerPrefs.SetInt("trap", 3);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();

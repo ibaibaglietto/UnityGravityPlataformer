@@ -16128,6 +16128,7 @@ MonoBehaviour:
   talking: 0
   convGravity: 0
   changingScene: 0
+  enteringScene: 0
 --- !u!58 &1819824413
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18664,8 +18665,8 @@ MonoBehaviour:
     name: (...)
     sentences:
     - I can't even see the platform I need to jump into...
-    - I wonder what I need to do to jump longer when I can control the gravity.
-    - Maybe putting the gravity to 0.3 to the ground and then jump and use the dash?
+    - I wonder what I need to do to get to places I can't with a normal jump...
+    - Maybe putting the gravity to the ceiling and walking to the left?
     - Or just fall to the left without knowing what is there, I don't know, do what
       you want.
     - (If you fall too quickly you may get hurt).

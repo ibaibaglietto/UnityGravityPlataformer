@@ -25,6 +25,11 @@ public class ShurikenScript : MonoBehaviour
         if (collision.tag == "Button")
         {
             collision.transform.parent.gameObject.GetComponent<Animator>().SetTrigger("Open");
+            Debug.Log(collision.transform.parent.gameObject.transform.position.x);
+            if (PlayerPrefs.GetInt("trap") == 0)
+            {
+                if (collision.transform.parent.gameObject.transform.position.x == -81.48338f) PlayerPrefs.SetInt("trap",1);
+            }            
         }
         else if (collision.tag == "Wall") Destroy(gameObject);
     }
