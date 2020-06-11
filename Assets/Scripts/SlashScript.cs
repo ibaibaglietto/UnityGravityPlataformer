@@ -23,12 +23,7 @@ public class SlashScript : MonoBehaviour
         Destroy(gameObject);
     }
     public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "King")
-        {
-            collision.GetComponent<KingScript>().damage = damageDealt;
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        }
+    {        
         if (collision.tag == "HeavyBandit")
         {
             if(Time.fixedTime - collision.GetComponent<HeavyBanditScript>().firstDamage < 3.0f)
@@ -96,9 +91,22 @@ public class SlashScript : MonoBehaviour
                 collision.GetComponent<Animator>().SetBool("isTakingDamage", false);
                 collision.GetComponent<KnightScript>().damage = 0.0f;
                 collision.GetComponent<Animator>().SetBool("isShielding", false);
-                collision.GetComponent<Animator>().SetBool("isAttacking", true);                
+                collision.GetComponent<Animator>().SetBool("isAttacking", true);
+                collision.GetComponent<KnightScript>().attacking = true;
             }
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
+        if (collision.tag == "dieExp")
+        {
+            PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + PlayerPrefs.GetInt("diedexp"));
+            PlayerPrefs.SetInt("diedexp", 0);
+            Destroy(collision.gameObject);
+        }
+        if (collision.tag == "King")
+        {
+            collision.GetComponent<KingScript>().damage = damageDealt;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
+
 }

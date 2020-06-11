@@ -2041,7 +2041,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &198372148
 PrefabInstance:
@@ -2165,12 +2165,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198915838}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.008553, y: 1.0026263, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.147587, y: -27.47688, z: 18.849907}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 2027634397}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &203977351
 GameObject:
@@ -6210,7 +6210,7 @@ Transform:
   - {fileID: 1444090752}
   - {fileID: 1787569058}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &683961621
 GameObject:
@@ -7285,7 +7285,7 @@ Transform:
   - {fileID: 20904890}
   - {fileID: 633926192}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &812502268
 GameObject:
@@ -13026,7 +13026,7 @@ Transform:
   - {fileID: 368702700}
   - {fileID: 462260623}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1446979156
 GameObject:
@@ -16129,6 +16129,9 @@ MonoBehaviour:
   convGravity: 0
   changingScene: 0
   enteringScene: 0
+  benchScene: 0
+  dieExpPrefab: {fileID: 4855393419767451195, guid: 2c3e6acb01d9558408bc51eaa13820bc, type: 3}
+  scene: 0
 --- !u!58 &1819824413
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -17971,8 +17974,9 @@ Transform:
   - {fileID: 507236937}
   - {fileID: 181936829}
   - {fileID: 1928469465}
+  - {fileID: 198915840}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2029909733
 PrefabInstance:

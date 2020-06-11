@@ -8,6 +8,8 @@ public class RestScript : MonoBehaviour
     private GameObject player;
     //The position the player rests
     public float restPos;
+    //The scene the bench is
+    public int scene;
 
 
     void Start()
@@ -21,6 +23,7 @@ public class RestScript : MonoBehaviour
         {
             player.GetComponent<PlayerMovement>().canRest = true;
             player.GetComponent<PlayerMovement>().restPos = restPos;
+            player.GetComponent<PlayerMovement>().benchScene = scene;
         }
     }
 

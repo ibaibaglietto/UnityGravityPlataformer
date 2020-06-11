@@ -53,6 +53,10 @@ public class PlayerLifeController : MonoBehaviour
         {
             player.GetComponent<PlayerMovement>().changeGravity(false, 1.0f, 0.0f, 0.0f, 0.0f);
             playerAnimator.SetBool("isDead", true);
+            PlayerPrefs.SetInt("hasDied", 2);
+            PlayerPrefs.SetFloat("diedx", player.transform.position.x);
+            PlayerPrefs.SetFloat("diedy", player.transform.position.y - 0.257f);
+            PlayerPrefs.SetInt("diedscene", player.GetComponent<PlayerMovement>().scene);
         }
     }
 }

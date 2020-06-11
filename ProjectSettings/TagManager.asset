@@ -9,6 +9,7 @@ TagManager:
   - Knight
   - Button
   - Wall
+  - dieExp
   layers:
   - Default
   - TransparentFX

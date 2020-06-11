@@ -119,6 +119,12 @@ public class PlayerMovement : MonoBehaviour
     public bool enteringScene;
     //The gameobject of the black image to fade in and out
     private GameObject fadeInOut;
+    //The scene the bench is
+    public int benchScene;
+    //The prefab of the dieExp
+    public GameObject dieExpPrefab;
+    //The scene that is being played
+    public int scene;
 
     private void Start()
     {
@@ -149,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
         convGravity = false;
         changingScene = false;
         enteringScene = false;
+        benchScene = 0;
         //Save the gameobject of the fadeInOut
         fadeInOut = GameObject.Find("FadeInOut");
         //PlayerPrefs.DeleteAll();
@@ -187,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
         if (!PlayerPrefs.HasKey("respawnscene")) PlayerPrefs.SetInt("respawnscene", 0);
         //An int to save the number of the las dialogue
         if (!PlayerPrefs.HasKey("lastDialogue")) PlayerPrefs.SetInt("lastDialogue", 0);
-        //Am int to know if the player died or only moved from one scene to another
+        //0 -> scene change, 1 -> to respawn when loading the game, 2 -> Player died
         if (!PlayerPrefs.HasKey("hasDied")) PlayerPrefs.SetInt("hasDied", 1);
         //A float to save the x of the spawn point (when we move from one scene to another without dieing)
         if (!PlayerPrefs.HasKey("spawnx")) PlayerPrefs.SetFloat("spawnx", -49.826f);
@@ -197,8 +204,18 @@ public class PlayerMovement : MonoBehaviour
         if (!PlayerPrefs.HasKey("spawnface")) PlayerPrefs.SetInt("spawnface", 0);
         //A float to see if the player has fallen into the trap of level 1-2
         if (!PlayerPrefs.HasKey("trap")) PlayerPrefs.SetInt("trap", 0);
+        //An int to save the exp the player has when resting
+        if (!PlayerPrefs.HasKey("restExp")) PlayerPrefs.SetInt("restExp", 0);
+        //A float to save the x where the player died
+        if (!PlayerPrefs.HasKey("diedx")) PlayerPrefs.SetFloat("diedx",0);
+        //A float to save the y where the player died
+        if (!PlayerPrefs.HasKey("diedy")) PlayerPrefs.SetFloat("diedy", 0);
+        //An int to save the exp lost when dieing
+        if (!PlayerPrefs.HasKey("diedexp")) PlayerPrefs.SetInt("diedexp", 0);
+        //An int to save the scene the player died
+        if (!PlayerPrefs.HasKey("diedscene")) PlayerPrefs.SetInt("diedscene", 0);
         //We put the player and the camera on their starting position
-        if (PlayerPrefs.GetInt("hasDied") == 1)
+        if (PlayerPrefs.GetInt("hasDied") != 0)
         {
             cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny") + 1.381f, -10.0f);
             gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
@@ -206,6 +223,17 @@ public class PlayerMovement : MonoBehaviour
             resting = true;
             if (PlayerPrefs.GetInt("respawnface") == 0 && controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
             else if (PlayerPrefs.GetInt("respawnface") == 1 && !controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
+            if (PlayerPrefs.GetInt("hasDied") == 2)
+            {
+                PlayerPrefs.SetInt("diedexp", PlayerPrefs.GetInt("exp"));
+                PlayerPrefs.SetInt("exp", 0);
+                PlayerPrefs.SetInt("restExp", 0);
+            }
+            else PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("restExp"));
+            if (PlayerPrefs.GetInt("diedscene") == PlayerPrefs.GetInt("respawnscene") && PlayerPrefs.GetInt("diedexp") != 0)
+            {
+                Instantiate(dieExpPrefab, new Vector2(PlayerPrefs.GetFloat("diedx"), PlayerPrefs.GetFloat("diedy")), transform.rotation);
+            }
         }
         else
         {
@@ -220,11 +248,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 cam.transform.position = new Vector3(PlayerPrefs.GetFloat("spawnx") + 4.4f, PlayerPrefs.GetFloat("spawny") + 1.381f, -10.0f);
                 gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("spawnx") + 4.4f, PlayerPrefs.GetFloat("spawny"));
-            }
-            
+            }            
             enteringScene = true;
-            PlayerPrefs.SetInt("hasDied", 1);
+            if (PlayerPrefs.GetInt("diedscene") == PlayerPrefs.GetInt("spawnscene") && PlayerPrefs.GetInt("diedexp") != 0) Instantiate(dieExpPrefab, new Vector2(PlayerPrefs.GetFloat("diedx"), PlayerPrefs.GetFloat("diedy")), transform.rotation);
         }
+        PlayerPrefs.SetInt("hasDied", 1);
         fadeInOut.GetComponent<Animator>().SetBool("Clear", true);
     }
     void Update(){
@@ -272,6 +300,8 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetFloat("respawnx", restPos);
             PlayerPrefs.SetFloat("respawny", gameObject.transform.position.y);
             PlayerPrefs.SetInt("respawnface", 0);
+            PlayerPrefs.SetInt("respawnscene", benchScene);
+            PlayerPrefs.SetInt("restExp", PlayerPrefs.GetInt("exp"));
             animator.SetBool("isResting", true);
         }
         //We check if the player can absorb, if so it tries to absorb pressing F

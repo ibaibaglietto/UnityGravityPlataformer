@@ -18,7 +18,7 @@ public class KnightScript : MonoBehaviour
     //the velocity we want the enemy to move
     private Vector3 targetVelocity;
     //A boolean to see if the enemy is attacking
-    private bool attacking;
+    public bool attacking;
     //A float to see when was the last attack of the enemy
     private float lastAttack;
     //float to see the damage the enemy is receiving
