@@ -20,7 +20,7 @@ public class ComboDamageScript : MonoBehaviour
         {
             player.GetComponent<Animator>().SetBool("takeDamage", true);
             player.GetComponent<PlayerMovement>().takingDamage = true;
-            player.GetComponent<PlayerMovement>().lastDamage = Time.fixedTime - 1.8f;
+            player.GetComponent<PlayerMovement>().lastDamage = Time.fixedTime - 1.7f;
             player.GetComponent<PlayerMovement>().enemyDamage = 20.0f;
         }
     }

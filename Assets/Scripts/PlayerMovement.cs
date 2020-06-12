@@ -250,8 +250,12 @@ public class PlayerMovement : MonoBehaviour
                 gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("spawnx") + 4.4f, PlayerPrefs.GetFloat("spawny"));
             }            
             enteringScene = true;
+            Debug.Log(PlayerPrefs.GetInt("diedscene"));
+            Debug.Log(PlayerPrefs.GetInt("spawnscene"));
+            Debug.Log(PlayerPrefs.GetInt("diedexp"));
             if (PlayerPrefs.GetInt("diedscene") == PlayerPrefs.GetInt("spawnscene") && PlayerPrefs.GetInt("diedexp") != 0) Instantiate(dieExpPrefab, new Vector2(PlayerPrefs.GetFloat("diedx"), PlayerPrefs.GetFloat("diedy")), transform.rotation);
         }
+        
         PlayerPrefs.SetInt("hasDied", 1);
         fadeInOut.GetComponent<Animator>().SetBool("Clear", true);
     }
@@ -264,6 +268,11 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Closing game");
         }
         if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(PlayerPrefs.GetInt("respawnscene"));
+        if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.L))
+        {
+            PlayerPrefs.DeleteAll();
+            SceneManager.LoadScene(0);
+        }
         //stop throwing shurikens when the player is damaged or is dead
         if (animator.GetBool("isDead") || animator.GetBool("takeDamage"))
         {

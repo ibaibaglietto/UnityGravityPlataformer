@@ -47,6 +47,7 @@ public class ExitScript : MonoBehaviour
             PlayerPrefs.SetFloat("spawny", spawny);
             PlayerPrefs.SetInt("spawnface", spawnface);
             PlayerPrefs.SetFloat("mana", manaBar.GetComponent<ManaController>().mana);
+            PlayerPrefs.SetInt("spawnscene", scene);
             SceneManager.LoadScene(scene);
         }
     }
