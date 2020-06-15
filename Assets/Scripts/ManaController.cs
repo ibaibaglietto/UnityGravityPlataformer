@@ -17,6 +17,61 @@ public class ManaController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //We initialize all the playerprefs on the awake
+        //The health level 
+        if (!PlayerPrefs.HasKey("healthLevel")) PlayerPrefs.SetInt("healthLevel", 1);
+        //The mana level
+        if (!PlayerPrefs.HasKey("manaLevel")) PlayerPrefs.SetInt("manaLevel", 1);
+        //The dealt damage level
+        if (!PlayerPrefs.HasKey("dealtDamageLevel")) PlayerPrefs.SetInt("dealtDamageLevel", 1);
+        //The stamina level
+        if (!PlayerPrefs.HasKey("staminaLevel")) PlayerPrefs.SetInt("staminaLevel", 1);
+        //The healing level
+        if (!PlayerPrefs.HasKey("healingLevel")) PlayerPrefs.SetInt("healingLevel", 1);
+        //The damage resistance level
+        if (!PlayerPrefs.HasKey("damageResistanceLevel")) PlayerPrefs.SetInt("damageResistanceLevel", 1);
+        //The exp gaining level
+        if (!PlayerPrefs.HasKey("expGainingLevel")) PlayerPrefs.SetInt("expGainingLevel", 1);
+        //The total lvl of the player
+        if (!PlayerPrefs.HasKey("lvl")) PlayerPrefs.SetInt("lvl", 1);
+        //The needed exp to lvl up
+        if (!PlayerPrefs.HasKey("needExp")) PlayerPrefs.SetInt("needExp", 30);
+        //The exp 
+        if (!PlayerPrefs.HasKey("exp")) PlayerPrefs.SetInt("exp", 0);
+        //A float to save the current mana
+        if (!PlayerPrefs.HasKey("mana")) PlayerPrefs.SetFloat("mana", 0.0f);
+        //An int to see if the exp tutorial has been shown
+        if (!PlayerPrefs.HasKey("expTutorial")) PlayerPrefs.SetInt("expTutorial", 0);
+        //A float to save the x of the respawn point
+        if (!PlayerPrefs.HasKey("respawnx")) PlayerPrefs.SetFloat("respawnx", -49.826f);
+        //A float to save the y of the respawn point
+        if (!PlayerPrefs.HasKey("respawny")) PlayerPrefs.SetFloat("respawny", -3.367f);
+        //A float to save the side the player is facing on the respawn point. 0-> left, 1-> right
+        if (!PlayerPrefs.HasKey("respawnface")) PlayerPrefs.SetInt("respawnface", 1);
+        //An int to save the scene of the respawn point
+        if (!PlayerPrefs.HasKey("respawnscene")) PlayerPrefs.SetInt("respawnscene", 0);
+        //An int to save the number of the las dialogue
+        if (!PlayerPrefs.HasKey("lastDialogue")) PlayerPrefs.SetInt("lastDialogue", 0);
+        //0 -> scene change, 1 -> to respawn when loading the game, 2 -> Player died
+        if (!PlayerPrefs.HasKey("hasDied")) PlayerPrefs.SetInt("hasDied", 1);
+        //A float to save the x of the spawn point (when we move from one scene to another without dieing)
+        if (!PlayerPrefs.HasKey("spawnx")) PlayerPrefs.SetFloat("spawnx", -49.76f);
+        //A float to save the y of the spawn point (when we move from one scene to another without dieing)
+        if (!PlayerPrefs.HasKey("spawny")) PlayerPrefs.SetFloat("spawny", -3.367f);
+        //A float to save the side the player is facing on the spawn point. 0-> left, 1-> right
+        if (!PlayerPrefs.HasKey("spawnface")) PlayerPrefs.SetInt("spawnface", 0);
+        //A float to see if the player has fallen into the trap of level 1-2
+        if (!PlayerPrefs.HasKey("trap")) PlayerPrefs.SetInt("trap", 0);
+        //An int to save the exp the player has when resting
+        if (!PlayerPrefs.HasKey("restExp")) PlayerPrefs.SetInt("restExp", 0);
+        //A float to save the x where the player died
+        if (!PlayerPrefs.HasKey("diedx")) PlayerPrefs.SetFloat("diedx", 0);
+        //A float to save the y where the player died
+        if (!PlayerPrefs.HasKey("diedy")) PlayerPrefs.SetFloat("diedy", 0);
+        //An int to save the exp lost when dieing
+        if (!PlayerPrefs.HasKey("diedexp")) PlayerPrefs.SetInt("diedexp", 0);
+        //An int to save the scene the player died
+        if (!PlayerPrefs.HasKey("diedscene")) PlayerPrefs.SetInt("diedscene", 0);
         maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
         player = GameObject.Find("Player");
         manaBar = GameObject.Find("Playermana");

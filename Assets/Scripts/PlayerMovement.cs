@@ -125,6 +125,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject dieExpPrefab;
     //The scene that is being played
     public int scene;
+    //A boolean to see if the player has stamina
+    public bool hasStamina;
+    //An int to see how much stamina is being spent
+    public int staminaSpent;
 
     private void Start()
     {
@@ -136,6 +140,7 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
         //Initialize all the variables we are going to use to manage the actions of the player
         hasMana = true;
+        hasStamina = true;
         rotated = false;
         rotating = false;
         healing = false;
@@ -156,64 +161,9 @@ public class PlayerMovement : MonoBehaviour
         changingScene = false;
         enteringScene = false;
         benchScene = 0;
+        staminaSpent = 0;
         //Save the gameobject of the fadeInOut
         fadeInOut = GameObject.Find("FadeInOut");
-        //PlayerPrefs.DeleteAll();
-        //Check if the levels are initialized
-        //The health level 
-        if (!PlayerPrefs.HasKey("healthLevel")) PlayerPrefs.SetInt("healthLevel", 1);
-        //The mana level
-        if (!PlayerPrefs.HasKey("manaLevel")) PlayerPrefs.SetInt("manaLevel", 1);
-        //The dealt damage level
-        if (!PlayerPrefs.HasKey("dealtDamageLevel")) PlayerPrefs.SetInt("dealtDamageLevel", 1);
-        //The dash level
-        if (!PlayerPrefs.HasKey("dashLevel")) PlayerPrefs.SetInt("dashLevel", 1);
-        //The healing level
-        if (!PlayerPrefs.HasKey("healingLevel")) PlayerPrefs.SetInt("healingLevel", 1);
-        //The damage resistance level
-        if (!PlayerPrefs.HasKey("damageResistanceLevel")) PlayerPrefs.SetInt("damageResistanceLevel", 1);
-        //The exp gaining level
-        if (!PlayerPrefs.HasKey("expGainingLevel")) PlayerPrefs.SetInt("expGainingLevel", 1);
-        //The total lvl of the player
-        if (!PlayerPrefs.HasKey("lvl")) PlayerPrefs.SetInt("lvl", 1);
-        //The needed exp to lvl up
-        if (!PlayerPrefs.HasKey("needExp")) PlayerPrefs.SetInt("needExp", 30);
-        //The exp 
-        if (!PlayerPrefs.HasKey("exp")) PlayerPrefs.SetInt("exp", 0);
-        //A float to save the current mana
-        if (!PlayerPrefs.HasKey("mana")) PlayerPrefs.SetFloat("mana", 0.0f);
-        //An int to see if the exp tutorial has been shown
-        if (!PlayerPrefs.HasKey("expTutorial")) PlayerPrefs.SetInt("expTutorial", 0);
-        //A float to save the x of the respawn point
-        if (!PlayerPrefs.HasKey("respawnx")) PlayerPrefs.SetFloat("respawnx", -49.826f);
-        //A float to save the y of the respawn point
-        if (!PlayerPrefs.HasKey("respawny")) PlayerPrefs.SetFloat("respawny", -3.367f);
-        //A float to save the side the player is facing on the respawn point. 0-> left, 1-> right
-        if (!PlayerPrefs.HasKey("respawnface")) PlayerPrefs.SetInt("respawnface", 1);
-        //An int to save the scene of the respawn point
-        if (!PlayerPrefs.HasKey("respawnscene")) PlayerPrefs.SetInt("respawnscene", 0);
-        //An int to save the number of the las dialogue
-        if (!PlayerPrefs.HasKey("lastDialogue")) PlayerPrefs.SetInt("lastDialogue", 0);
-        //0 -> scene change, 1 -> to respawn when loading the game, 2 -> Player died
-        if (!PlayerPrefs.HasKey("hasDied")) PlayerPrefs.SetInt("hasDied", 1);
-        //A float to save the x of the spawn point (when we move from one scene to another without dieing)
-        if (!PlayerPrefs.HasKey("spawnx")) PlayerPrefs.SetFloat("spawnx", -49.826f);
-        //A float to save the y of the spawn point (when we move from one scene to another without dieing)
-        if (!PlayerPrefs.HasKey("spawny")) PlayerPrefs.SetFloat("spawny", -3.367f);
-        //A float to save the side the player is facing on the spawn point. 0-> left, 1-> right
-        if (!PlayerPrefs.HasKey("spawnface")) PlayerPrefs.SetInt("spawnface", 0);
-        //A float to see if the player has fallen into the trap of level 1-2
-        if (!PlayerPrefs.HasKey("trap")) PlayerPrefs.SetInt("trap", 0);
-        //An int to save the exp the player has when resting
-        if (!PlayerPrefs.HasKey("restExp")) PlayerPrefs.SetInt("restExp", 0);
-        //A float to save the x where the player died
-        if (!PlayerPrefs.HasKey("diedx")) PlayerPrefs.SetFloat("diedx",0);
-        //A float to save the y where the player died
-        if (!PlayerPrefs.HasKey("diedy")) PlayerPrefs.SetFloat("diedy", 0);
-        //An int to save the exp lost when dieing
-        if (!PlayerPrefs.HasKey("diedexp")) PlayerPrefs.SetInt("diedexp", 0);
-        //An int to save the scene the player died
-        if (!PlayerPrefs.HasKey("diedscene")) PlayerPrefs.SetInt("diedscene", 0);
         //We put the player and the camera on their starting position
         if (PlayerPrefs.GetInt("hasDied") != 0)
         {
@@ -433,8 +383,8 @@ public class PlayerMovement : MonoBehaviour
             rotating = false;
             rotated = false;
         }
-        if (Time.fixedTime - lastDash <= (1 / Mathf.Sqrt(PlayerPrefs.GetInt("dashLevel"))) && gameObject.GetComponent<CharacterController2D>().m_Grounded) wasGround = true;
-        if (Time.fixedTime - lastDash > (1 / Mathf.Sqrt(PlayerPrefs.GetInt("dashLevel"))) && (gameObject.GetComponent<CharacterController2D>().m_Grounded || wasGround)) canDash = true;
+        if (Time.fixedTime - lastDash <= 0.5f && gameObject.GetComponent<CharacterController2D>().m_Grounded) wasGround = true;
+        if (Time.fixedTime - lastDash > 0.5f && (gameObject.GetComponent<CharacterController2D>().m_Grounded || wasGround)) canDash = true;
         //We activate/deactivate the healing using the R button
         if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene) healing = !healing;
         //We dash using the right button of the mouse
@@ -452,17 +402,17 @@ public class PlayerMovement : MonoBehaviour
             lastDash = Time.fixedTime;
             canDash = false;
             wasGround = false;
-
+            staminaSpent = 5;
         }
 
         //We attack using the left button of the mouse, choosing the side of the attack depending on where is the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina)
         {            
             attacking = true;
             animator.SetBool("isAttacking", true);
             animator.SetBool("isSpinning", false);
         }
-        //We throw shurikens using the right click of the mouse. 
+        //We throw shurikens using the E key. 
         if (!changingGravity && Input.GetKey(KeyCode.E) && !dashing && !animator.GetBool("isDead") && gameObject.GetComponent<CharacterController2D>().m_Grounded && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene)
         {
             attacking = true;
@@ -789,7 +739,12 @@ public class PlayerMovement : MonoBehaviour
     //function to end the attack
     public void endAttack()
     {
-        attacking = animator.GetBool("isAttacking");
+        if (hasStamina) attacking = animator.GetBool("isAttacking");
+        else
+        {
+            attacking = false;
+            animator.SetBool("isAttacking", false);
+        }
     }
     //function to end the spin damage animation
     public void endSpin()

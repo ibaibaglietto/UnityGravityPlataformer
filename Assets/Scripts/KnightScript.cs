@@ -45,6 +45,10 @@ public class KnightScript : MonoBehaviour
     public int combo;
     //The time the shielding started
     private float shieldTime;
+    //A vector3 to save the starting pos
+    public Vector3 startPos;
+    //A boolean to save where is looking the bandit when spawned. 0->left, 1-> right
+    public int looking;
 
 
     // Start is called before the first frame update
@@ -64,24 +68,41 @@ public class KnightScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f && !fighting && !player.GetComponent<PlayerMovement>().talking)
+        if (player.GetComponent<PlayerMovement>().sleeping && gameObject.transform.position != startPos)
         {
-            fighting = true;
-            player.GetComponent<PlayerMovement>().attacked += 1;
-        }
-        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && fighting && !gameObject.GetComponent<Animator>().GetBool("isDead") && !player.GetComponent<PlayerMovement>().talking)
-        {
+            health = 120.0f;
+            gameObject.GetComponent<Animator>().SetBool("isDead", false);
+            gameObject.transform.position = startPos;
+            prevPos = gameObject.transform.position;
+            attacking = false;
+            gameObject.GetComponent<Animator>().SetBool("isTakingDamage", false);
+            gameObject.GetComponent<Animator>().SetBool("isAttacking", false);
             fighting = false;
-            player.GetComponent<PlayerMovement>().attacked -= 1;
-        }
-        else if (player.GetComponent<PlayerMovement>().talking) fighting = false;
+            if (!lookingRight && looking != 0) Flip();
+            else if (lookingRight && looking != 1) Flip();
 
-        if (!moving)
-        {
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-            gameObject.transform.position = prevPos;
         }
-        prevPos = gameObject.transform.position;
+        else
+        {
+            if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f && !fighting && !player.GetComponent<PlayerMovement>().talking)
+            {
+                fighting = true;
+                player.GetComponent<PlayerMovement>().attacked += 1;
+            }
+            else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && fighting && !gameObject.GetComponent<Animator>().GetBool("isDead") && !player.GetComponent<PlayerMovement>().talking)
+            {
+                fighting = false;
+                player.GetComponent<PlayerMovement>().attacked -= 1;
+            }
+            else if (player.GetComponent<PlayerMovement>().talking) fighting = false;
+
+            if (!moving)
+            {
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                gameObject.transform.position = prevPos;
+            }
+            prevPos = gameObject.transform.position;
+        }        
     }
 
     void FixedUpdate()

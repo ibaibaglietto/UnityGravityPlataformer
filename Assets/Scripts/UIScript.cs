@@ -23,8 +23,8 @@ public class UIScript : MonoBehaviour
     private Text manaLevel;
     //The dealt damage level
     private Text dealtDamageLevel;
-    //The dash level
-    private Text dashLevel;
+    //The stamina level
+    private Text staminaLevel;
     //The healing level
     private Text healingLevel;
     //The damage resistance level
@@ -43,8 +43,8 @@ public class UIScript : MonoBehaviour
     private GameObject manaLevelMinus;
     //The dealt damage level minus button
     private GameObject dealtDamageLevelMinus;
-    //The dash level minus button
-    private GameObject dashLevelMinus;
+    //The stamina level minus button
+    private GameObject staminaLevelMinus;
     //The healing level minus button
     private GameObject healingLevelMinus;
     //The damage resistance level minus button
@@ -57,8 +57,8 @@ public class UIScript : MonoBehaviour
     private Text manaLevelNext;
     //The next dealt damage
     private Text dealtDamageLevelNext;
-    //The next dash cooldown
-    private Text dashLevelNext;
+    //The next max stamina
+    private Text staminaLevelNext;
     //The next healing per second
     private Text healingLevelNext;
     //The next damage resistance
@@ -69,6 +69,8 @@ public class UIScript : MonoBehaviour
     private GameObject healthBar;
     //The manabar
     private GameObject manaBar;
+    //The staminabar
+    private GameObject staminaBar;
     //The light of the player
     private Light2D playerLight;
 
@@ -85,14 +87,14 @@ public class UIScript : MonoBehaviour
         healthLevel = GameObject.Find("HealthLevel").GetComponent<Text>();
         manaLevel = GameObject.Find("ManaLevel").GetComponent<Text>();
         dealtDamageLevel = GameObject.Find("DamageDealtLevel").GetComponent<Text>();
-        dashLevel = GameObject.Find("DashLevel").GetComponent<Text>();
+        staminaLevel = GameObject.Find("StaminaLevel").GetComponent<Text>();
         healingLevel = GameObject.Find("HealingLevel").GetComponent<Text>();
         damageResistanceLevel = GameObject.Find("DamageResistanceLevel").GetComponent<Text>();
         expGainingLevel = GameObject.Find("ExpGainLevel").GetComponent<Text>();
         healthLevelMinus = GameObject.Find("HealthMinus");
         manaLevelMinus = GameObject.Find("ManaMinus");
         dealtDamageLevelMinus = GameObject.Find("DamageDealtMinus");
-        dashLevelMinus = GameObject.Find("DashMinus");
+        staminaLevelMinus = GameObject.Find("StaminaMinus");
         healingLevelMinus = GameObject.Find("HealingMinus");
         damageResistanceLevelMinus = GameObject.Find("DamageResistanceMinus");
         expGainingLevelMinus = GameObject.Find("ExpGainMinus");
@@ -102,14 +104,36 @@ public class UIScript : MonoBehaviour
         healthLevelNext = GameObject.Find("HealthDescrpitionNumb").GetComponent<Text>();
         manaLevelNext = GameObject.Find("ManaDescrpitionNumb").GetComponent<Text>();
         dealtDamageLevelNext = GameObject.Find("DamageDealtDescrpitionNumb").GetComponent<Text>();
-        dashLevelNext = GameObject.Find("DashDescrpitionNumb").GetComponent<Text>();
+        staminaLevelNext = GameObject.Find("StaminaDescrpitionNumb").GetComponent<Text>();
         healingLevelNext = GameObject.Find("HealingDescrpitionNumb").GetComponent<Text>();
         damageResistanceLevelNext = GameObject.Find("DamageResistanceDescrpitionNumb").GetComponent<Text>();
         expGainingLevelNext = GameObject.Find("ExpGainDescrpitionNumb").GetComponent<Text>();
         healthBar = GameObject.Find("Healthbar");
         manaBar = GameObject.Find("Manabar");
+        staminaBar = GameObject.Find("Staminabar");
         playerLight = player.transform.GetChild(1).gameObject.GetComponent<Light2D>();
         lvlUp.SetActive(false);
+        healthBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55) * 0.002f + 0.034f, 0.9644875f);
+        healthBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        if (healthBar.GetComponent<PlayerLifeController>().maxHealth != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55)
+        {
+            healthBar.GetComponent<PlayerLifeController>().health += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55) - healthBar.GetComponent<PlayerLifeController>().maxHealth;
+            healthBar.GetComponent<PlayerLifeController>().maxHealth = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55;
+        }
+        manaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5) * 0.002f + 0.034f, 0.9196156f);
+        manaBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        if (manaBar.GetComponent<ManaController>().maxMana != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5)
+        {
+            manaBar.GetComponent<ManaController>().mana += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5) - manaBar.GetComponent<ManaController>().maxMana;
+            manaBar.GetComponent<ManaController>().maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
+        }
+        staminaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f) * 0.002f + 0.034f, 0.8923525f);
+        staminaBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        if (staminaBar.GetComponent<StaminaController>().maxStamina != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f)
+        {
+            staminaBar.GetComponent<StaminaController>().stamina += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f) - staminaBar.GetComponent<StaminaController>().maxStamina;
+            staminaBar.GetComponent<StaminaController>().maxStamina = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f;
+        }
     }
 
 
@@ -121,7 +145,7 @@ public class UIScript : MonoBehaviour
             healthLevel.text = PlayerPrefs.GetInt("healthLevel").ToString();
             manaLevel.text = PlayerPrefs.GetInt("manaLevel").ToString();
             dealtDamageLevel.text = PlayerPrefs.GetInt("dealtDamageLevel").ToString();
-            dashLevel.text = PlayerPrefs.GetInt("dashLevel").ToString();
+            staminaLevel.text = PlayerPrefs.GetInt("staminaLevel").ToString();
             healingLevel.text = PlayerPrefs.GetInt("healingLevel").ToString();
             damageResistanceLevel.text = PlayerPrefs.GetInt("damageResistanceLevel").ToString();
             expGainingLevel.text = PlayerPrefs.GetInt("expGainingLevel").ToString();
@@ -131,7 +155,7 @@ public class UIScript : MonoBehaviour
             healthLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(healthLevel.text)) + 55).ToString("F0");
             manaLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(manaLevel.text)) + 5).ToString("F0");
             dealtDamageLevelNext.text = (Mathf.Sqrt(100 * int.Parse(dealtDamageLevel.text)) + 10).ToString("F0");
-            dashLevelNext.text = (1 / Mathf.Sqrt(int.Parse(dashLevel.text))).ToString("F2");
+            staminaLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f).ToString("F0");
             healingLevelNext.text = (Mathf.Sqrt(2 * int.Parse(healingLevel.text)) + 1.1f).ToString("F1");
             damageResistanceLevelNext.text = (Mathf.Sqrt(150 * int.Parse(damageResistanceLevel.text)) - 12.247f).ToString("F0");
             expGainingLevelNext.text = (1.0f + (int.Parse(expGainingLevel.text)-1.0f)*0.1f).ToString("F1");
@@ -139,7 +163,7 @@ public class UIScript : MonoBehaviour
             healthLevelMinus.SetActive(false);
             manaLevelMinus.SetActive(false);
             dealtDamageLevelMinus.SetActive(false);
-            dashLevelMinus.SetActive(false);
+            staminaLevelMinus.SetActive(false);
             healingLevelMinus.SetActive(false);
             damageResistanceLevelMinus.SetActive(false);
             expGainingLevelMinus.SetActive(false);
@@ -184,9 +208,9 @@ public class UIScript : MonoBehaviour
             }
             else if (atrib == 4)
             {
-                dashLevel.text = (int.Parse(dashLevel.text) + 1).ToString();
-                dashLevelMinus.SetActive(true);
-                dashLevelNext.text = (1 / Mathf.Sqrt(int.Parse(dashLevel.text))).ToString("F2");
+                staminaLevel.text = (int.Parse(staminaLevel.text) + 1).ToString();
+                staminaLevelMinus.SetActive(true);
+                staminaLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(staminaLevel.text))/2 + 2.639f).ToString("F0");
             }
             else if (atrib == 5)
             {
@@ -233,9 +257,9 @@ public class UIScript : MonoBehaviour
         }
         else if (atrib == 4)
         {
-            dashLevel.text = (int.Parse(dashLevel.text) - 1).ToString();
-            dashLevelNext.text = (1 / Mathf.Sqrt(int.Parse(dashLevel.text))).ToString("F2");
-            if (int.Parse(dashLevel.text) == PlayerPrefs.GetInt("dashLevel")) dashLevelMinus.SetActive(false);
+            staminaLevel.text = (int.Parse(staminaLevel.text) - 1).ToString();
+            staminaLevelNext.text = (Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f).ToString("F0");
+            if (int.Parse(staminaLevel.text) == PlayerPrefs.GetInt("staminaLevel")) staminaLevelMinus.SetActive(false);
         }
         else if (atrib == 5)
         {
@@ -265,13 +289,14 @@ public class UIScript : MonoBehaviour
         PlayerPrefs.SetInt("healthLevel", int.Parse(healthLevel.text));
         PlayerPrefs.SetInt("manaLevel", int.Parse(manaLevel.text));
         PlayerPrefs.SetInt("dealtDamageLevel", int.Parse(dealtDamageLevel.text));
-        PlayerPrefs.SetInt("dashLevel", int.Parse(dashLevel.text));
+        PlayerPrefs.SetInt("staminaLevel", int.Parse(staminaLevel.text));
         PlayerPrefs.SetInt("healingLevel", int.Parse(healingLevel.text));
         PlayerPrefs.SetInt("damageResistanceLevel", int.Parse(damageResistanceLevel.text));
         PlayerPrefs.SetInt("expGainingLevel", int.Parse(expGainingLevel.text));
         PlayerPrefs.SetInt("lvl", int.Parse(lvl.text));
         PlayerPrefs.SetInt("needExp", int.Parse(needExp.text));
         PlayerPrefs.SetInt("exp", int.Parse(lvlUpExp.text));
+        PlayerPrefs.SetInt("restExp", PlayerPrefs.GetInt("exp"));
         player.GetComponent<PlayerMovement>().sleeping = false;
         healthBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(healthLevel.text)) + 55)*0.002f+0.034f, 0.9644875f);
         healthBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
@@ -286,7 +311,14 @@ public class UIScript : MonoBehaviour
         {
             manaBar.GetComponent<ManaController>().mana += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5) - manaBar.GetComponent<ManaController>().maxMana;
             manaBar.GetComponent<ManaController>().maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
-        }        
+        }
+        staminaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f) * 0.002f + 0.034f, 0.8923525f);
+        staminaBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        if (staminaBar.GetComponent<StaminaController>().maxStamina != Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f)
+        {
+            staminaBar.GetComponent<StaminaController>().stamina += (Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f) - staminaBar.GetComponent<StaminaController>().maxStamina;
+            staminaBar.GetComponent<StaminaController>().maxStamina = Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f;
+        }
         player.GetComponent<Animator>().SetBool("isResting", false);
         lvlUp.SetActive(false);
     }

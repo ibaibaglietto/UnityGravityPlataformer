@@ -16,6 +16,7 @@ public class SlashScript : MonoBehaviour
         player = GameObject.Find("Player");
         parryTime = Time.fixedTime - 0.6f;
         damageDealt = Mathf.Sqrt(100 * PlayerPrefs.GetInt("dealtDamageLevel")) + 10;
+        player.GetComponent<PlayerMovement>().staminaSpent = 10;
     }
 
     public void endSlash()

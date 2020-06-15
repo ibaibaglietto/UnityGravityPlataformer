@@ -34,6 +34,10 @@ public class HeavyBanditScript : MonoBehaviour
     public float firstDamage;
     //An int to see the number of the strikes of the combo (player)
     public int combo;
+    //A vector3 to save the starting pos
+    public Vector3 startPos;
+    //A boolean to save where is looking the bandit when spawned. 0->left, 1-> right
+    public int looking;
 
 
     // Start is called before the first frame update
@@ -51,28 +55,44 @@ public class HeavyBanditScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 1.0f && !gameObject.GetComponent<Animator>().GetBool("IsFighting") && !player.GetComponent<PlayerMovement>().talking)
+        if(player.GetComponent<PlayerMovement>().sleeping && gameObject.transform.position != startPos)
         {
-            gameObject.GetComponent<Animator>().SetBool("IsFighting", true);
-            player.GetComponent<PlayerMovement>().attacked += 1;
-        }
-        else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 1.0f && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead") && !player.GetComponent<PlayerMovement>().talking)
-        {
+            health = 120.0f;
+            gameObject.GetComponent<Animator>().SetBool("IsDead", false);
+            gameObject.transform.position = startPos;
+            prevPos = gameObject.transform.position;
+            attacking = false;
+            gameObject.GetComponent<Animator>().SetBool("TakeDamage", false);
+            gameObject.GetComponent<Animator>().SetBool("IsAttacking", false);
             gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
-            player.GetComponent<PlayerMovement>().attacked -= 1;
+            if (lookingLeft && looking != 0) Flip();
+            else if (!lookingLeft && looking != 1) Flip();
         }
-        else if (player.GetComponent<PlayerMovement>().talking && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
+        else
         {
-            gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
-            player.GetComponent<PlayerMovement>().attacked -= 1;
-        }
+            if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 1.0f && !gameObject.GetComponent<Animator>().GetBool("IsFighting") && !player.GetComponent<PlayerMovement>().talking)
+            {
+                gameObject.GetComponent<Animator>().SetBool("IsFighting", true);
+                player.GetComponent<PlayerMovement>().attacked += 1;
+            }
+            else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 1.0f && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead") && !player.GetComponent<PlayerMovement>().talking)
+            {
+                gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
+                player.GetComponent<PlayerMovement>().attacked -= 1;
+            }
+            else if (player.GetComponent<PlayerMovement>().talking && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
+            {
+                gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
+                player.GetComponent<PlayerMovement>().attacked -= 1;
+            }
 
-        if (!moving)
-        {
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-            gameObject.transform.position = prevPos;
-        }
-        prevPos = gameObject.transform.position;
+            if (!moving)
+            {
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                gameObject.transform.position = prevPos;
+            }
+            prevPos = gameObject.transform.position;
+        }        
     }
 
     void FixedUpdate()
