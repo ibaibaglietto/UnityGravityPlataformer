@@ -6,7 +6,8 @@ public class ComboDamageScript : MonoBehaviour
 {
     //The player
     private GameObject player;
-
+    //THe damage
+    public float damage;
 
     void Start()
     {
@@ -21,7 +22,7 @@ public class ComboDamageScript : MonoBehaviour
             player.GetComponent<Animator>().SetBool("takeDamage", true);
             player.GetComponent<PlayerMovement>().takingDamage = true;
             player.GetComponent<PlayerMovement>().lastDamage = Time.fixedTime - 1.7f;
-            player.GetComponent<PlayerMovement>().enemyDamage = 20.0f;
+            player.GetComponent<PlayerMovement>().enemyDamage = damage;
         }
     }
 

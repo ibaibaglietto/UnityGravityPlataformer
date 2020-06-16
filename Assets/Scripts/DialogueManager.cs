@@ -38,25 +38,25 @@ public class DialogueManager : MonoBehaviour
             {
                 player.GetComponent<PlayerMovement>().convGravity = true;
                 player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                player.GetComponent<PlayerMovement>().changeGravity(true, 0.1f, 0.0f, 0.0f, 0.0f);
+                player.GetComponent<PlayerMovement>().changeGravity(true, 0.5f, 0.0f, 0.0f, 0.0f);
             }
             else if (gravity1 == 1)
             {
                 player.GetComponent<PlayerMovement>().convGravity = true;
                 player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.1f, 0.0f, 0.0f);
+                player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.5f, 0.0f, 0.0f);
             }
             else if (gravity1 == 2)
             {
                 player.GetComponent<PlayerMovement>().convGravity = true;
                 player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.0f, 0.1f, 0.0f);
+                player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.0f, 0.5f, 0.0f);
             }
             else if (gravity1 == 3)
             {
                 player.GetComponent<PlayerMovement>().convGravity = true;
                 player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.0f, 0.0f, 0.1f);
+                player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.0f, 0.0f, 0.5f);
             }
         }
 

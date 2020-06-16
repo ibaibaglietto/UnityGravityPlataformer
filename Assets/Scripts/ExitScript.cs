@@ -13,15 +13,20 @@ public class ExitScript : MonoBehaviour
     public int exitSide; //0 left, 1 right
     private GameObject manaBar;
     private GameObject player;
+    private GameObject healthBar;
     //The gameobject of the black image to fade in and out
     private GameObject fadeInOut;
+    //A boolean to see if the player entered this exit
+    private bool thisExit;
 
     private void Start()
     {
         manaBar = GameObject.Find("Manabar");
+        healthBar = GameObject.Find("Healthbar");
         player = GameObject.Find("Player");
         //Save the gameobject of the fadeInOut
         fadeInOut = GameObject.Find("FadeInOut");
+        thisExit = false;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -35,19 +40,21 @@ public class ExitScript : MonoBehaviour
             if (player.GetComponent<CharacterController2D>().m_FacingRight && exitSide == 0) player.GetComponent<CharacterController2D>().Flip();
             else if (!player.GetComponent<CharacterController2D>().m_FacingRight && exitSide == 1) player.GetComponent<CharacterController2D>().Flip();
             player.GetComponent<PlayerMovement>().changingScene = true;
-        }        
-    }
-
-    private void Update()
-    {
-        if (player.GetComponent<PlayerMovement>().changingScene && fadeInOut.GetComponent<Image>().color.a == 1)
-        {
+            thisExit = true;
             PlayerPrefs.SetInt("hasDied", 0);
             PlayerPrefs.SetFloat("spawnx", spawnx);
             PlayerPrefs.SetFloat("spawny", spawny);
             PlayerPrefs.SetInt("spawnface", spawnface);
             PlayerPrefs.SetFloat("mana", manaBar.GetComponent<ManaController>().mana);
+            PlayerPrefs.SetFloat("health", healthBar.GetComponent<PlayerLifeController>().health);
             PlayerPrefs.SetInt("spawnscene", scene);
+        }        
+    }
+
+    private void Update()
+    {
+        if (player.GetComponent<PlayerMovement>().changingScene && fadeInOut.GetComponent<Image>().color.a == 1 && thisExit)
+        {
             SceneManager.LoadScene(scene);
         }
     }

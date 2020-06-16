@@ -19,13 +19,21 @@ public class PlayerLifeController : MonoBehaviour
     private GameObject manaBar;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        //The health level 
+        if (!PlayerPrefs.HasKey("healthLevel")) PlayerPrefs.SetInt("healthLevel", 1);
         maxHealth = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55;
+        //A float to save the current health
+        if (!PlayerPrefs.HasKey("health")) PlayerPrefs.SetFloat("health", maxHealth);
         player = GameObject.Find("Player");
         healthBar = GameObject.Find("Playerhealth");
         manaBar = GameObject.Find("Manabar");
-        health = maxHealth;
+        if (PlayerPrefs.GetInt("hasDied") == 0 || !PlayerPrefs.HasKey("hasDied"))
+        {
+            health = PlayerPrefs.GetFloat("health");
+        }
+        else health = maxHealth;
     }
 
     // Update is called once per frame
@@ -43,10 +51,12 @@ public class PlayerLifeController : MonoBehaviour
             player.GetComponent<PlayerMovement>().enemyDamage = 0.0f;
             if (health < maxHealth && player.GetComponent<PlayerMovement>().hasMana && player.GetComponent<PlayerMovement>().healing)
             {
-                manaBar.GetComponent<ManaController>().mana -= (Mathf.Sqrt(2 * PlayerPrefs.GetInt("healingLevel")) + 1.1f)/50f;
+                manaBar.GetComponent<ManaController>().mana -= (Mathf.Sqrt(2 * PlayerPrefs.GetInt("healingLevel")) + 1.1f) / 50f;
                 health += (Mathf.Sqrt(2 * PlayerPrefs.GetInt("healingLevel")) + 1.1f) / 50f;
             }
-            else if (health < maxHealth && player.GetComponent<PlayerMovement>().sleeping) health += 0.2f;
+            else if (health >= maxHealth && player.GetComponent<PlayerMovement>().healing) player.GetComponent<PlayerMovement>().healing = false;
+
+            if (health < maxHealth && player.GetComponent<PlayerMovement>().sleeping) health += 0.2f;
             if (health > maxHealth) health = maxHealth;
         }
         else if(!playerAnimator.GetBool("isDead"))

@@ -88,7 +88,7 @@ public class HeavyBanditScript : MonoBehaviour
 
             if (!moving)
             {
-                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
                 gameObject.transform.position = prevPos;
             }
             prevPos = gameObject.transform.position;
@@ -211,7 +211,9 @@ public class HeavyBanditScript : MonoBehaviour
     //function to give exp to the player
     public void giveExp()
     {
-        PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + (int)(30.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
+        PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + (int)(60.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
         if(PlayerPrefs.GetInt("expTutorial") == 0) PlayerPrefs.SetInt("expTutorial", 1);
     }
+
+
 }

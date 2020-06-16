@@ -178,6 +178,7 @@ public class PlayerMovement : MonoBehaviour
                 PlayerPrefs.SetInt("diedexp", PlayerPrefs.GetInt("exp"));
                 PlayerPrefs.SetInt("exp", 0);
                 PlayerPrefs.SetInt("restExp", 0);
+                if (PlayerPrefs.GetInt("dieTutorial") == 0) PlayerPrefs.SetInt("dieTutorial", 1);
             }
             else PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("restExp"));
             if (PlayerPrefs.GetInt("diedscene") == PlayerPrefs.GetInt("respawnscene") && PlayerPrefs.GetInt("diedexp") != 0)
@@ -200,9 +201,6 @@ public class PlayerMovement : MonoBehaviour
                 gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("spawnx") + 4.4f, PlayerPrefs.GetFloat("spawny"));
             }            
             enteringScene = true;
-            Debug.Log(PlayerPrefs.GetInt("diedscene"));
-            Debug.Log(PlayerPrefs.GetInt("spawnscene"));
-            Debug.Log(PlayerPrefs.GetInt("diedexp"));
             if (PlayerPrefs.GetInt("diedscene") == PlayerPrefs.GetInt("spawnscene") && PlayerPrefs.GetInt("diedexp") != 0) Instantiate(dieExpPrefab, new Vector2(PlayerPrefs.GetFloat("diedx"), PlayerPrefs.GetFloat("diedy")), transform.rotation);
         }
         
@@ -264,7 +262,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isResting", true);
         }
         //We check if the player can absorb, if so it tries to absorb pressing F
-        if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking && !changingScene && !enteringScene)
+        if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking && !changingScene && !enteringScene && attacked == 0)
         {
             if (canAbsorb && !fullMana) isAbsorbing = true;
             else isAbsorbing = false;
@@ -388,7 +386,7 @@ public class PlayerMovement : MonoBehaviour
         //We activate/deactivate the healing using the R button
         if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene) healing = !healing;
         //We dash using the right button of the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina)
         {
             animator.SetBool("isDashing", true);
             if (gravity == 0 && gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(3200f, 0));
@@ -792,6 +790,7 @@ public class PlayerMovement : MonoBehaviour
     public void dashShadow()
     {
         dashing = true;
+        Physics2D.IgnoreLayerCollision(8,9,true);
     }
 
     //function to end the dash
@@ -799,6 +798,7 @@ public class PlayerMovement : MonoBehaviour
     {
         dashing = false;
         animator.SetBool("isDashing", false);
+        Physics2D.IgnoreLayerCollision(8, 9, false);
     }
 
     //function to end the getting damage state
@@ -935,4 +935,5 @@ public class PlayerMovement : MonoBehaviour
     {
         tryAbsorb = false;
     }
+
 }

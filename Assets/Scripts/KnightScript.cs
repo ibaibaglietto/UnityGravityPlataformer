@@ -249,7 +249,6 @@ public class KnightScript : MonoBehaviour
     //function to give exp to the player
     public void giveExp()
     {
-        Debug.Log((int)(60.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
-        PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + (int)(60.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
+        PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + (int)(100.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
     }
 }

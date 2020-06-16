@@ -4583,7 +4583,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1444185584}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &368702701
 MonoBehaviour:
@@ -4749,7 +4749,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1444185584}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &375200650
 MonoBehaviour:
@@ -4975,6 +4975,7 @@ MonoBehaviour:
     - Finally some light I can use to change the laws of gravity, **** you Newton!
     - (Press and mantain F to absorb light. Blue torches will recharge when some
       time passes.)
+    - (You can't absorb light when enemies are attacking you).
     - (Press Q to enter the gravity changing state. You can change gravity with WASD).
     - (Pressing Left Shift while you press the other buttons you can change the gravity
       faster).
@@ -5809,7 +5810,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1444185584}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &462260624
 MonoBehaviour:
@@ -6694,7 +6695,8 @@ MonoBehaviour:
       of this tutorial.
     - Second, to the right, a way flooded by enemies that has no price at the end.
     - Seriously, take the way to the left and then jump to the right using the dash.
-    - (To use the dash press the right button of the mouse).
+    - (To use the dash press the right button of the mouse.)
+    - (While you are dashing you can pass through enemies).
   gravity1: 0
   gravity2: 0
   dialogueNumber: 2
@@ -13957,6 +13959,7 @@ Transform:
   - {fileID: 563923818}
   - {fileID: 394966352}
   - {fileID: 634774632}
+  - {fileID: 1536853580}
   - {fileID: 2124666369}
   - {fileID: 2123189409}
   - {fileID: 375200649}
@@ -14361,6 +14364,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536234048}
   m_CullTransparentMesh: 0
+--- !u!1 &1536853579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1536853580}
+  - component: {fileID: 1536853581}
+  m_Layer: 0
+  m_Name: DieDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1536853580
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536853579}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -19.692646, y: 11.546854, z: -79.136604}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1444185584}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1536853581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536853579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3134501db5e7f4283c1c36b2153fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    name: (...)
+    sentences:
+    - Did I just die?
+    - ...............................
+    - Let's continue as if nothing happened.
+    - (When you die you will lose all the vital light you gained)
+    - (You can recover it breaking the shining barrel that appeared where you died
+      with a normal attack)
+    - (If you die again the vital light will be lost forever. If you died with 0
+      vital light, nothing will appear)
+  gravity1: 6
+  gravity2: 6
+  dialogueNumber: 0
 --- !u!1001 &1547594175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16205,7 +16265,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1444185584}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1769168106
 MonoBehaviour:
@@ -17722,7 +17782,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1444185584}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1922748452
 MonoBehaviour:
@@ -17746,6 +17806,7 @@ MonoBehaviour:
       for small people...
     - After a littel break I should exit this pathetic tutorial going to the top-right
       corner.
+    - (Enemies will respawn when you rest)
   gravity1: 0
   gravity2: 0
   dialogueNumber: 7
@@ -19346,7 +19407,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1444185584}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2123189410
 MonoBehaviour:
@@ -19479,5 +19540,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1444185584}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

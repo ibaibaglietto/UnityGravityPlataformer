@@ -21,7 +21,7 @@ public class BossHealthController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 1000.0f;
+        maxHealth = 1500.0f;
         king = GameObject.Find("King");
         healthBar = GameObject.Find("Bosshealth");
         backBar = GameObject.Find("BossHealthBar");
@@ -48,7 +48,7 @@ public class BossHealthController : MonoBehaviour
         {
             health -= king.GetComponent<KingScript>().damage;
             king.GetComponent<KingScript>().damage = 0f;
-            if (health < 500.0f && !king.GetComponent<KingScript>().fase2) king.GetComponent<Animator>().SetBool("EnterFase2", true);
+            if (health < 750.0f && !king.GetComponent<KingScript>().fase2) king.GetComponent<Animator>().SetBool("EnterFase2", true);
         }
         else
         {

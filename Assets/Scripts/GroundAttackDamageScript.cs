@@ -21,7 +21,7 @@ public class GroundAttackDamageScript : MonoBehaviour
             player.GetComponent<Animator>().SetBool("takeDamage", true);
             player.GetComponent<PlayerMovement>().takingDamage = true;
             player.GetComponent<PlayerMovement>().lastDamage = Time.fixedTime;
-            player.GetComponent<PlayerMovement>().enemyDamage = 40.0f;
+            player.GetComponent<PlayerMovement>().enemyDamage = 50.0f;
         }
     }
 

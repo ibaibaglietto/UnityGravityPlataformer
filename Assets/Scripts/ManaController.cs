@@ -18,8 +18,6 @@ public class ManaController : MonoBehaviour
     void Awake()
     {
         //We initialize all the playerprefs on the awake
-        //The health level 
-        if (!PlayerPrefs.HasKey("healthLevel")) PlayerPrefs.SetInt("healthLevel", 1);
         //The mana level
         if (!PlayerPrefs.HasKey("manaLevel")) PlayerPrefs.SetInt("manaLevel", 1);
         //The dealt damage level
@@ -72,6 +70,8 @@ public class ManaController : MonoBehaviour
         if (!PlayerPrefs.HasKey("diedexp")) PlayerPrefs.SetInt("diedexp", 0);
         //An int to save the scene the player died
         if (!PlayerPrefs.HasKey("diedscene")) PlayerPrefs.SetInt("diedscene", 0);
+        //An int to save if the die tutorial has been seen
+        if (!PlayerPrefs.HasKey("dieTutorial")) PlayerPrefs.SetInt("dieTutorial", 0);        
         maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
         player = GameObject.Find("Player");
         manaBar = GameObject.Find("Playermana");
@@ -79,7 +79,7 @@ public class ManaController : MonoBehaviour
         {
             mana = PlayerPrefs.GetFloat("mana");
         }
-        else if (PlayerPrefs.GetInt("hasDied") == 1 && PlayerPrefs.GetInt("lastDialogue") >= 7) mana = maxMana;
+        else if (PlayerPrefs.GetInt("hasDied") > 0 && PlayerPrefs.GetInt("lastDialogue") >= 7) mana = maxMana;
         else mana = 0.0f;
 
     }

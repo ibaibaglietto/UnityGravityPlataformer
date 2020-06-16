@@ -22,14 +22,19 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Update()
     {
-        if(PlayerPrefs.GetInt("expTutorial") == 1 && gravity1 == 4)
+        if (PlayerPrefs.GetInt("expTutorial") == 1 && gravity1 == 4)
         {
             PlayerPrefs.SetInt("expTutorial", 2);
-            FindObjectOfType<DialogueManager>().StartDialogue(dialogue,0,0);
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0);
         }
         if (PlayerPrefs.GetInt("trap") == 1 && gravity1 == 5)
         {
             PlayerPrefs.SetInt("trap", 2);
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0);
+        }
+        if (PlayerPrefs.GetInt("dieTutorial") == 1 && gravity1 == 6)
+        {
+            PlayerPrefs.SetInt("dieTutorial", 2);
             FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0);
         }
     }
