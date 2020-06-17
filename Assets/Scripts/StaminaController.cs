@@ -50,7 +50,7 @@ public class StaminaController : MonoBehaviour
         }
         if ((Time.fixedTime - staminaTime) > 1.0f && stamina < maxStamina)
         {
-            stamina += 0.2f;
+            stamina += 0.3f;
             player.GetComponent<PlayerMovement>().hasStamina = true;
         }
     }

@@ -31,6 +31,7 @@ public class DialogueTrigger : MonoBehaviour
         {
             PlayerPrefs.SetInt("trap", 2);
             FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0);
+            PlayerPrefs.SetInt("lastDialogue", dialogueNumber);
         }
         if (PlayerPrefs.GetInt("dieTutorial") == 1 && gravity1 == 6)
         {

@@ -30,31 +30,28 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue (Dialogue dialogue, int gravity1, int gravity2)
     {
         player.GetComponent<PlayerMovement>().spendingMana = 0.0f;
+        Time.timeScale = 1.0f;
         if (player.GetComponent<PlayerMovement>().changingGravity) player.GetComponent<PlayerMovement>().changingGravity = false;
         if (player.GetComponent<PlayerMovement>().healing) player.GetComponent<PlayerMovement>().healing = false;
         if ((player.GetComponent<PlayerMovement>().gravity != gravity1) && (player.GetComponent<PlayerMovement>().gravity != gravity2))
         {
             if(gravity1 == 0)
             {
-                player.GetComponent<PlayerMovement>().convGravity = true;
                 player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                 player.GetComponent<PlayerMovement>().changeGravity(true, 0.5f, 0.0f, 0.0f, 0.0f);
             }
             else if (gravity1 == 1)
             {
-                player.GetComponent<PlayerMovement>().convGravity = true;
                 player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                 player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.5f, 0.0f, 0.0f);
             }
             else if (gravity1 == 2)
             {
-                player.GetComponent<PlayerMovement>().convGravity = true;
                 player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                 player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.0f, 0.5f, 0.0f);
             }
             else if (gravity1 == 3)
             {
-                player.GetComponent<PlayerMovement>().convGravity = true;
                 player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                 player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.0f, 0.0f, 0.5f);
             }
@@ -83,7 +80,6 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();
             return;
         }
-
         string sentence = sentences.Dequeue();
         dialogueText.text = sentence;
         StopAllCoroutines();
@@ -104,6 +100,10 @@ public class DialogueManager : MonoBehaviour
     {
         player.GetComponent<PlayerMovement>().talking = false;
         animator.SetBool("Open", false);
+        if (player.GetComponent<PlayerMovement>().gravity == 0) player.GetComponent<PlayerMovement>().changeGravity(true, 1.0f, 0.0f, 0.0f, 0.0f);
+        else if (player.GetComponent<PlayerMovement>().gravity == 1) player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 1.0f, 0.0f, 0.0f);
+        else if (player.GetComponent<PlayerMovement>().gravity == 2) player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.0f, 1.0f, 0.0f);
+        else if (player.GetComponent<PlayerMovement>().gravity == 3) player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.0f, 0.0f, 1.0f);
         player.GetComponent<PlayerMovement>().spendingMana = ((player.GetComponent<PlayerMovement>().gravityUp) + Mathf.Abs(player.GetComponent<PlayerMovement>().gravityDown - 1.0f) + player.GetComponent<PlayerMovement>().gravityLeft + player.GetComponent<PlayerMovement>().gravityRight) / 50.0f;
     }
        

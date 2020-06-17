@@ -3695,6 +3695,10 @@ PrefabInstance:
       propertyPath: restPos
       value: -41.78
       objectReference: {fileID: 0}
+    - target: {fileID: 3186711773212531953, guid: 19132880a4bc5654c84500c302539080, type: 3}
+      propertyPath: scene
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3470899632206144976, guid: 19132880a4bc5654c84500c302539080, type: 3}
       propertyPath: m_LocalPosition.x
       value: -40.38
@@ -4975,12 +4979,14 @@ MonoBehaviour:
     - Finally some light I can use to change the laws of gravity, **** you Newton!
     - (Press and mantain F to absorb light. Blue torches will recharge when some
       time passes.)
-    - (You can't absorb light when enemies are attacking you).
-    - (Press Q to enter the gravity changing state. You can change gravity with WASD).
+    - (You can't absorb light when enemies are attacking you.)
+    - (Press Q to enter the gravity changing state. You can change gravity with WASD.)
     - (Pressing Left Shift while you press the other buttons you can change the gravity
-      faster).
+      faster.)
     - (Doing the same with Left Control you can put a gravity of one on the direction
-      you want).
+      you want.)
+    - (You can also activate the regeneration with R. You deactivate it pressing
+      R again.)
   gravity1: 0
   gravity2: 1
   dialogueNumber: 3
@@ -5826,7 +5832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnx: -49.826
   spawny: -3.371
-  scene: 1
+  scene: 2
   spawnface: 0
   exitSide: 0
 --- !u!61 &462260625
@@ -16770,12 +16776,11 @@ MonoBehaviour:
   isAbsorbing: 0
   attacked: 0
   talking: 0
-  convGravity: 0
   changingScene: 0
   enteringScene: 0
   benchScene: 0
   dieExpPrefab: {fileID: 4855393419767451195, guid: 2c3e6acb01d9558408bc51eaa13820bc, type: 3}
-  scene: 0
+  scene: 1
   hasStamina: 0
   staminaSpent: 0
 --- !u!58 &1819824413

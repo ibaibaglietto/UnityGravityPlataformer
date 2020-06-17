@@ -86,9 +86,14 @@ public class HeavyBanditScript : MonoBehaviour
                 player.GetComponent<PlayerMovement>().attacked -= 1;
             }
 
-            if (!moving)
+            if (!moving && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
             {
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+                gameObject.transform.position = new Vector2(prevPos.x, gameObject.transform.position.y);
+            }
+            else if (gameObject.GetComponent<Animator>().GetBool("IsDead"))
+            {
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                 gameObject.transform.position = prevPos;
             }
             prevPos = gameObject.transform.position;
@@ -137,7 +142,7 @@ public class HeavyBanditScript : MonoBehaviour
 
         if (gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsJumping") && health > 0.0)
         {
-            if (player.transform.position.x < gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.5f))
+            if (player.transform.position.x < gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.75f))
             {
                 if (!lookingLeft) Flip();
                 if (gameObject.transform.position.x - player.transform.position.x > 1.25f)
@@ -153,7 +158,7 @@ public class HeavyBanditScript : MonoBehaviour
                     attacking = true;
                 }
             }
-            else if (player.transform.position.x >= gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.5f))
+            else if (player.transform.position.x >= gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.75f))
             {
                 if (lookingLeft) Flip();
                 if (player.transform.position.x - gameObject.transform.position.x > 1.25f)
@@ -192,6 +197,7 @@ public class HeavyBanditScript : MonoBehaviour
     {
         if(!lookingLeft) attack = Instantiate(attackPrefab, new Vector2(transform.position.x + 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
         else attack = Instantiate(attackPrefab, new Vector2(transform.position.x - 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
+        lastAttack = Time.fixedTime;
     }
 
     //function to end the attack
@@ -199,7 +205,6 @@ public class HeavyBanditScript : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("IsAttacking", false);
         attacking = false;
-        lastAttack = Time.fixedTime;
     }
 
     //function to end the damage animation

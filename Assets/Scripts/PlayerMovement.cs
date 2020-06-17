@@ -111,8 +111,6 @@ public class PlayerMovement : MonoBehaviour
     public int attacked;
     //A boolean to see if the player is talking
     public bool talking;
-    //A boolean to see if we changed the gravity because of a conversation
-    public bool convGravity;
     //A boolean to see if the player is changing scene
     public bool changingScene;
     //A boolean to see if the player is entering a scene
@@ -157,7 +155,6 @@ public class PlayerMovement : MonoBehaviour
         tryAbsorb = false;
         attacked = 0;
         talking = false;
-        convGravity = false;
         changingScene = false;
         enteringScene = false;
         benchScene = 0;
@@ -227,14 +224,6 @@ public class PlayerMovement : MonoBehaviour
             throwing = false;
             attacking = false;
             animator.SetBool("isSpinning", false);
-        }
-        if(gameObject.GetComponent<CharacterController2D>().m_Grounded && convGravity)
-        {
-            convGravity = false;
-            if (gravity == 0) gravityDown = 1.0f;
-            else if (gravity == 1) gravityUp = 1.0f;
-            else if (gravity == 2) gravityLeft = 1.0f;
-            else if (gravity == 3) gravityRight = 1.0f;
         }
         if (controller.m_Grounded && changingScene)
         {
@@ -813,25 +802,25 @@ public class PlayerMovement : MonoBehaviour
     {
         if(gravity == 0)
         {
-            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x + 0.75f, transform.position.y, transform.position.z);
+            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z);
             else slashPos = new Vector3(transform.position.x - 0.75f, transform.position.y, transform.position.z);
             slashRotation = 90;
         }
         if (gravity == 1)
         {
-            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x + 0.75f, transform.position.y, transform.position.z);
+            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z);
             else slashPos = new Vector3(transform.position.x - 0.75f, transform.position.y, transform.position.z);
             slashRotation = 90;
         }
         if (gravity == 2)
         {
-            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 0.75f, transform.position.z);
+            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
             else slashPos = new Vector3(transform.position.x, transform.position.y - 0.75f, transform.position.z);
             slashRotation = 0;
         }
         if (gravity == 3)
         {
-            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 0.75f, transform.position.z);
+            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
             else slashPos = new Vector3(transform.position.x, transform.position.y - 0.75f, transform.position.z);
             slashRotation = 0;
         }

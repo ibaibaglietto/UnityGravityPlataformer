@@ -21,15 +21,11 @@ public class PlayerLifeController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        //The health level 
-        if (!PlayerPrefs.HasKey("healthLevel")) PlayerPrefs.SetInt("healthLevel", 1);
         maxHealth = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55;
-        //A float to save the current health
-        if (!PlayerPrefs.HasKey("health")) PlayerPrefs.SetFloat("health", maxHealth);
         player = GameObject.Find("Player");
         healthBar = GameObject.Find("Playerhealth");
         manaBar = GameObject.Find("Manabar");
-        if (PlayerPrefs.GetInt("hasDied") == 0 || !PlayerPrefs.HasKey("hasDied"))
+        if (PlayerPrefs.GetInt("hasDied") == 0)
         {
             health = PlayerPrefs.GetFloat("health");
         }

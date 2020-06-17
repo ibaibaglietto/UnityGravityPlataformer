@@ -94,9 +94,19 @@ public class KnightScript : MonoBehaviour
                 fighting = false;
                 player.GetComponent<PlayerMovement>().attacked -= 1;
             }
+            else if (player.GetComponent<PlayerMovement>().talking && fighting)
+            {
+                player.GetComponent<PlayerMovement>().attacked -= 1;
+                fighting = false;
+            }
             else if (player.GetComponent<PlayerMovement>().talking) fighting = false;
 
-            if (!moving)
+            if (!moving && !gameObject.GetComponent<Animator>().GetBool("isDead"))
+            {
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+                gameObject.transform.position = new Vector2(prevPos.x, gameObject.transform.position.y);
+            }
+            else if (gameObject.GetComponent<Animator>().GetBool("isDead"))
             {
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                 gameObject.transform.position = prevPos;

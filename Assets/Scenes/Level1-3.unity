@@ -4953,7 +4953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3186711773212531953, guid: 19132880a4bc5654c84500c302539080, type: 3}
       propertyPath: scene
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3470899632206144976, guid: 19132880a4bc5654c84500c302539080, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6796,12 +6796,11 @@ MonoBehaviour:
   isAbsorbing: 0
   attacked: 0
   talking: 0
-  convGravity: 0
   changingScene: 0
   enteringScene: 0
   benchScene: 0
   dieExpPrefab: {fileID: 4855393419767451195, guid: 2c3e6acb01d9558408bc51eaa13820bc, type: 3}
-  scene: 2
+  scene: 3
   hasStamina: 0
   staminaSpent: 0
 --- !u!58 &1034573074
@@ -7915,7 +7914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnx: -63.79
   spawny: 10.16
-  scene: 1
+  scene: 2
   spawnface: 0
   exitSide: 0
 --- !u!61 &1125286018
