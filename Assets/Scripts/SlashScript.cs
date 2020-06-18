@@ -27,13 +27,14 @@ public class SlashScript : MonoBehaviour
     {        
         if (collision.tag == "HeavyBandit")
         {
-            if(Time.fixedTime - collision.GetComponent<HeavyBanditScript>().firstDamage < 3.0f)
+            if(Time.fixedTime - collision.GetComponent<HeavyBanditScript>().lastDamage < 1.0f)
             {
+                collision.GetComponent<HeavyBanditScript>().lastDamage = Time.fixedTime;
                 collision.GetComponent<HeavyBanditScript>().combo += 1;
             }
             else
             {
-                collision.GetComponent<HeavyBanditScript>().firstDamage = Time.fixedTime;
+                collision.GetComponent<HeavyBanditScript>().lastDamage = Time.fixedTime;
                 collision.GetComponent<HeavyBanditScript>().combo = 1;
             }
             if(!collision.GetComponent<Animator>().GetBool("IsJumping")) collision.GetComponent<Animator>().SetBool("TakeDamage", true);
@@ -46,13 +47,14 @@ public class SlashScript : MonoBehaviour
             {
                 collision.GetComponent<Animator>().SetBool("isTakingDamage", true);
                 collision.GetComponent<KnightScript>().damage = damageDealt;
-                if (Time.fixedTime - collision.GetComponent<KnightScript>().firstDamage < 3.0f)
+                if (Time.fixedTime - collision.GetComponent<KnightScript>().lastDamage < 1.0f)
                 {
+                    collision.GetComponent<KnightScript>().lastDamage = Time.fixedTime;
                     collision.GetComponent<KnightScript>().combo += 1;
                 }
                 else
                 {
-                    collision.GetComponent<KnightScript>().firstDamage = Time.fixedTime;
+                    collision.GetComponent<KnightScript>().lastDamage = Time.fixedTime;
                     collision.GetComponent<KnightScript>().combo = 1;
                 }
             }
@@ -61,13 +63,14 @@ public class SlashScript : MonoBehaviour
                 collision.GetComponent<Animator>().SetBool("isTakingDamage", true);
                 collision.GetComponent<Animator>().SetBool("isShielding", false);
                 collision.GetComponent<KnightScript>().damage = damageDealt;
-                if (Time.fixedTime - collision.GetComponent<KnightScript>().firstDamage < 3.0f)
+                if (Time.fixedTime - collision.GetComponent<KnightScript>().lastDamage < 1.0f)
                 {
+                    collision.GetComponent<KnightScript>().lastDamage = Time.fixedTime;
                     collision.GetComponent<KnightScript>().combo += 1;
                 }
                 else
                 {
-                    collision.GetComponent<KnightScript>().firstDamage = Time.fixedTime;
+                    collision.GetComponent<KnightScript>().lastDamage = Time.fixedTime;
                     collision.GetComponent<KnightScript>().combo = 1;
                 }
             }
@@ -76,13 +79,14 @@ public class SlashScript : MonoBehaviour
                 collision.GetComponent<Animator>().SetBool("isTakingDamage", true);
                 collision.GetComponent<Animator>().SetBool("isShielding", false);
                 collision.GetComponent<KnightScript>().damage = damageDealt;
-                if (Time.fixedTime - collision.GetComponent<KnightScript>().firstDamage < 3.0f)
+                if (Time.fixedTime - collision.GetComponent<KnightScript>().lastDamage < 1.0f)
                 {
+                    collision.GetComponent<KnightScript>().lastDamage = Time.fixedTime;
                     collision.GetComponent<KnightScript>().combo += 1;
                 }
                 else
                 {
-                    collision.GetComponent<KnightScript>().firstDamage = Time.fixedTime;
+                    collision.GetComponent<KnightScript>().lastDamage = Time.fixedTime;
                     collision.GetComponent<KnightScript>().combo = 1;
                 }
             }

@@ -40,7 +40,7 @@ public class KnightScript : MonoBehaviour
     //A boolean to see if the enemy is fighting
     private bool fighting;
     //A float to see when was the first damage of the combo dealt
-    public float firstDamage;
+    public float lastDamage;
     //An int to see the number of the strikes of the combo (player)
     public int combo;
     //The time the shielding started
@@ -61,7 +61,7 @@ public class KnightScript : MonoBehaviour
         damage = 0.0f;
         health = 120.0f;
         fighting = false;
-        firstDamage = Time.fixedTime - 3.0f;
+        lastDamage = Time.fixedTime - 3.0f;
         shieldTime = Time.fixedTime - 1.5f;
     }
 
@@ -84,12 +84,12 @@ public class KnightScript : MonoBehaviour
         }
         else
         {
-            if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 4.0f && !fighting && !player.GetComponent<PlayerMovement>().talking)
+            if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 2.3f && !fighting && !player.GetComponent<PlayerMovement>().talking)
             {
                 fighting = true;
                 player.GetComponent<PlayerMovement>().attacked += 1;
             }
-            else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 4.0f && fighting && !gameObject.GetComponent<Animator>().GetBool("isDead") && !player.GetComponent<PlayerMovement>().talking)
+            else if ((Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f || Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 2.3f) && fighting && !gameObject.GetComponent<Animator>().GetBool("isDead") && !player.GetComponent<PlayerMovement>().talking)
             {
                 fighting = false;
                 player.GetComponent<PlayerMovement>().attacked -= 1;
@@ -174,7 +174,7 @@ public class KnightScript : MonoBehaviour
                 }
             }
         }
-        else targetVelocity = new Vector2(0f, 0f);
+        else targetVelocity = new Vector2(0f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
         gameObject.GetComponent<Animator>().SetFloat("Speed", Mathf.Abs(targetVelocity.x));
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.SmoothDamp(gameObject.GetComponent<Rigidbody2D>().velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
         gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(0.0f, -1.0f);

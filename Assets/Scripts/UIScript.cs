@@ -67,10 +67,16 @@ public class UIScript : MonoBehaviour
     private Text expGainingLevelNext;
     //The healthbar
     private GameObject healthBar;
+    //The healthbar color
+    private GameObject healthBarColor;
     //The manabar
     private GameObject manaBar;
+    //The manabar color
+    private GameObject manaBarColor;
     //The staminabar
     private GameObject staminaBar;
+    //The staminabar color
+    private GameObject staminaBarColor;
     //The light of the player
     private Light2D playerLight;
 
@@ -109,12 +115,17 @@ public class UIScript : MonoBehaviour
         damageResistanceLevelNext = GameObject.Find("DamageResistanceDescrpitionNumb").GetComponent<Text>();
         expGainingLevelNext = GameObject.Find("ExpGainDescrpitionNumb").GetComponent<Text>();
         healthBar = GameObject.Find("Healthbar");
+        healthBarColor = GameObject.Find("Playerhealth");
         manaBar = GameObject.Find("Manabar");
+        manaBarColor = GameObject.Find("Playermana");
         staminaBar = GameObject.Find("Staminabar");
+        staminaBarColor = GameObject.Find("Playerstamina");
         playerLight = player.transform.GetChild(1).gameObject.GetComponent<Light2D>();
         lvlUp.SetActive(false);
         healthBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55) * 0.002f + 0.034f, 0.9644875f);
         healthBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        healthBarColor.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55) * 0.002f + 0.0315f, 0.9575f);
+        healthBarColor.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         if (healthBar.GetComponent<PlayerLifeController>().maxHealth != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55)
         {
             healthBar.GetComponent<PlayerLifeController>().health += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55) - healthBar.GetComponent<PlayerLifeController>().maxHealth;
@@ -122,13 +133,17 @@ public class UIScript : MonoBehaviour
         }
         manaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5) * 0.002f + 0.034f, 0.9196156f);
         manaBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        manaBarColor.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5) * 0.002f + 0.0315f, 0.9115f);
+        manaBarColor.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         if (manaBar.GetComponent<ManaController>().maxMana != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5)
         {
             manaBar.GetComponent<ManaController>().mana += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5) - manaBar.GetComponent<ManaController>().maxMana;
             manaBar.GetComponent<ManaController>().maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
         }
-        staminaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f) * 0.002f + 0.034f, 0.8923525f);
+        staminaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f) * 0.002f + 0.034f, 0.8901318f);
         staminaBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        staminaBarColor.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f) * 0.002f + 0.0315f, 0.8825f);
+        staminaBarColor.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         if (staminaBar.GetComponent<StaminaController>().maxStamina != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f)
         {
             staminaBar.GetComponent<StaminaController>().stamina += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f) - staminaBar.GetComponent<StaminaController>().maxStamina;
@@ -300,20 +315,26 @@ public class UIScript : MonoBehaviour
         player.GetComponent<PlayerMovement>().sleeping = false;
         healthBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(healthLevel.text)) + 55)*0.002f+0.034f, 0.9644875f);
         healthBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        if(healthBar.GetComponent<PlayerLifeController>().maxHealth != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55)
+        healthBarColor.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(healthLevel.text)) + 55) * 0.002f + 0.0315f, 0.9575f);
+        healthBarColor.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        if (healthBar.GetComponent<PlayerLifeController>().maxHealth != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55)
         {
             healthBar.GetComponent<PlayerLifeController>().health += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55) - healthBar.GetComponent<PlayerLifeController>().maxHealth;
             healthBar.GetComponent<PlayerLifeController>().maxHealth = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55;
         }        
         manaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(manaLevel.text)) + 5) * 0.002f + 0.034f, 0.9196156f);
         manaBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        if(manaBar.GetComponent<ManaController>().maxMana != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5)
+        manaBarColor.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(manaLevel.text)) + 5) * 0.002f + 0.0315f, 0.9115f);
+        manaBarColor.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        if (manaBar.GetComponent<ManaController>().maxMana != Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5)
         {
             manaBar.GetComponent<ManaController>().mana += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5) - manaBar.GetComponent<ManaController>().maxMana;
             manaBar.GetComponent<ManaController>().maxMana = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("manaLevel")) + 5;
         }
-        staminaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f) * 0.002f + 0.034f, 0.8923525f);
+        staminaBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f) * 0.002f + 0.034f, 0.8901318f);
         staminaBar.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        staminaBarColor.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f) * 0.002f + 0.0315f, 0.8825f);
+        staminaBarColor.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         if (staminaBar.GetComponent<StaminaController>().maxStamina != Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f)
         {
             staminaBar.GetComponent<StaminaController>().stamina += (Mathf.Sqrt(2000 * int.Parse(staminaLevel.text)) / 2 + 2.639f) - staminaBar.GetComponent<StaminaController>().maxStamina;

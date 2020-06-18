@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private GameObject dash;
     //The prefab of the slash
     public GameObject slashPrefab;
+    //The background
+    private GameObject backGround;
     public int gravity = 0; //0 -> down, 1 -> up, 2-> left, 3 -> right.
     //the gravity of the previous frame
     public int lastGravity = 0;
@@ -136,6 +138,8 @@ public class PlayerMovement : MonoBehaviour
         gravityLeft = 0.0f;
         gravityRight = 0.0f;
         cam = Camera.main;
+        //We find the background
+        backGround = GameObject.Find("Background");
         //Initialize all the variables we are going to use to manage the actions of the player
         hasMana = true;
         hasStamina = true;
@@ -165,6 +169,7 @@ public class PlayerMovement : MonoBehaviour
         if (PlayerPrefs.GetInt("hasDied") != 0)
         {
             cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny") + 1.381f, -10.0f);
+            //backGround.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny") + 1.381f, 0.0f);
             gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
             animator.SetTrigger("isSpawning");
             resting = true;

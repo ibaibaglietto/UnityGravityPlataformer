@@ -11,7 +11,7 @@ public class ParallaxBackgroundScrpit : MonoBehaviour
     private Vector3 prevCameraPosition;
     private float textureUnitSize;
 
-    void Start()
+    void Awake()
     {
         cameraTransform = Camera.main.transform;
         prevCameraPosition = cameraTransform.position;

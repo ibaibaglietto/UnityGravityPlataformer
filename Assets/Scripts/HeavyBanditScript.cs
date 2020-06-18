@@ -30,8 +30,8 @@ public class HeavyBanditScript : MonoBehaviour
     private GameObject attack;
     //A float to see the health of the enemy
     private float health;
-    //A float to see when was the first damage of the combo dealt
-    public float firstDamage;
+    //A float to see when was the last damage of the combo dealt
+    public float lastDamage;
     //An int to see the number of the strikes of the combo (player)
     public int combo;
     //A vector3 to save the starting pos
@@ -49,7 +49,7 @@ public class HeavyBanditScript : MonoBehaviour
         lastAttack = -1.0f;
         damage = 0.0f;
         health = 120.0f;
-        firstDamage = Time.fixedTime - 3.0f;
+        lastDamage = Time.fixedTime - 3.0f;
     }
 
     // Update is called once per frame
@@ -70,12 +70,12 @@ public class HeavyBanditScript : MonoBehaviour
         }
         else
         {
-            if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 1.0f && !gameObject.GetComponent<Animator>().GetBool("IsFighting") && !player.GetComponent<PlayerMovement>().talking)
+            if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 2.3f && !gameObject.GetComponent<Animator>().GetBool("IsFighting") && !player.GetComponent<PlayerMovement>().talking)
             {
                 gameObject.GetComponent<Animator>().SetBool("IsFighting", true);
                 player.GetComponent<PlayerMovement>().attacked += 1;
             }
-            else if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 1.0f && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead") && !player.GetComponent<PlayerMovement>().talking)
+            else if ((Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) >= 8.0f || Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) >= 2.3f) && gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsDead") && !player.GetComponent<PlayerMovement>().talking)
             {
                 gameObject.GetComponent<Animator>().SetBool("IsFighting", false);
                 player.GetComponent<PlayerMovement>().attacked -= 1;
@@ -136,10 +136,6 @@ public class HeavyBanditScript : MonoBehaviour
             gameObject.GetComponent<Animator>().SetBool("IsAttacking", false);
             gameObject.GetComponent<Animator>().SetBool("IsJumping", true);
         }
-        
-        
-        
-
         if (gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsJumping") && health > 0.0)
         {
             if (player.transform.position.x < gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.75f))
@@ -175,7 +171,7 @@ public class HeavyBanditScript : MonoBehaviour
                 }
             }
         }
-        else targetVelocity = new Vector2(0f, 0f);
+        else targetVelocity = new Vector2(0f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
         gameObject.GetComponent<Animator>().SetFloat("Speed", Mathf.Abs(targetVelocity.x));
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.SmoothDamp(gameObject.GetComponent<Rigidbody2D>().velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
         gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(0.0f, -1.0f);
