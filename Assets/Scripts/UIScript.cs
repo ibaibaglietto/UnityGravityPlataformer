@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class UIScript : MonoBehaviour
 {
@@ -51,6 +52,8 @@ public class UIScript : MonoBehaviour
     private GameObject damageResistanceLevelMinus;
     //The exp gaining level minus button
     private GameObject expGainingLevelMinus;
+    //The final text
+    private GameObject finalText;
     //The next maximum health
     private Text healthLevelNext;
     //The next maximum mana
@@ -79,6 +82,8 @@ public class UIScript : MonoBehaviour
     private GameObject staminaBarColor;
     //The light of the player
     private Light2D playerLight;
+    //The pause menu
+    private GameObject pauseMenu;
 
     private void Start()
     {
@@ -120,6 +125,7 @@ public class UIScript : MonoBehaviour
         manaBarColor = GameObject.Find("Playermana");
         staminaBar = GameObject.Find("Staminabar");
         staminaBarColor = GameObject.Find("Playerstamina");
+        pauseMenu = GameObject.Find("Pause");
         playerLight = player.transform.GetChild(1).gameObject.GetComponent<Light2D>();
         lvlUp.SetActive(false);
         healthBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55) * 0.002f + 0.034f, 0.9644875f);
@@ -149,11 +155,23 @@ public class UIScript : MonoBehaviour
             staminaBar.GetComponent<StaminaController>().stamina += (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f) - staminaBar.GetComponent<StaminaController>().maxStamina;
             staminaBar.GetComponent<StaminaController>().maxStamina = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f;
         }
+        finalText = GameObject.Find("Final text");
     }
 
 
     void Update()
     {
+        if (player.GetComponent<PlayerMovement>().ended)
+        {
+            finalText.SetActive(true);
+            PlayerPrefs.SetInt("lastDialogue", 15);
+        }
+        else finalText.SetActive(false);
+        if (player.GetComponent<PlayerMovement>().paused)
+        {
+            pauseMenu.SetActive(true);
+        }
+        else pauseMenu.SetActive(false);
         //Check that all the numbers of the lvl up interface are up to date
         if (!lvlUp.activeSelf && player.GetComponent<PlayerMovement>().sleeping)
         {
@@ -342,5 +360,21 @@ public class UIScript : MonoBehaviour
         }
         player.GetComponent<Animator>().SetBool("isResting", false);
         lvlUp.SetActive(false);
+    }
+    public void loadMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void continueLevel()
+    {
+        player.GetComponent<PlayerMovement>().paused = false;
+        Time.timeScale = 1.0f;
+    }
+
+    public void CloseGame()
+    {
+        Application.Quit();
+        Debug.Log("Closing game");
     }
 }

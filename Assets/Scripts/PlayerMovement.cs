@@ -129,6 +129,12 @@ public class PlayerMovement : MonoBehaviour
     public bool hasStamina;
     //An int to see how much stamina is being spent
     public int staminaSpent;
+    //A bool to check if the player is approaching the boss
+    public bool approach;
+    //A bool to check if the player has ended the game
+    public bool ended;
+    //A bool to check if the game is paused
+    public bool paused;
 
     private void Start()
     {
@@ -161,6 +167,9 @@ public class PlayerMovement : MonoBehaviour
         talking = false;
         changingScene = false;
         enteringScene = false;
+        approach = false;
+        ended = false;
+        paused = false;
         benchScene = 0;
         staminaSpent = 0;
         //Save the gameobject of the fadeInOut
@@ -169,7 +178,6 @@ public class PlayerMovement : MonoBehaviour
         if (PlayerPrefs.GetInt("hasDied") != 0)
         {
             cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny") + 1.381f, -10.0f);
-            //backGround.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny") + 1.381f, 0.0f);
             gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
             animator.SetTrigger("isSpawning");
             resting = true;
@@ -214,15 +222,10 @@ public class PlayerMovement : MonoBehaviour
         if (PlayerPrefs.GetInt("trap") == 2 && PlayerPrefs.GetFloat("respawnx") == -62.63f) PlayerPrefs.SetInt("trap", 3);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
-            Debug.Log("Closing game");
+            paused = true;
+            Time.timeScale = 0.0f;
         }
         if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(PlayerPrefs.GetInt("respawnscene"));
-        if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.L))
-        {
-            PlayerPrefs.DeleteAll();
-            SceneManager.LoadScene(0);
-        }
         //stop throwing shurikens when the player is damaged or is dead
         if (animator.GetBool("isDead") || animator.GetBool("takeDamage"))
         {
@@ -230,10 +233,15 @@ public class PlayerMovement : MonoBehaviour
             attacking = false;
             animator.SetBool("isSpinning", false);
         }
-        if (controller.m_Grounded && changingScene)
+        if (controller.m_Grounded && (changingScene || PlayerPrefs.GetInt("lastDialogue") == 16 ) && !talking)
         {
+            if (!gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
             gravityDown = 1.0f;
             fadeInOut.GetComponent<Animator>().SetBool("Clear",false);
+        }
+        if (PlayerPrefs.GetInt("lastDialogue") == 16 && fadeInOut.GetComponent<Image>().color.a == 1)
+        {
+            ended = true;
         }
         if (enteringScene)
         {
@@ -425,7 +433,7 @@ public class PlayerMovement : MonoBehaviour
                 else horizontalMove = Input.GetAxisRaw("Vertical") * runSpeed;
             }
             if (animator.GetBool("isDead") || takingDamage || resting || tryAbsorb || talking) horizontalMove = 0.0f;
-            if ((changingScene && gravityDown == 1.0f) || enteringScene)
+            if ((changingScene && gravityDown == 1.0f) || enteringScene || approach || (PlayerPrefs.GetInt("lastDialogue") == 16 && fadeInOut.GetComponent<Image>().color.a != 1) && !talking)
             {
                 if (controller.m_FacingRight) horizontalMove = runSpeed;
                 else horizontalMove = -runSpeed;

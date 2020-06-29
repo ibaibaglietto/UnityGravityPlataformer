@@ -13,11 +13,16 @@ public class DialogueTrigger : MonoBehaviour
     public int gravity2;
     //The number of the dialogue
     public int dialogueNumber;
-
+    //The boss health bar
+    private GameObject bossBar;
+    //The animator off the boss fight arena
+    private Animator bossArena;
 
     void Start()
     {
         player = GameObject.Find("Player");
+        bossBar = GameObject.Find("BossHealthBar");
+        if(player.GetComponent<PlayerMovement>().scene == 3) bossArena = GameObject.Find("Boss platform").GetComponent<Animator>();
     }
 
     private void Update()
@@ -44,8 +49,14 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (collision == player.GetComponent<Collider2D>())
         {
-            if (PlayerPrefs.GetInt("lastDialogue") < dialogueNumber)
+            if (PlayerPrefs.GetInt("lastDialogue") < dialogueNumber || dialogueNumber == 15)
             {
+                if(dialogueNumber == 15)
+                {
+                    bossArena.SetBool("Close",true);
+                    player.GetComponent<PlayerMovement>().approach = false;
+                    bossBar.GetComponent<BossHealthController>().fighting = true;
+                }
                 FindObjectOfType<DialogueManager>().StartDialogue(dialogue, gravity1, gravity2);
                 PlayerPrefs.SetInt("lastDialogue", dialogueNumber);
             }

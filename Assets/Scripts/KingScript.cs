@@ -46,7 +46,7 @@ public class KingScript : MonoBehaviour
     //boolean to see if the boss is in his secon fase
     public bool fase2;
     //boolean to see if the fight has started
-    private bool fighting;
+    public bool fighting;
     //boolean to see if the king has already tried to teleport this attack
     private bool teleportAttack;
 
@@ -62,11 +62,11 @@ public class KingScript : MonoBehaviour
         fase2 = false;
         fighting = false;
         teleportAttack = false;
+        Flip();
     }
 
     private void Update()
     {
-        if (player.transform.position.x > -10.0f && player.transform.position.x < 16.5f) fighting = true;
         if (!moving)
         {
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
