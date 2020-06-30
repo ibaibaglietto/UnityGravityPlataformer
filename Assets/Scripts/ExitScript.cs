@@ -37,8 +37,8 @@ public class ExitScript : MonoBehaviour
             if (player.GetComponent<PlayerMovement>().healing) player.GetComponent<PlayerMovement>().healing = false;
             player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             player.GetComponent<PlayerMovement>().changeGravity(true, 0.5f, 0.0f, 0.0f, 0.0f);
-            if (player.GetComponent<CharacterController2D>().m_FacingRight && exitSide == 0) player.GetComponent<CharacterController2D>().Flip();
-            else if (!player.GetComponent<CharacterController2D>().m_FacingRight && exitSide == 1) player.GetComponent<CharacterController2D>().Flip();
+            if (player.GetComponent<PlayerMovement>().m_FacingRight && exitSide == 0) player.GetComponent<PlayerMovement>().Flip();
+            else if (!player.GetComponent<PlayerMovement>().m_FacingRight && exitSide == 1) player.GetComponent<PlayerMovement>().Flip();
             player.GetComponent<PlayerMovement>().changingScene = true;
             thisExit = true;
             PlayerPrefs.SetInt("hasDied", 0);

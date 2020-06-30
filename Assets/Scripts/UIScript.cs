@@ -369,7 +369,8 @@ public class UIScript : MonoBehaviour
     public void continueLevel()
     {
         player.GetComponent<PlayerMovement>().paused = false;
-        Time.timeScale = 1.0f;
+        if(player.GetComponent<PlayerMovement>().changingGravity) Time.timeScale = 0.05f;
+        else Time.timeScale = 1.0f;
     }
 
     public void CloseGame()

@@ -3,14 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Amount of force added when the player jumps.
+    private float m_JumpForce = 800f;
+    // How much to smooth out the movement
+    private float m_MovementSmoothing = .05f;
+    // A mask determining what is ground to the character
+    [SerializeField] private LayerMask m_WhatIsGround;
+    // A position marking where to check if the player is grounded.
+    [SerializeField] private Transform m_GroundCheck;
+
+    // Radius of the overlap circle to determine if grounded
+    const float k_GroundedRadius = .2f;
+    // Whether or not the player is grounded.
+    public bool m_Grounded;            
+    private Rigidbody2D m_Rigidbody2D;
+    // For determining which way the player is currently facing.
+    public bool m_FacingRight = true;  
+    private Vector3 m_Velocity = Vector3.zero;
+
     //The main camera
     private Camera cam;
-    //The character controller
-    public CharacterController2D controller;
     //The animator
     public Animator animator;
     //Boolean to check if we are changing the gravity
@@ -136,6 +153,22 @@ public class PlayerMovement : MonoBehaviour
     //A bool to check if the game is paused
     public bool paused;
 
+    [Header("Events")]
+    [Space]
+
+    public UnityEvent OnLandEvent;
+
+    [System.Serializable]
+    public class BoolEvent : UnityEvent<bool> { }
+
+    private void Awake()
+    {
+        m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        if (OnLandEvent == null)
+            OnLandEvent = new UnityEvent();
+    }
+
+
     private void Start()
     {
         //We initialize the gravity and the camera
@@ -181,8 +214,8 @@ public class PlayerMovement : MonoBehaviour
             gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
             animator.SetTrigger("isSpawning");
             resting = true;
-            if (PlayerPrefs.GetInt("respawnface") == 0 && controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
-            else if (PlayerPrefs.GetInt("respawnface") == 1 && !controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
+            if (PlayerPrefs.GetInt("respawnface") == 0 && m_FacingRight) Flip();
+            else if (PlayerPrefs.GetInt("respawnface") == 1 && !m_FacingRight) Flip();
             if (PlayerPrefs.GetInt("hasDied") == 2)
             {
                 PlayerPrefs.SetInt("diedexp", PlayerPrefs.GetInt("exp"));
@@ -198,9 +231,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (PlayerPrefs.GetInt("spawnface") == 0 && controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
-            else if (PlayerPrefs.GetInt("spawnface") == 1 && !controller.m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
-            if (controller.m_FacingRight)
+            if (PlayerPrefs.GetInt("spawnface") == 0 && m_FacingRight) Flip();
+            else if (PlayerPrefs.GetInt("spawnface") == 1 && !m_FacingRight) Flip();
+            if (m_FacingRight)
             {
                 cam.transform.position = new Vector3(PlayerPrefs.GetFloat("spawnx") - 4.4f, PlayerPrefs.GetFloat("spawny") + 1.381f, -10.0f);
                 gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("spawnx") - 4.4f, PlayerPrefs.GetFloat("spawny"));
@@ -233,9 +266,9 @@ public class PlayerMovement : MonoBehaviour
             attacking = false;
             animator.SetBool("isSpinning", false);
         }
-        if (controller.m_Grounded && (changingScene || PlayerPrefs.GetInt("lastDialogue") == 16 ) && !talking)
+        if (m_Grounded && (changingScene || PlayerPrefs.GetInt("lastDialogue") == 16 ) && !talking)
         {
-            if (!gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
+            if (!m_FacingRight) Flip();
             gravityDown = 1.0f;
             fadeInOut.GetComponent<Animator>().SetBool("Clear",false);
         }
@@ -245,14 +278,14 @@ public class PlayerMovement : MonoBehaviour
         }
         if (enteringScene)
         {
-            if (controller.m_FacingRight && PlayerPrefs.GetFloat("spawnx") <= gameObject.transform.position.x) enteringScene = false;
-            else if (!controller.m_FacingRight && PlayerPrefs.GetFloat("spawnx") >= gameObject.transform.position.x) enteringScene = false;
+            if (m_FacingRight && PlayerPrefs.GetFloat("spawnx") <= gameObject.transform.position.x) enteringScene = false;
+            else if (!m_FacingRight && PlayerPrefs.GetFloat("spawnx") >= gameObject.transform.position.x) enteringScene = false;
         }
         //We check if the player can rest, and if so it startes to rest when we press the S button
         if (canRest && !changingGravity && Input.GetKeyDown(KeyCode.S) && animator.GetFloat("Speed")<0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) && !tryAbsorb && attacked == 0 && !changingScene && !enteringScene)
         {
             gameObject.GetComponent<PlayerMovement>().changeGravity(true, 1.0f, 0.0f, 0.0f, 0.0f);
-            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<CharacterController2D>().Flip();
+            if (m_FacingRight) Flip();
             resting = true;
             healing = false;
             gameObject.transform.position = new Vector2(restPos, gameObject.transform.position.y);
@@ -366,7 +399,7 @@ public class PlayerMovement : MonoBehaviour
                 //We'll change the facing component depending on the last gravity
                 if ((lastGravity == 0 && gravity == 1) || (lastGravity == 1 && gravity == 0) || (lastGravity == 0 && gravity == 2) || (lastGravity == 2 && gravity == 0) || (lastGravity == 3 && gravity == 1) || (lastGravity == 1 && gravity == 3) || (lastGravity == 3 && gravity == 2) || (lastGravity == 2 && gravity == 3))
                 {
-                    gameObject.GetComponent<CharacterController2D>().m_FacingRight = !gameObject.GetComponent<CharacterController2D>().m_FacingRight;
+                    m_FacingRight = !m_FacingRight;
                 }
                 //We set the rotation that needs to have the player and where is the "ground" supposed to be
                 if (gravity == 0) rotation = 0.0f;
@@ -383,22 +416,22 @@ public class PlayerMovement : MonoBehaviour
             rotating = false;
             rotated = false;
         }
-        if (Time.fixedTime - lastDash <= 0.5f && gameObject.GetComponent<CharacterController2D>().m_Grounded) wasGround = true;
-        if (Time.fixedTime - lastDash > 0.5f && (gameObject.GetComponent<CharacterController2D>().m_Grounded || wasGround)) canDash = true;
+        if (Time.fixedTime - lastDash <= 0.5f && m_Grounded) wasGround = true;
+        if (Time.fixedTime - lastDash > 0.5f && (m_Grounded || wasGround)) canDash = true;
         //We activate/deactivate the healing using the R button
-        if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene) healing = !healing;
+        if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && !paused) healing = !healing;
         //We dash using the right button of the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina && !paused)
         {
             animator.SetBool("isDashing", true);
-            if (gravity == 0 && gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(3200f, 0));
-            else if (gravity == 0 && !gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-3200f, 0));
-            else if (gravity == 1 && gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(3200f, 0));
-            else if (gravity == 1 && !gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-3200f, 0));
-            else if (gravity == 2 && gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3200f));
-            else if (gravity == 2 && !gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -3200f));
-            else if (gravity == 3 && gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3200f));
-            else if (gravity == 3 && !gameObject.GetComponent<CharacterController2D>().m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -3200f));
+            if (gravity == 0 && m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(3200f, 0));
+            else if (gravity == 0 && !m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-3200f, 0));
+            else if (gravity == 1 && m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(3200f, 0));
+            else if (gravity == 1 && !m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-3200f, 0));
+            else if (gravity == 2 && m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3200f));
+            else if (gravity == 2 && !m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -3200f));
+            else if (gravity == 3 && m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3200f));
+            else if (gravity == 3 && !m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -3200f));
             lastDash = Time.fixedTime;
             canDash = false;
             wasGround = false;
@@ -406,14 +439,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //We attack using the left button of the mouse, choosing the side of the attack depending on where is the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina && !paused)
         {            
             attacking = true;
             animator.SetBool("isAttacking", true);
             animator.SetBool("isSpinning", false);
         }
         //We throw shurikens using the E key. 
-        if (!changingGravity && Input.GetKey(KeyCode.E) && !dashing && !animator.GetBool("isDead") && gameObject.GetComponent<CharacterController2D>().m_Grounded && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene)
+        if (!changingGravity && Input.GetKey(KeyCode.E) && !dashing && !animator.GetBool("isDead") && m_Grounded && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && !paused)
         {
             attacking = true;
             animator.SetBool("isSpinning", true);
@@ -425,7 +458,7 @@ public class PlayerMovement : MonoBehaviour
         }       
 
         //We'll save the movement if the player is not dead or is attacking or is changing gravity or trying to absorb or talking
-        if (!changingGravity)
+        if (!changingGravity && !paused)
         {           
             if (!attacking)
             {
@@ -435,7 +468,7 @@ public class PlayerMovement : MonoBehaviour
             if (animator.GetBool("isDead") || takingDamage || resting || tryAbsorb || talking) horizontalMove = 0.0f;
             if ((changingScene && gravityDown == 1.0f) || enteringScene || approach || (PlayerPrefs.GetInt("lastDialogue") == 16 && fadeInOut.GetComponent<Image>().color.a != 1) && !talking)
             {
-                if (controller.m_FacingRight) horizontalMove = runSpeed;
+                if (m_FacingRight) horizontalMove = runSpeed;
                 else horizontalMove = -runSpeed;
             }
             animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
@@ -447,7 +480,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //We'll activate the jumping animation if the player is not on the ground
-        if(!gameObject.GetComponent<CharacterController2D>().m_Grounded) animator.SetBool("isJumping", true);
+        if(!m_Grounded) animator.SetBool("isJumping", true);
         //We'll activate the falling animation depending on the gravity
         if (gravity == 0)
         {
@@ -480,6 +513,21 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
+        bool wasGrounded = m_Grounded;
+        m_Grounded = false;
+
+        // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+        // This can be done using layers instead but Sample Assets will not overwrite your project settings.
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject)
+            {
+                m_Grounded = true;
+                if (!wasGrounded)
+                    OnLandEvent.Invoke();
+            }
+        }
         //We apply the gravity
         gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(gravityRight - gravityLeft, gravityUp - gravityDown);
         if (changingGravity)
@@ -584,7 +632,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //We call the move function
-        controller.Move(horizontalMove * Time.fixedDeltaTime, jump, gravity, changingGravity);
+        Move(horizontalMove * Time.fixedDeltaTime, jump, gravity, changingGravity || paused);
         jump = false;
         //We throw shurikens depending on the firing rate. The shurikens will go where the mouse is aiming at.
         if ( throwing && ((Time.fixedTime - lastShuriken) >= firingRate))
@@ -609,13 +657,13 @@ public class PlayerMovement : MonoBehaviour
         if (dashing)
         {
             dash = Instantiate(dashPrefab, transform.position, transform.rotation);
-            if (!gameObject.GetComponent<CharacterController2D>().m_FacingRight && (gravity == 0 || gravity == 3))
+            if (!m_FacingRight && (gravity == 0 || gravity == 3))
             {
                 Vector3 theScale = dash.transform.localScale;
                 theScale.x *= -1;
                 dash.transform.localScale = theScale;
             }
-            else if (gameObject.GetComponent<CharacterController2D>().m_FacingRight && (gravity == 1 || gravity == 2))
+            else if (m_FacingRight && (gravity == 1 || gravity == 2))
             {
                 Vector3 theScale = dash.transform.localScale;
                 theScale.x *= -1;
@@ -641,7 +689,7 @@ public class PlayerMovement : MonoBehaviour
         //else if (gameObject.GetComponent<Rigidbody2D>().rotation == rotation && rotating) rotated = true;
         gravityDamage = 0.0f;
         //if the player is on the floor and has 3 gravity or more she takes damage per second
-        if (gameObject.GetComponent<CharacterController2D>().m_Grounded && (gravityDown > 3.0f || gravityUp > 3.0f || gravityLeft > 3.0f || gravityRight > 3.0f))
+        if (m_Grounded && (gravityDown > 3.0f || gravityUp > 3.0f || gravityLeft > 3.0f || gravityRight > 3.0f))
         {
             if (gravity == 0) gravityDamage += gravityDown / 50.0f;
             else if (gravity == 1) gravityDamage += gravityUp / 50.0f;
@@ -815,25 +863,25 @@ public class PlayerMovement : MonoBehaviour
     {
         if(gravity == 0)
         {
-            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z);
+            if (m_FacingRight) slashPos = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z);
             else slashPos = new Vector3(transform.position.x - 0.75f, transform.position.y, transform.position.z);
             slashRotation = 90;
         }
         if (gravity == 1)
         {
-            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z);
+            if (m_FacingRight) slashPos = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z);
             else slashPos = new Vector3(transform.position.x - 0.75f, transform.position.y, transform.position.z);
             slashRotation = 90;
         }
         if (gravity == 2)
         {
-            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+            if (m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
             else slashPos = new Vector3(transform.position.x, transform.position.y - 0.75f, transform.position.z);
             slashRotation = 0;
         }
         if (gravity == 3)
         {
-            if (gameObject.GetComponent<CharacterController2D>().m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+            if (m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
             else slashPos = new Vector3(transform.position.x, transform.position.y - 0.75f, transform.position.z);
             slashRotation = 0;
         }
@@ -912,7 +960,7 @@ public class PlayerMovement : MonoBehaviour
         //We'll change the facing component depending on the last gravity
         if ((lastGravity == 0 && gravity == 1) || (lastGravity == 1 && gravity == 0) || (lastGravity == 0 && gravity == 2) || (lastGravity == 2 && gravity == 0) || (lastGravity == 3 && gravity == 1) || (lastGravity == 1 && gravity == 3) || (lastGravity == 3 && gravity == 2) || (lastGravity == 2 && gravity == 3))
         {
-            gameObject.GetComponent<CharacterController2D>().m_FacingRight = !gameObject.GetComponent<CharacterController2D>().m_FacingRight;
+            m_FacingRight = !m_FacingRight;
         }
         //We set the rotation that needs to have the player and where is the "ground" supposed to be
         if (gravity == 0) rotation = 0.0f;
@@ -936,6 +984,57 @@ public class PlayerMovement : MonoBehaviour
     public void endAbsorb()
     {
         tryAbsorb = false;
+    }
+
+    //function to move the player
+    public void Move(float move, bool jump, int gravity, bool pausedMove)
+    {
+        //only control the player if not paused
+        if (!pausedMove)
+        {
+            Vector3 targetVelocity;
+            // Move the character by finding the target velocity
+            if (gravity < 2) targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+            else targetVelocity = new Vector2(m_Rigidbody2D.velocity.x, move * 10f);
+
+            // And then smoothing it out and applying it to the character
+            m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+
+            // If the input is moving the player right and the player is facing left...
+            if (move > 0 && !m_FacingRight)
+            {
+                // ... flip the player.
+                Flip();
+            }
+            // Otherwise if the input is moving the player left and the player is facing right...
+            else if (move < 0 && m_FacingRight)
+            {
+                // ... flip the player.
+                Flip();
+            }
+        }
+        // If the player should jump...
+        if (m_Grounded && jump)
+        {
+            // Add a vertical force to the player.
+            m_Grounded = false;
+            if (gravity == 0) m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+            else if (gravity == 1) m_Rigidbody2D.AddForce(new Vector2(0f, -m_JumpForce));
+            else if (gravity == 2) m_Rigidbody2D.AddForce(new Vector2(m_JumpForce, 0));
+            else if (gravity == 3) m_Rigidbody2D.AddForce(new Vector2(-m_JumpForce, 0));
+        }
+    }
+
+    //Function to flip the player
+    public void Flip()
+    {
+        // Switch the way the player is labelled as facing.
+        m_FacingRight = !m_FacingRight;
+
+        // Multiply the player's x local scale by -1.
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
 }
