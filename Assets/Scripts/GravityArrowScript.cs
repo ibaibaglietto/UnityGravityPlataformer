@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GravityArrowScript : MonoBehaviour
 {
@@ -28,21 +29,41 @@ public class GravityArrowScript : MonoBehaviour
             gameObject.transform.position = player.transform.position;
             if (player.GetComponent<PlayerMovement>().prevGravityDown > 0.0f)
             {
+                gravityDown.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.46925f, 0.4f - 0.0125f* player.GetComponent<PlayerMovement>().prevGravityDown);
+                gravityDown.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+                if (player.GetComponent<PlayerMovement>().prevGravityDown <= 1.0f) gravityDown.GetComponent<Image>().color = new Color(1.0f - player.GetComponent<PlayerMovement>().prevGravityDown, 1.0f, 1.0f - player.GetComponent<PlayerMovement>().prevGravityDown);
+                else if (player.GetComponent<PlayerMovement>().prevGravityDown <= 3.05f) gravityDown.GetComponent<Image>().color = new Color((player.GetComponent<PlayerMovement>().prevGravityDown - 1.0f) / 2.0f, 1.0f, 0.0f);
+                else gravityDown.GetComponent<Image>().color = new Color(1.0f - ((player.GetComponent<PlayerMovement>().prevGravityDown - 3.1f) / 10.0f), 0.0f, 0.0f);
                 gravityDown.SetActive(true);
             }
             else gravityDown.SetActive(false);
             if (player.GetComponent<PlayerMovement>().prevGravityUp > 0.0f)
             {
+                gravityUp.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.53075f, 0.6f + 0.0125f * player.GetComponent<PlayerMovement>().prevGravityUp);
+                gravityUp.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+                if (player.GetComponent<PlayerMovement>().prevGravityUp <= 1.0f) gravityUp.GetComponent<Image>().color = new Color(1.0f - player.GetComponent<PlayerMovement>().prevGravityUp, 1.0f, 1.0f - player.GetComponent<PlayerMovement>().prevGravityUp);
+                else if (player.GetComponent<PlayerMovement>().prevGravityUp <= 3.05f) gravityUp.GetComponent<Image>().color = new Color((player.GetComponent<PlayerMovement>().prevGravityUp - 1.0f) / 2.0f, 1.0f, 0.0f);
+                else gravityUp.GetComponent<Image>().color = new Color(1.0f - ((player.GetComponent<PlayerMovement>().prevGravityUp - 3.1f) / 10.0f), 0.0f, 0.0f);
                 gravityUp.SetActive(true);
             }
             else gravityUp.SetActive(false);
             if (player.GetComponent<PlayerMovement>().prevGravityLeft > 0.0f)
             {
+                gravityLeft.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.4f - 0.0125f * player.GetComponent<PlayerMovement>().prevGravityLeft, 0.46925f);
+                gravityLeft.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+                if (player.GetComponent<PlayerMovement>().prevGravityLeft <= 1.0f) gravityLeft.GetComponent<Image>().color = new Color(1.0f - player.GetComponent<PlayerMovement>().prevGravityLeft, 1.0f, 1.0f - player.GetComponent<PlayerMovement>().prevGravityLeft);
+                else if (player.GetComponent<PlayerMovement>().prevGravityLeft <= 3.05f) gravityLeft.GetComponent<Image>().color = new Color((player.GetComponent<PlayerMovement>().prevGravityLeft - 1.0f) / 2.0f, 1.0f, 0.0f);
+                else gravityLeft.GetComponent<Image>().color = new Color(1.0f - ((player.GetComponent<PlayerMovement>().prevGravityLeft - 3.1f) / 10.0f), 0.0f, 0.0f);
                 gravityLeft.SetActive(true);
             }
             else gravityLeft.SetActive(false);
             if (player.GetComponent<PlayerMovement>().prevGravityRight > 0.0f)
             {
+                gravityRight.transform.GetComponent<RectTransform>().anchorMax = new Vector2(0.6f + 0.0125f * player.GetComponent<PlayerMovement>().prevGravityRight, 0.53075f);
+                gravityRight.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+                if (player.GetComponent<PlayerMovement>().prevGravityRight <= 1.0f) gravityRight.GetComponent<Image>().color = new Color(1.0f - player.GetComponent<PlayerMovement>().prevGravityRight, 1.0f, 1.0f - player.GetComponent<PlayerMovement>().prevGravityRight);
+                else if (player.GetComponent<PlayerMovement>().prevGravityRight <= 3.05f) gravityRight.GetComponent<Image>().color = new Color((player.GetComponent<PlayerMovement>().prevGravityRight - 1.0f) / 2.0f, 1.0f, 0.0f);
+                else gravityRight.GetComponent<Image>().color = new Color(1.0f - ((player.GetComponent<PlayerMovement>().prevGravityRight - 3.1f) / 10.0f), 0.0f, 0.0f);
                 gravityRight.SetActive(true);
             }
             else gravityRight.SetActive(false);

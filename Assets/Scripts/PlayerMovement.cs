@@ -169,6 +169,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+
     private void Start()
     {
         //We initialize the gravity and the camera
@@ -251,6 +252,7 @@ public class PlayerMovement : MonoBehaviour
         fadeInOut.GetComponent<Animator>().SetBool("Clear", true);
     }
     void Update(){
+        if (attacked == -1) attacked = 0;
         //we set the trap int to make the doors to be opened
         if (PlayerPrefs.GetInt("trap") == 2 && PlayerPrefs.GetFloat("respawnx") == -62.63f) PlayerPrefs.SetInt("trap", 3);
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -268,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (m_Grounded && (changingScene || PlayerPrefs.GetInt("lastDialogue") == 16 ) && !talking)
         {
-            if (!m_FacingRight) Flip();
+            if (!m_FacingRight && PlayerPrefs.GetInt("lastDialogue") == 16) Flip();
             gravityDown = 1.0f;
             fadeInOut.GetComponent<Animator>().SetBool("Clear",false);
         }
@@ -538,6 +540,7 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKey(KeyCode.W) && !rotating)
                 {
                     if (prevGravityDown >= 0.5f) prevGravityDown -= 0.5f;
+                    else if (prevGravityUp >= 9.5f) prevGravityUp = 10.0f;
                     else
                     {
                         prevGravityUp += 0.5f - prevGravityDown;
@@ -547,6 +550,7 @@ public class PlayerMovement : MonoBehaviour
                 else if (Input.GetKey(KeyCode.S) && !rotating)
                 {
                     if (prevGravityUp >= 0.5f) prevGravityUp -= 0.5f;
+                    else if (prevGravityDown >= 9.5f) prevGravityDown = 10.0f;
                     else
                     {
                         prevGravityDown += 0.5f - prevGravityUp;
@@ -556,6 +560,7 @@ public class PlayerMovement : MonoBehaviour
                 else if (Input.GetKey(KeyCode.A) && !rotating)
                 {
                     if (prevGravityRight >= 0.5f) prevGravityRight -= 0.5f;
+                    else if (prevGravityLeft >= 9.5f) prevGravityLeft = 10.0f;
                     else
                     {
                         prevGravityLeft += 0.5f - prevGravityRight;
@@ -565,6 +570,7 @@ public class PlayerMovement : MonoBehaviour
                 else if (Input.GetKey(KeyCode.D) && !rotating)
                 {
                     if (prevGravityLeft >= 0.5f) prevGravityLeft -= 0.5f;
+                    else if (prevGravityRight >= 9.5f) prevGravityRight = 10.0f;
                     else
                     {
                         prevGravityRight += 0.5f - prevGravityLeft;
@@ -609,24 +615,28 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (prevGravityDown > 0.1f) prevGravityDown -= 0.1f;
                     else if (prevGravityDown > 0.0f) prevGravityDown = 0.0f;
+                    else if (prevGravityUp >= 9.9f) prevGravityUp = 10.0f;
                     else prevGravityUp += 0.1f;
                 }
                 else if (Input.GetKey(KeyCode.S) && !rotating)
                 {
                     if (prevGravityUp > 0.1f) prevGravityUp -= 0.1f;
                     else if (prevGravityUp > 0.0f) prevGravityUp = 0.0f;
+                    else if (prevGravityDown >= 9.9f) prevGravityDown = 10.0f;
                     else prevGravityDown += 0.1f;
                 }
                 else if (Input.GetKey(KeyCode.A) && !rotating)
                 {
                     if (prevGravityRight > 0.1f) prevGravityRight -= 0.1f;
                     else if (prevGravityRight > 0.0f) prevGravityRight = 0.0f;
+                    else if (prevGravityLeft >= 9.9f) prevGravityLeft = 10.0f;
                     else prevGravityLeft += 0.1f;
                 }
                 else if (Input.GetKey(KeyCode.D) && !rotating)
                 {
                     if (prevGravityLeft > 0.1f) prevGravityLeft -= 0.1f;
                     else if (prevGravityLeft > 0.0f) prevGravityLeft = 0.0f;
+                    else if (prevGravityRight >= 9.9f) prevGravityRight = 10.0f;
                     else prevGravityRight += 0.1f;
                 }
             }
@@ -689,7 +699,7 @@ public class PlayerMovement : MonoBehaviour
         //else if (gameObject.GetComponent<Rigidbody2D>().rotation == rotation && rotating) rotated = true;
         gravityDamage = 0.0f;
         //if the player is on the floor and has 3 gravity or more she takes damage per second
-        if (m_Grounded && (gravityDown > 3.0f || gravityUp > 3.0f || gravityLeft > 3.0f || gravityRight > 3.0f))
+        if (m_Grounded && (gravityDown > 3.05f || gravityUp > 3.05f || gravityLeft > 3.05f || gravityRight > 3.05f))
         {
             if (gravity == 0) gravityDamage += gravityDown / 50.0f;
             else if (gravity == 1) gravityDamage += gravityUp / 50.0f;

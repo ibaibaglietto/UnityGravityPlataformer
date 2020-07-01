@@ -70,7 +70,7 @@ public class HeavyBanditScript : MonoBehaviour
         }
         else
         {
-            if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 2.3f && !gameObject.GetComponent<Animator>().GetBool("IsFighting") && !player.GetComponent<PlayerMovement>().talking)
+            if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 2.3f && !gameObject.GetComponent<Animator>().GetBool("IsFighting") && !player.GetComponent<PlayerMovement>().talking && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
             {
                 gameObject.GetComponent<Animator>().SetBool("IsFighting", true);
                 player.GetComponent<PlayerMovement>().attacked += 1;

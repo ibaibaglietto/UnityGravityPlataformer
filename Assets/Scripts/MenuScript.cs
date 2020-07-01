@@ -145,7 +145,7 @@ public class MenuScript : MonoBehaviour
 
     public void CloseGame()
     {
-        Application.Quit();
         Debug.Log("Closing game");
+        Application.Quit();
     }
 }
