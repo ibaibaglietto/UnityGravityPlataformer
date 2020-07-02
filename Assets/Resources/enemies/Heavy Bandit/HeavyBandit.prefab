@@ -140,7 +140,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.042884827, y: -0.42146766}
+  m_Offset: {x: 0.042884827, y: -0.4209088}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -151,7 +151,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1250496, y: 1.3586266}
+  m_Size: {x: 1.1250496, y: 1.3575089}
   m_EdgeRadius: 0
 --- !u!58 &8778456445968590587
 CircleCollider2D:
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_MovementSmoothing: 0.05
   damage: 0
   attackPrefab: {fileID: 885668583441586928, guid: be6e82d35d625f7499cbd6f8ca7aaf0d, type: 3}
-  firstDamage: 0
+  lastDamage: 0
   combo: 0
   startPos: {x: 0, y: 0, z: 0}
   looking: 0

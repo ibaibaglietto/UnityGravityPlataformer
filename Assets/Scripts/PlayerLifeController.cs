@@ -42,9 +42,6 @@ public class PlayerLifeController : MonoBehaviour
     {
         if (health > 0.0f)
         {
-            health -= (player.GetComponent<PlayerMovement>().gravityDamage + player.GetComponent<PlayerMovement>().trapDamage + player.GetComponent<PlayerMovement>().enemyDamage) * ((100 - ((Mathf.Sqrt(150 * PlayerPrefs.GetInt("damageResistanceLevel"))) - 12.247f)) * 0.01f);
-            player.GetComponent<PlayerMovement>().trapDamage = 0.0f;
-            player.GetComponent<PlayerMovement>().enemyDamage = 0.0f;
             if (health < maxHealth && player.GetComponent<PlayerMovement>().hasMana && player.GetComponent<PlayerMovement>().healing)
             {
                 manaBar.GetComponent<ManaController>().mana -= (Mathf.Sqrt(2 * PlayerPrefs.GetInt("healingLevel")) + 1.1f) / 50f;
@@ -65,4 +62,10 @@ public class PlayerLifeController : MonoBehaviour
             PlayerPrefs.SetInt("diedscene", player.GetComponent<PlayerMovement>().scene);
         }
     }
+
+    public void receiveDamage(float damage)
+    {
+        health -= damage * ((100 - ((Mathf.Sqrt(150 * PlayerPrefs.GetInt("damageResistanceLevel"))) - 12.247f)) * 0.01f);
+    }
+
 }

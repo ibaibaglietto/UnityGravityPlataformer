@@ -10,6 +10,7 @@ public class GravityArrowScript : MonoBehaviour
     private GameObject gravityUp;
     private GameObject gravityLeft;
     private GameObject gravityRight;
+    private GameObject white;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class GravityArrowScript : MonoBehaviour
         gravityUp = GameObject.Find("Side1");
         gravityLeft = GameObject.Find("Side2");
         gravityRight = GameObject.Find("Side3");
+        white = GameObject.Find("ChangeGravity");
     }
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class GravityArrowScript : MonoBehaviour
     {
         if (player.GetComponent<PlayerMovement>().changingGravity && !player.GetComponent<PlayerMovement>().rotating)
         {
+            white.SetActive(true);
             gameObject.transform.position = player.transform.position;
             if (player.GetComponent<PlayerMovement>().prevGravityDown > 0.0f)
             {
@@ -70,6 +73,7 @@ public class GravityArrowScript : MonoBehaviour
         }
         else
         {
+            white.SetActive(false);
             gravityDown.SetActive(false);
             gravityUp.SetActive(false);
             gravityLeft.SetActive(false);

@@ -6,12 +6,16 @@ public class ComboDamageScript : MonoBehaviour
 {
     //The player
     private GameObject player;
+    //The healthbar
+    private GameObject healthBar;
     //THe damage
     public float damage;
 
     void Start()
     {
         player = GameObject.Find("Player");
+        //Find the healthbar
+        healthBar = GameObject.Find("Healthbar");
     }
 
     //If the player enters the collider and she hasn't taken damage in the previous 2 seconds she will take damage
@@ -22,7 +26,7 @@ public class ComboDamageScript : MonoBehaviour
             player.GetComponent<Animator>().SetBool("takeDamage", true);
             player.GetComponent<PlayerMovement>().takingDamage = true;
             player.GetComponent<PlayerMovement>().lastDamage = Time.fixedTime - 1.7f;
-            player.GetComponent<PlayerMovement>().enemyDamage = damage;
+            healthBar.GetComponent<PlayerLifeController>().receiveDamage(damage);
         }
     }
 

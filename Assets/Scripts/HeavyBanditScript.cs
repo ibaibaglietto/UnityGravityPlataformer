@@ -115,7 +115,7 @@ public class HeavyBanditScript : MonoBehaviour
             moving = false;
         }
         if (damage > 0.0f)
-        {
+        {            
             health -= damage;
             damage = 0.0f;
         }

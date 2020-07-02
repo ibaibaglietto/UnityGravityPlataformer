@@ -261,4 +261,6 @@ public class KnightScript : MonoBehaviour
     {
         PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + (int)(100.0f * (1.0f + (PlayerPrefs.GetInt("expGainingLevel") - 1.0f) * 0.1f)));
     }
+
+    
 }

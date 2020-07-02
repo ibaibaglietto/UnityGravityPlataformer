@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject slashPrefab;
     //The background
     private GameObject backGround;
+    //The healthbar
+    private GameObject healthBar;
     public int gravity = 0; //0 -> down, 1 -> up, 2-> left, 3 -> right.
     //the gravity of the previous frame
     public int lastGravity = 0;
@@ -180,6 +182,8 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
         //We find the background
         backGround = GameObject.Find("Background");
+        //Find the healthbar
+        healthBar = GameObject.Find("Healthbar");
         //Initialize all the variables we are going to use to manage the actions of the player
         hasMana = true;
         hasStamina = true;
@@ -314,7 +318,7 @@ public class PlayerMovement : MonoBehaviour
         //The player tries to absorb automatically when sleeping
         if (sleeping && !fullMana) isAbsorbing = true;
         //Activate gravity change when player presses Q
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && !approach)
         {
             //Time will slow down while changing the gravity
             Time.timeScale = 0.05f;
@@ -701,22 +705,25 @@ public class PlayerMovement : MonoBehaviour
         //if the player is on the floor and has 3 gravity or more she takes damage per second
         if (m_Grounded && (gravityDown > 3.05f || gravityUp > 3.05f || gravityLeft > 3.05f || gravityRight > 3.05f))
         {
-            if (gravity == 0) gravityDamage += gravityDown / 50.0f;
-            else if (gravity == 1) gravityDamage += gravityUp / 50.0f;
-            else if (gravity == 2) gravityDamage += gravityLeft / 50.0f;
-            else if (gravity == 3) gravityDamage += gravityRight / 50.0f;
+            if (gravity == 0) gravityDamage = gravityDown / 50.0f;
+            else if (gravity == 1) gravityDamage = gravityUp / 50.0f;
+            else if (gravity == 2) gravityDamage = gravityLeft / 50.0f;
+            else if (gravity == 3) gravityDamage = gravityRight / 50.0f;
+            healthBar.GetComponent<PlayerLifeController>().receiveDamage(gravityDamage);
         }
+
         //if the player falls in more than 20 velocity she takes instant damage
         if (!rotating && ((Mathf.Abs(Mathf.Abs(gameObject.GetComponent<Rigidbody2D>().velocity.x) - Mathf.Abs(lastVelocity.x)) > 20.0f && Mathf.Abs(gameObject.GetComponent<Rigidbody2D>().velocity.x) < (gravityLeft + gravityRight + 1.0f)) || (Mathf.Abs(Mathf.Abs(gameObject.GetComponent<Rigidbody2D>().velocity.y) - Mathf.Abs(lastVelocity.y)) > 20.0f && Mathf.Abs(gameObject.GetComponent<Rigidbody2D>().velocity.y) < (gravityUp + gravityDown + 1.0f))))
         {
             if (gravity == 0 || gravity == 1)
             {
-                gravityDamage += Mathf.Abs(Mathf.Abs(gameObject.GetComponent<Rigidbody2D>().velocity.y) - Mathf.Abs(lastVelocity.y)) / 2.0f;
+                gravityDamage = Mathf.Abs(lastVelocity.y) / 2.0f;
             }
             else
             {
-                gravityDamage += Mathf.Abs(Mathf.Abs(gameObject.GetComponent<Rigidbody2D>().velocity.x) - Mathf.Abs(lastVelocity.x)) / 2.0f;
+                gravityDamage = Mathf.Abs(lastVelocity.x) / 2.0f;
             }
+            healthBar.GetComponent<PlayerLifeController>().receiveDamage(gravityDamage);
         }
         //we check if the player has taken damage to make it visually easy to see that he can't take damage now
         if ((Time.fixedTime - lastDamage) < 0.3f && !animator.GetBool("isDead"))
@@ -1046,5 +1053,56 @@ public class PlayerMovement : MonoBehaviour
         theScale.x *= -1;
         transform.localScale = theScale;
     }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.transform.tag == "HeavyBandit")
+        {
+            if (Mathf.Abs(lastVelocity.y) > 20.0f)
+            {
+                gravityDamage = Mathf.Abs(lastVelocity.y) / 2.0f;
+                collision.transform.GetComponent<HeavyBanditScript>().damage = gravityDamage * 4;
+                collision.transform.GetComponent<Animator>().SetBool("TakeDamage", true);
+            }
+            else if (Mathf.Abs(lastVelocity.x) > 20.0f)
+            {
+                gravityDamage = Mathf.Abs(lastVelocity.x) / 2.0f;
+                collision.transform.GetComponent<HeavyBanditScript>().damage = gravityDamage * 4;
+                collision.transform.GetComponent<Animator>().SetBool("TakeDamage", true);
+            }
+            healthBar.GetComponent<PlayerLifeController>().receiveDamage(gravityDamage);
+        }
+        else if (collision.transform.tag == "Knight")
+        {            
+            if (Mathf.Abs(lastVelocity.y) > 20.0f)
+            {
+                gravityDamage = Mathf.Abs(lastVelocity.y) / 2.0f;
+                collision.transform.GetComponent<KnightScript>().damage = gravityDamage * 4;
+                collision.transform.GetComponent<Animator>().SetBool("isTakingDamage", true);
+            }
+            else if (Mathf.Abs(lastVelocity.x) > 20.0f)
+            {
+                gravityDamage = Mathf.Abs(lastVelocity.x) / 2.0f;
+                collision.transform.GetComponent<KnightScript>().damage = gravityDamage * 4;
+                collision.transform.GetComponent<Animator>().SetBool("isTakingDamage", true);
+            }
+            healthBar.GetComponent<PlayerLifeController>().receiveDamage(gravityDamage);
+        }
+        else if (collision.transform.tag == "King")
+        {
+            if (Mathf.Abs(lastVelocity.y) > 20.0f)
+            {
+                gravityDamage = Mathf.Abs(lastVelocity.y) / 2.0f;
+                collision.transform.GetComponent<KingScript>().damage = gravityDamage * 4;
+            }
+            else if (Mathf.Abs(lastVelocity.x) > 20.0f)
+            {
+                gravityDamage = Mathf.Abs(lastVelocity.x) / 2.0f;
+                collision.transform.GetComponent<KingScript>().damage = gravityDamage * 4;
+            }
+            healthBar.GetComponent<PlayerLifeController>().receiveDamage(gravityDamage);
+        }
+    }
+
 
 }

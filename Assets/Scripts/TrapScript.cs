@@ -6,11 +6,16 @@ public class TrapScript : MonoBehaviour
 {
     //The player
     private GameObject player;
+    //The healthbar
+    private GameObject healthBar;
 
-   
+
     void Start()
     {
+        //Find the player
         player = GameObject.Find("Player");
+        //Find the healthbar
+        healthBar = GameObject.Find("Healthbar");
     }
 
     //If the player enters the collider and she hasn't taken damage in the previous 2 seconds she will take damage
@@ -21,7 +26,7 @@ public class TrapScript : MonoBehaviour
             player.GetComponent<Animator>().SetBool("takeDamage", true);
             player.GetComponent<PlayerMovement>().takingDamage = true;
             player.GetComponent<PlayerMovement>().lastDamage = Time.fixedTime;
-            player.GetComponent<PlayerMovement>().trapDamage = 20.0f;
+            healthBar.GetComponent<PlayerLifeController>().receiveDamage(20.0f);
         }
     }
 }
