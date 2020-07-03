@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
+    //The cursor
+    public Texture2D cursorArrow;
     private GameObject LoadButton;
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
         LoadButton = GameObject.Find("Load");
         //We initialize all the playerprefs on the awake
         //The mana level
@@ -68,6 +71,8 @@ public class MenuScript : MonoBehaviour
         if (!PlayerPrefs.HasKey("dieTutorial")) PlayerPrefs.SetInt("dieTutorial", 0);
         //The health level 
         if (!PlayerPrefs.HasKey("healthLevel")) PlayerPrefs.SetInt("healthLevel", 1);
+        //An int to save if the player has recovered the lost exp
+        if (!PlayerPrefs.HasKey("recoveredExp")) PlayerPrefs.SetInt("recoveredExp", 0);
         //A float to save the current health
         if (!PlayerPrefs.HasKey("health")) PlayerPrefs.SetFloat("health", Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55);
         if (PlayerPrefs.GetInt("lastDialogue") == 0) LoadButton.GetComponent<Button>().interactable = false;

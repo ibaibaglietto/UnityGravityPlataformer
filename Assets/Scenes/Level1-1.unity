@@ -15480,6 +15480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1196ef59a2a7e264789f9309fb097bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursorArrow: {fileID: 2800000, guid: c481d55c06e107541a4cc7e81f083616, type: 3}
+  cursorSword: {fileID: 2800000, guid: 670a318d8a250424f82144c93a5eb0cc, type: 3}
 --- !u!114 &1516559840
 MonoBehaviour:
   m_ObjectHideFlags: 0

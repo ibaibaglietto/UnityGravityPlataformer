@@ -154,6 +154,10 @@ public class PlayerMovement : MonoBehaviour
     public bool ended;
     //A bool to check if the game is paused
     public bool paused;
+    //A bool to check if the die animation has ended
+    public bool dead;
+    //A bool to check if the player is inside a trap
+    public bool trap;
 
     [Header("Events")]
     [Space]
@@ -185,6 +189,8 @@ public class PlayerMovement : MonoBehaviour
         //Find the healthbar
         healthBar = GameObject.Find("Healthbar");
         //Initialize all the variables we are going to use to manage the actions of the player
+        trap = false;
+        dead = false;
         hasMana = true;
         hasStamina = true;
         rotated = false;
@@ -223,6 +229,7 @@ public class PlayerMovement : MonoBehaviour
             else if (PlayerPrefs.GetInt("respawnface") == 1 && !m_FacingRight) Flip();
             if (PlayerPrefs.GetInt("hasDied") == 2)
             {
+                PlayerPrefs.SetInt("recoveredExp", 0);
                 PlayerPrefs.SetInt("diedexp", PlayerPrefs.GetInt("exp"));
                 PlayerPrefs.SetInt("exp", 0);
                 PlayerPrefs.SetInt("restExp", 0);
@@ -259,10 +266,20 @@ public class PlayerMovement : MonoBehaviour
         if (attacked == -1) attacked = 0;
         //we set the trap int to make the doors to be opened
         if (PlayerPrefs.GetInt("trap") == 2 && PlayerPrefs.GetFloat("respawnx") == -62.63f) PlayerPrefs.SetInt("trap", 3);
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !animator.GetBool("isDead") && !resting)
         {
             paused = true;
             Time.timeScale = 0.0f;
+        }
+        if (dead && m_Grounded )
+        {
+            if (!trap)
+            {
+                PlayerPrefs.SetFloat("diedx", gameObject.transform.position.x);
+                PlayerPrefs.SetFloat("diedy", gameObject.transform.position.y - 0.257f);
+            }
+            PlayerPrefs.SetInt("diedscene", gameObject.GetComponent<PlayerMovement>().scene);
+            dead = false;
         }
         if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(PlayerPrefs.GetInt("respawnscene"));
         //stop throwing shurikens when the player is damaged or is dead
@@ -301,6 +318,11 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetInt("respawnscene", benchScene);
             PlayerPrefs.SetInt("restExp", PlayerPrefs.GetInt("exp"));
             animator.SetBool("isResting", true);
+            if(PlayerPrefs.GetInt("recoveredExp") == 1)
+            {
+                PlayerPrefs.SetInt("recoveredExp", 0);
+                PlayerPrefs.SetInt("diedexp", 0);
+            }
         }
         //We check if the player can absorb, if so it tries to absorb pressing F
         if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking && !changingScene && !enteringScene && attacked == 0)
@@ -1104,5 +1126,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnApplicationPause(bool appPause)
+    {
+        if (appPause && !resting)
+        {
+            paused = true;
+            Time.timeScale = 0.0f;
+        }
+    }
+
+    public void endDie()
+    {
+        dead = true;
+    }
 
 }

@@ -104,7 +104,7 @@ public class SlashScript : MonoBehaviour
         if (collision.tag == "dieExp")
         {
             PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("exp") + PlayerPrefs.GetInt("diedexp"));
-            PlayerPrefs.SetInt("diedexp", 0);
+            PlayerPrefs.SetInt("recoveredExp", 1);
             Destroy(collision.gameObject);
         }
         if (collision.tag == "King")

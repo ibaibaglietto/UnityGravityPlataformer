@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class UIScript : MonoBehaviour
 {
+    //The cursors
+    public Texture2D cursorArrow;
+    public Texture2D cursorSword;
     //4 gameobjects to represent the gravity to each side
     //private GameObject g0;
     //private GameObject g1;
@@ -92,6 +95,7 @@ public class UIScript : MonoBehaviour
         //g1 = GameObject.Find("g1");
         //g2 = GameObject.Find("g2");
         //g3 = GameObject.Find("g3");
+        Cursor.SetCursor(cursorSword, Vector2.zero, CursorMode.ForceSoftware);
         player = GameObject.Find("Player");
         lvlUp = GameObject.Find("Upgrade player");
         exp = GameObject.Find("LightNumb").GetComponent<Text>();
@@ -170,8 +174,13 @@ public class UIScript : MonoBehaviour
         if (player.GetComponent<PlayerMovement>().paused)
         {
             pauseMenu.SetActive(true);
+            Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
         }
-        else pauseMenu.SetActive(false);
+        else if(pauseMenu.activeSelf == true)
+        {
+            pauseMenu.SetActive(false);
+            Cursor.SetCursor(cursorSword, Vector2.zero, CursorMode.ForceSoftware);
+        }
         //Check that all the numbers of the lvl up interface are up to date
         if (!lvlUp.activeSelf && player.GetComponent<PlayerMovement>().sleeping)
         {
