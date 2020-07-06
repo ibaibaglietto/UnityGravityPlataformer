@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class KingScript : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class KingScript : MonoBehaviour
     private GameObject groundAttack;
     //The prefab of the groundAttackfase2
     public GameObject groundAttackFase2Prefab;
+    //The gameobject of the light 
+    private GameObject bossLight;
     //The number we are going to use to decide what attack to do
     private float r;
     //A boolean to see if the king is attacking
@@ -53,6 +56,7 @@ public class KingScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        bossLight = gameObject.transform.GetChild(0).gameObject;
         lookingRight = true;
         moving = false;
         prevPos = gameObject.transform.position;
@@ -63,6 +67,7 @@ public class KingScript : MonoBehaviour
         fighting = false;
         teleportAttack = false;
         Flip();
+        bossLight.SetActive(false);
     }
 
     private void Update()
@@ -290,4 +295,11 @@ public class KingScript : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("EnterFase2", false);
         fase2 = true;
     }
+
+    //function to enable the light
+    public void enableLight()
+    {
+        bossLight.SetActive(true);
+    }
+
 }

@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5413151196767433453}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5413151195914914449
 SpriteRenderer:
@@ -111,7 +111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5413151196767433453}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5413151196675275390
 MonoBehaviour:
@@ -183,9 +183,9 @@ Transform:
   m_LocalPosition: {x: -46.19, y: -0.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5413151195914914448}
-  - {fileID: 5413151196827087426}
   - {fileID: 5413151196675275389}
+  - {fileID: 5413151196827087426}
+  - {fileID: 5413151195914914448}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -228,6 +228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyPrefab: {fileID: 329504441637429877, guid: 3bbd01b036ad41b4bbe893793b7c73be, type: 3}
+  blueTorch: 0
+  bossLight: 0
 --- !u!1 &5413151196827087425
 GameObject:
   m_ObjectHideFlags: 0

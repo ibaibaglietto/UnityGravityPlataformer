@@ -47,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
     private GameObject backGround;
     //The healthbar
     private GameObject healthBar;
+    //The die screen
+    private GameObject dieScreen;
     public int gravity = 0; //0 -> down, 1 -> up, 2-> left, 3 -> right.
     //the gravity of the previous frame
     public int lastGravity = 0;
@@ -117,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
     //A boolean to see if the player can rest
     public bool canRest;
     //A boolean to see if the player is resting
-    private bool resting;
+    public bool resting;
     //A float to see the position the player will rest
     public float restPos;
     //A float to see if the player is sleeping
@@ -188,6 +190,8 @@ public class PlayerMovement : MonoBehaviour
         backGround = GameObject.Find("Background");
         //Find the healthbar
         healthBar = GameObject.Find("Healthbar");
+        //Find the die screen
+        dieScreen = GameObject.Find("DieScreen");
         //Initialize all the variables we are going to use to manage the actions of the player
         trap = false;
         dead = false;
@@ -278,10 +282,10 @@ public class PlayerMovement : MonoBehaviour
                 PlayerPrefs.SetFloat("diedx", gameObject.transform.position.x);
                 PlayerPrefs.SetFloat("diedy", gameObject.transform.position.y - 0.257f);
             }
+            dieScreen.SetActive(true);
             PlayerPrefs.SetInt("diedscene", gameObject.GetComponent<PlayerMovement>().scene);
-            dead = false;
         }
-        if (animator.GetBool("isDead") && Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(PlayerPrefs.GetInt("respawnscene"));
+        else dieScreen.SetActive(false);
         //stop throwing shurikens when the player is damaged or is dead
         if (animator.GetBool("isDead") || animator.GetBool("takeDamage"))
         {
@@ -1128,7 +1132,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnApplicationPause(bool appPause)
     {
-        if (appPause && !resting)
+        if (appPause && !resting && !animator.GetBool("isDead"))
         {
             paused = true;
             Time.timeScale = 0.0f;

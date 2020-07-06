@@ -10,11 +10,6 @@ public class UIScript : MonoBehaviour
     //The cursors
     public Texture2D cursorArrow;
     public Texture2D cursorSword;
-    //4 gameobjects to represent the gravity to each side
-    //private GameObject g0;
-    //private GameObject g1;
-    //private GameObject g2;
-    //private GameObject g3;
     //The gameobject of the player
     private GameObject player;
     //The gameobject of the lvl up interface
@@ -87,14 +82,11 @@ public class UIScript : MonoBehaviour
     private Light2D playerLight;
     //The pause menu
     private GameObject pauseMenu;
+    //The Die screen
+    private GameObject dieScreen;
 
     private void Start()
     {
-        //Find all the gameobjects and save them
-        //g0 = GameObject.Find("g0");
-        //g1 = GameObject.Find("g1");
-        //g2 = GameObject.Find("g2");
-        //g3 = GameObject.Find("g3");
         Cursor.SetCursor(cursorSword, Vector2.zero, CursorMode.ForceSoftware);
         player = GameObject.Find("Player");
         lvlUp = GameObject.Find("Upgrade player");
@@ -130,6 +122,7 @@ public class UIScript : MonoBehaviour
         staminaBar = GameObject.Find("Staminabar");
         staminaBarColor = GameObject.Find("Playerstamina");
         pauseMenu = GameObject.Find("Pause");
+        dieScreen = GameObject.Find("DieScreen");
         playerLight = player.transform.GetChild(1).gameObject.GetComponent<Light2D>();
         lvlUp.SetActive(false);
         healthBar.transform.GetComponent<RectTransform>().anchorMax = new Vector2((Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55) * 0.002f + 0.034f, 0.9644875f);
@@ -181,6 +174,7 @@ public class UIScript : MonoBehaviour
             pauseMenu.SetActive(false);
             Cursor.SetCursor(cursorSword, Vector2.zero, CursorMode.ForceSoftware);
         }
+        if(dieScreen.activeSelf == true) Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
         //Check that all the numbers of the lvl up interface are up to date
         if (!lvlUp.activeSelf && player.GetComponent<PlayerMovement>().sleeping)
         {
@@ -209,17 +203,8 @@ public class UIScript : MonoBehaviour
             healingLevelMinus.SetActive(false);
             damageResistanceLevelMinus.SetActive(false);
             expGainingLevelMinus.SetActive(false);
+            Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
         }
-        //Check if we are changing gravity and if so make the gameobjects active
-        //g0.SetActive(player.GetComponent<PlayerMovement>().changingGravity && !player.GetComponent<PlayerMovement>().rotating);
-        //g1.SetActive(player.GetComponent<PlayerMovement>().changingGravity && !player.GetComponent<PlayerMovement>().rotating);
-        //g2.SetActive(player.GetComponent<PlayerMovement>().changingGravity && !player.GetComponent<PlayerMovement>().rotating);
-        //g3.SetActive(player.GetComponent<PlayerMovement>().changingGravity && !player.GetComponent<PlayerMovement>().rotating);
-        //Write the gravity applied to each side
-        //g0.GetComponent<Text>().text = player.GetComponent<PlayerMovement>().prevGravityDown.ToString("F1");
-        //g1.GetComponent<Text>().text = player.GetComponent<PlayerMovement>().prevGravityUp.ToString("F1");
-        //g2.GetComponent<Text>().text = player.GetComponent<PlayerMovement>().prevGravityLeft.ToString("F1");
-        //g3.GetComponent<Text>().text = player.GetComponent<PlayerMovement>().prevGravityRight.ToString("F1");
         //Show the light number on the interface
         exp.text = PlayerPrefs.GetInt("exp").ToString();
         if (PlayerPrefs.GetInt("needExp") > PlayerPrefs.GetInt("exp")) playerLight.pointLightOuterRadius = (float)PlayerPrefs.GetInt("exp") / (float)PlayerPrefs.GetInt("needExp") * 3.0f;
@@ -369,6 +354,7 @@ public class UIScript : MonoBehaviour
         }
         player.GetComponent<Animator>().SetBool("isResting", false);
         lvlUp.SetActive(false);
+        Cursor.SetCursor(cursorSword, Vector2.zero, CursorMode.ForceSoftware);
     }
     public void loadMenu()
     {
@@ -388,4 +374,11 @@ public class UIScript : MonoBehaviour
         Debug.Log("Closing game");
         Application.Quit();        
     }
+
+    public void Respawn()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetInt("respawnscene"));
+        player.GetComponent<PlayerMovement>().dead = false;
+    }
+
 }

@@ -17,6 +17,8 @@ public class DialogueTrigger : MonoBehaviour
     private GameObject bossBar;
     //The animator off the boss fight arena
     private Animator bossArena;
+    //the side the player will face
+    public bool faceRight;
 
     void Start()
     {
@@ -57,6 +59,7 @@ public class DialogueTrigger : MonoBehaviour
                     player.GetComponent<PlayerMovement>().approach = false;
                     bossBar.GetComponent<BossHealthController>().fighting = true;
                 }
+                if ((faceRight && !player.GetComponent<PlayerMovement>().m_FacingRight) || (!faceRight && player.GetComponent<PlayerMovement>().m_FacingRight)) player.GetComponent<PlayerMovement>().Flip();
                 FindObjectOfType<DialogueManager>().StartDialogue(dialogue, gravity1, gravity2);
                 PlayerPrefs.SetInt("lastDialogue", dialogueNumber);
             }

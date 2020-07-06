@@ -23,12 +23,14 @@ public class TorchScript : MonoBehaviour
     private float absorbed;
     //A bool to see if the torch is blue
     public bool blueTorch;
+    //A bool to see if it's the boss light
+    public bool bossLight;
 
     void Start()
     {
         player = GameObject.Find("Player");
-        flame = gameObject.transform.GetChild(1).gameObject;
-        torchLight = gameObject.transform.GetChild(2).gameObject.GetComponent<Light2D>();
+        if (!bossLight) flame = gameObject.transform.GetChild(1).gameObject;
+        torchLight = gameObject.transform.GetChild(0).gameObject.GetComponent<Light2D>();
         playerNear = false;
         manaBar = GameObject.Find("Manabar");
         absorbed = 0.0f;
@@ -63,7 +65,7 @@ public class TorchScript : MonoBehaviour
     {
         if (player.GetComponent<PlayerMovement>().isAbsorbing && playerNear)
         {
-            flame.transform.localScale -= new Vector3(0.01f, 0.01f, 0.0f);
+            if(!bossLight) flame.transform.localScale -= new Vector3(0.01f, 0.01f, 0.0f);
             torchLight.pointLightOuterRadius -= 0.045f;
             manaBar.GetComponent<ManaController>().mana += 0.2f;
             Vector2 dir = new Vector3(player.transform.position.x, player.transform.position.y + 0.3f) - transform.position;
@@ -73,20 +75,23 @@ public class TorchScript : MonoBehaviour
             dir.Normalize();
             energy.GetComponent<Rigidbody2D>().velocity = dir * 5.0f;
         }
-        if (flame.transform.localScale.x <= 0.0f && absorbed == 0.0f)
+        if (torchLight.pointLightOuterRadius <= 0.0f && absorbed == 0.0f)
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            flame.SetActive(false);
+            if (!bossLight) flame.SetActive(false);
             torchLight.enabled = false;
             absorbed = Time.fixedTime;
         }
-        else if (absorbed != 0.0f && (Time.fixedTime-absorbed > 15.0f) && blueTorch)
+        else if (absorbed != 0.0f && (Time.fixedTime-absorbed > 15.0f) && (blueTorch || bossLight))
         {
             torchLight.pointLightOuterRadius = 4.5f;
-            gameObject.GetComponent<BoxCollider2D>().enabled = true;
-            flame.SetActive(true);
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;            
             torchLight.enabled = true;
-            flame.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            if (!bossLight)
+            {
+                flame.SetActive(true);
+                flame.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }            
             absorbed = 0.0f;
         }
     }

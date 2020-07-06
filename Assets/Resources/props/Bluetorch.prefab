@@ -131,7 +131,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 506902742037400576}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &506902741938637358
 SpriteRenderer:
@@ -213,9 +213,9 @@ Transform:
   m_LocalPosition: {x: 6.53, y: -9.88, z: -99.695915}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 506902741938637359}
-  - {fileID: 506902741528235988}
   - {fileID: 506902742757293832}
+  - {fileID: 506902741528235988}
+  - {fileID: 506902741938637359}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -233,6 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyPrefab: {fileID: 329504441637429877, guid: 3bbd01b036ad41b4bbe893793b7c73be, type: 3}
   blueTorch: 1
+  bossLight: 0
 --- !u!61 &506902742050321718
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -288,7 +289,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 506902742037400576}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &506902742757293839
 MonoBehaviour:
