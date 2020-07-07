@@ -8,13 +8,35 @@ public class MenuScript : MonoBehaviour
 {
     //The cursor
     public Texture2D cursorArrow;
+    //The main menu
+    private GameObject mainMenu;
+    //The load button
     private GameObject LoadButton;
+    //The settings menu
+    private GameObject settingsMenu;
+    //The resolution selector dropdown
+    private GameObject resolution;
+    //The toggle of the full screen mode
+    private GameObject fullScreenToggle;
+    //the screen mode
+    private bool fullScreen;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
+        mainMenu = GameObject.Find("MainMenu");
         LoadButton = GameObject.Find("Load");
+        settingsMenu = GameObject.Find("SettingsMenu");
+        resolution = GameObject.Find("DropdownResolution");
+        fullScreenToggle = GameObject.Find("Windowed");
+        settingsMenu.SetActive(false);
         //We initialize all the playerprefs on the awake
+        //The resolution width
+        if (!PlayerPrefs.HasKey("resolutionW")) PlayerPrefs.SetInt("resolutionW", 1280);
+        //The resolution height
+        if (!PlayerPrefs.HasKey("resolutionH")) PlayerPrefs.SetInt("resolutionH", 720);
+        //The full screen mode: 0-> windowed, 1-> full screen
+        if (!PlayerPrefs.HasKey("fullScreen")) PlayerPrefs.SetInt("fullScreen", 0);
         //The mana level
         if (!PlayerPrefs.HasKey("manaLevel")) PlayerPrefs.SetInt("manaLevel", 1);
         //The dealt damage level
@@ -77,6 +99,9 @@ public class MenuScript : MonoBehaviour
         if (!PlayerPrefs.HasKey("health")) PlayerPrefs.SetFloat("health", Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55);
         if (PlayerPrefs.GetInt("lastDialogue") == 0) LoadButton.GetComponent<Button>().interactable = false;
         else LoadButton.GetComponent<Button>().interactable = true;
+        if (PlayerPrefs.GetInt("fullScreen") == 0) fullScreen = false;
+        else fullScreen = true;
+        Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreen);
     }
 
     public void NewGame()
@@ -152,5 +177,135 @@ public class MenuScript : MonoBehaviour
     {
         Debug.Log("Closing game");
         Application.Quit();
+    }
+
+    public void OpenSettings()
+    {
+        mainMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+
+    public void CloseNoSave()
+    {
+        settingsMenu.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+
+    public void CloseSave()
+    {
+        if(resolution.GetComponent<Dropdown>().value == 0)
+        {
+            PlayerPrefs.SetInt("resolutionW", 640);
+            PlayerPrefs.SetInt("resolutionH", 480);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 1)
+        {
+            PlayerPrefs.SetInt("resolutionW", 800);
+            PlayerPrefs.SetInt("resolutionH", 600);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 2)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1024);
+            PlayerPrefs.SetInt("resolutionH", 576);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 3)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1024);
+            PlayerPrefs.SetInt("resolutionH", 768);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 4)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1152);
+            PlayerPrefs.SetInt("resolutionH", 648);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 5)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1280);
+            PlayerPrefs.SetInt("resolutionH", 720);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 6)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1280);
+            PlayerPrefs.SetInt("resolutionH", 800);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 7)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1280);
+            PlayerPrefs.SetInt("resolutionH", 960);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 8)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1366);
+            PlayerPrefs.SetInt("resolutionH", 768);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 9)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1400);
+            PlayerPrefs.SetInt("resolutionH", 1050);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 10)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1440);
+            PlayerPrefs.SetInt("resolutionH", 900);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 11)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1440);
+            PlayerPrefs.SetInt("resolutionH", 1080);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 12)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1600);
+            PlayerPrefs.SetInt("resolutionH", 900);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 13)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1600);
+            PlayerPrefs.SetInt("resolutionH", 1200);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 14)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1856);
+            PlayerPrefs.SetInt("resolutionH", 1392);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 15)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1920);
+            PlayerPrefs.SetInt("resolutionH", 1080);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 16)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1920);
+            PlayerPrefs.SetInt("resolutionH", 1200);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 17)
+        {
+            PlayerPrefs.SetInt("resolutionW", 1920);
+            PlayerPrefs.SetInt("resolutionH", 1440);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 18)
+        {
+            PlayerPrefs.SetInt("resolutionW", 2048);
+            PlayerPrefs.SetInt("resolutionH", 1536);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 19)
+        {
+            PlayerPrefs.SetInt("resolutionW", 2560);
+            PlayerPrefs.SetInt("resolutionH", 1440);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 20)
+        {
+            PlayerPrefs.SetInt("resolutionW", 2560);
+            PlayerPrefs.SetInt("resolutionH", 1600);
+        }
+        else if (resolution.GetComponent<Dropdown>().value == 21)
+        {
+            PlayerPrefs.SetInt("resolutionW", 3840);
+            PlayerPrefs.SetInt("resolutionH", 2160);
+        }
+        Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreenToggle.GetComponent<Toggle>().isOn);
+
+        settingsMenu.SetActive(false);
+        mainMenu.SetActive(true);
     }
 }
