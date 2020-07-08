@@ -6,8 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
-    //The cursor
-    public Texture2D cursorArrow;
+    //The cursors
+    public Texture2D cursorArrow16;
+    public Texture2D cursorArrow20;
+    public Texture2D cursorArrow26;
+    public Texture2D cursorArrow29;
+    public Texture2D cursorArrow32;
+    public Texture2D cursorArrow34;
+    public Texture2D cursorArrow35;
+    public Texture2D cursorArrow36;
+    public Texture2D cursorArrow40;
+    public Texture2D cursorArrow46;
+    public Texture2D cursorArrow48;
+    public Texture2D cursorArrow51;
+    public Texture2D cursorArrow64;
+    public Texture2D cursorArrow96;
     //The main menu
     private GameObject mainMenu;
     //The load button
@@ -20,16 +33,32 @@ public class MenuScript : MonoBehaviour
     private GameObject fullScreenToggle;
     //the screen mode
     private bool fullScreen;
+    //The framerate selector dropdown
+    private GameObject framerate;
+    //The previous screen configuration
+    private int prevW;
+    private int prevH;
+    private bool prevFS;
+    private int prevFR;
+    //The return configuration text
+    private Text returnText;
+    //The time the resolution changes were made
+    private float resolutionTime;
+    //The confirmation window
+    private GameObject confirmationMenu;
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
         mainMenu = GameObject.Find("MainMenu");
         LoadButton = GameObject.Find("Load");
         settingsMenu = GameObject.Find("SettingsMenu");
         resolution = GameObject.Find("DropdownResolution");
+        framerate = GameObject.Find("DropdownFrameRate");
         fullScreenToggle = GameObject.Find("Windowed");
+        confirmationMenu = GameObject.Find("ConfirmMenu");
+        returnText = GameObject.Find("ReturnText").GetComponent<Text>();
         settingsMenu.SetActive(false);
+        confirmationMenu.SetActive(false);
         //We initialize all the playerprefs on the awake
         //The resolution width
         if (!PlayerPrefs.HasKey("resolutionW")) PlayerPrefs.SetInt("resolutionW", 1280);
@@ -37,6 +66,8 @@ public class MenuScript : MonoBehaviour
         if (!PlayerPrefs.HasKey("resolutionH")) PlayerPrefs.SetInt("resolutionH", 720);
         //The full screen mode: 0-> windowed, 1-> full screen
         if (!PlayerPrefs.HasKey("fullScreen")) PlayerPrefs.SetInt("fullScreen", 0);
+        //The preferred refresh rate
+        if (!PlayerPrefs.HasKey("framerate")) PlayerPrefs.SetInt("framerate", 0);
         //The mana level
         if (!PlayerPrefs.HasKey("manaLevel")) PlayerPrefs.SetInt("manaLevel", 1);
         //The dealt damage level
@@ -101,7 +132,92 @@ public class MenuScript : MonoBehaviour
         else LoadButton.GetComponent<Button>().interactable = true;
         if (PlayerPrefs.GetInt("fullScreen") == 0) fullScreen = false;
         else fullScreen = true;
-        Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreen);
+        Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreen, PlayerPrefs.GetInt("framerate"));
+        if (PlayerPrefs.GetInt("resolutionW") == 640)
+        {
+            Cursor.SetCursor(cursorArrow16, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 0;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 800)
+        {
+            Cursor.SetCursor(cursorArrow20, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 1;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1024)
+        {
+            Cursor.SetCursor(cursorArrow26, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 576) resolution.GetComponent<Dropdown>().value = 2;
+            else resolution.GetComponent<Dropdown>().value = 3;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1152)
+        {
+            Cursor.SetCursor(cursorArrow29, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 4;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1280)
+        {
+            Cursor.SetCursor(cursorArrow32, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 720) resolution.GetComponent<Dropdown>().value = 5;
+            else if (PlayerPrefs.GetInt("resolutionH") == 800) resolution.GetComponent<Dropdown>().value = 6;
+            else resolution.GetComponent<Dropdown>().value = 7;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1366)
+        {
+            Cursor.SetCursor(cursorArrow34, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 8;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1400)
+        {
+            Cursor.SetCursor(cursorArrow35, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 9;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1440)
+        {
+            Cursor.SetCursor(cursorArrow36, Vector2.zero, CursorMode.ForceSoftware);
+            if(PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 10;
+            else resolution.GetComponent<Dropdown>().value = 11;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1600)
+        {
+            Cursor.SetCursor(cursorArrow40, Vector2.zero, CursorMode.ForceSoftware);
+            if(PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 12;
+            else resolution.GetComponent<Dropdown>().value = 13;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1856)
+        {
+            Cursor.SetCursor(cursorArrow46, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 14;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1920)
+        {
+            Cursor.SetCursor(cursorArrow48, Vector2.zero, CursorMode.ForceSoftware);
+            if(PlayerPrefs.GetInt("resolutionH") == 1080) resolution.GetComponent<Dropdown>().value = 15;
+            else if (PlayerPrefs.GetInt("resolutionH") == 1200) resolution.GetComponent<Dropdown>().value = 16;
+            else resolution.GetComponent<Dropdown>().value = 17;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 2048)
+        {
+            Cursor.SetCursor(cursorArrow51, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 18;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 2560)
+        {
+            Cursor.SetCursor(cursorArrow64, Vector2.zero, CursorMode.ForceSoftware);
+            if(PlayerPrefs.GetInt("resolutionH") == 1440) resolution.GetComponent<Dropdown>().value = 19;
+            else resolution.GetComponent<Dropdown>().value = 20;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 3840)
+        {
+            Cursor.SetCursor(cursorArrow96, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 21;
+        }
+        if (PlayerPrefs.GetInt("framerate") == 30) framerate.GetComponent<Dropdown>().value = 0;
+        else if (PlayerPrefs.GetInt("framerate") == 60) framerate.GetComponent<Dropdown>().value = 1;
+        else if (PlayerPrefs.GetInt("framerate") == 90) framerate.GetComponent<Dropdown>().value = 2;
+        else if (PlayerPrefs.GetInt("framerate") == 120) framerate.GetComponent<Dropdown>().value = 3;
+        else if (PlayerPrefs.GetInt("framerate") == 144) framerate.GetComponent<Dropdown>().value = 4;
+        else if (PlayerPrefs.GetInt("framerate") == 0) framerate.GetComponent<Dropdown>().value = 5;
+        fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;        
     }
 
     public void NewGame()
@@ -167,6 +283,15 @@ public class MenuScript : MonoBehaviour
         PlayerPrefs.SetFloat("health", Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55);
         SceneManager.LoadScene(1);
     }
+    void FixedUpdate()
+    {
+        if (resolutionTime != 0.0f && (Time.fixedTime - resolutionTime) >= 10)
+        {
+            resolutionTime = 0.0f;
+            ReturnResolution();
+        }
+        else if (resolutionTime != 0.0f) returnText.text = "Return (" + (10 - (int)(Time.fixedTime - resolutionTime)).ToString() +")";
+    }
 
     public void LoadLevel()
     {
@@ -193,6 +318,10 @@ public class MenuScript : MonoBehaviour
 
     public void CloseSave()
     {
+        prevW = PlayerPrefs.GetInt("resolutionW");
+        prevH = PlayerPrefs.GetInt("resolutionH");
+        prevFS = fullScreen;
+        prevFR = PlayerPrefs.GetInt("framerate");
         if(resolution.GetComponent<Dropdown>().value == 0)
         {
             PlayerPrefs.SetInt("resolutionW", 640);
@@ -303,9 +432,142 @@ public class MenuScript : MonoBehaviour
             PlayerPrefs.SetInt("resolutionW", 3840);
             PlayerPrefs.SetInt("resolutionH", 2160);
         }
-        Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreenToggle.GetComponent<Toggle>().isOn);
+        if (framerate.GetComponent<Dropdown>().value == 0) PlayerPrefs.SetInt("framerate", 30);
+        else if (framerate.GetComponent<Dropdown>().value == 1) PlayerPrefs.SetInt("framerate", 60);
+        else if (framerate.GetComponent<Dropdown>().value == 2) PlayerPrefs.SetInt("framerate", 90);
+        else if (framerate.GetComponent<Dropdown>().value == 3) PlayerPrefs.SetInt("framerate", 120);
+        else if (framerate.GetComponent<Dropdown>().value == 4) PlayerPrefs.SetInt("framerate", 144);
+        else if (framerate.GetComponent<Dropdown>().value == 5) PlayerPrefs.SetInt("framerate", 0);
+        if (fullScreenToggle.GetComponent<Toggle>().isOn) PlayerPrefs.SetInt("fullScreen", 1);
+        else PlayerPrefs.SetInt("fullScreen", 0);
+        fullScreen = fullScreenToggle.GetComponent<Toggle>().isOn;
 
+        Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreenToggle.GetComponent<Toggle>().isOn, PlayerPrefs.GetInt("framerate"));
+
+        if (PlayerPrefs.GetInt("resolutionW") == 640) Cursor.SetCursor(cursorArrow16, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 800) Cursor.SetCursor(cursorArrow20, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 1024) Cursor.SetCursor(cursorArrow26, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 1152) Cursor.SetCursor(cursorArrow29, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 1280) Cursor.SetCursor(cursorArrow32, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 1366) Cursor.SetCursor(cursorArrow34, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 1400) Cursor.SetCursor(cursorArrow35, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 1440) Cursor.SetCursor(cursorArrow36, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 1600) Cursor.SetCursor(cursorArrow40, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 1856) Cursor.SetCursor(cursorArrow46, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 1920) Cursor.SetCursor(cursorArrow48, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 2048) Cursor.SetCursor(cursorArrow51, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 2560) Cursor.SetCursor(cursorArrow64, Vector2.zero, CursorMode.ForceSoftware);
+        else if (PlayerPrefs.GetInt("resolutionW") == 3840) Cursor.SetCursor(cursorArrow96, Vector2.zero, CursorMode.ForceSoftware);
+
+        resolutionTime = Time.fixedTime;
+        confirmationMenu.SetActive(true);
+    }
+
+    public void ConfirmResolution()
+    {
+        confirmationMenu.SetActive(false);
         settingsMenu.SetActive(false);
         mainMenu.SetActive(true);
+    }
+
+    public void ReturnResolution()
+    {
+        PlayerPrefs.SetInt("resolutionW", prevW);
+        PlayerPrefs.SetInt("resolutionH", prevH);
+        if(prevFS) PlayerPrefs.SetInt("fullScreen", 1);
+        else PlayerPrefs.SetInt("fullScreen", 0);
+        fullScreen = prevFS;
+        PlayerPrefs.SetInt("framerate", prevFR);
+
+        Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreen, PlayerPrefs.GetInt("framerate"));
+
+
+        if (PlayerPrefs.GetInt("resolutionW") == 640)
+        {
+            Cursor.SetCursor(cursorArrow16, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 0;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 800)
+        {
+            Cursor.SetCursor(cursorArrow20, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 1;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1024)
+        {
+            Cursor.SetCursor(cursorArrow26, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 576) resolution.GetComponent<Dropdown>().value = 2;
+            else resolution.GetComponent<Dropdown>().value = 3;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1152)
+        {
+            Cursor.SetCursor(cursorArrow29, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 4;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1280)
+        {
+            Cursor.SetCursor(cursorArrow32, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 720) resolution.GetComponent<Dropdown>().value = 5;
+            else if (PlayerPrefs.GetInt("resolutionH") == 800) resolution.GetComponent<Dropdown>().value = 6;
+            else resolution.GetComponent<Dropdown>().value = 7;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1366)
+        {
+            Cursor.SetCursor(cursorArrow34, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 8;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1400)
+        {
+            Cursor.SetCursor(cursorArrow35, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 9;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1440)
+        {
+            Cursor.SetCursor(cursorArrow36, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 10;
+            else resolution.GetComponent<Dropdown>().value = 11;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1600)
+        {
+            Cursor.SetCursor(cursorArrow40, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 12;
+            else resolution.GetComponent<Dropdown>().value = 13;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1856)
+        {
+            Cursor.SetCursor(cursorArrow46, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 14;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1920)
+        {
+            Cursor.SetCursor(cursorArrow48, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 1080) resolution.GetComponent<Dropdown>().value = 15;
+            else if (PlayerPrefs.GetInt("resolutionH") == 1200) resolution.GetComponent<Dropdown>().value = 16;
+            else resolution.GetComponent<Dropdown>().value = 17;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 2048)
+        {
+            Cursor.SetCursor(cursorArrow51, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 18;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 2560)
+        {
+            Cursor.SetCursor(cursorArrow64, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 1440) resolution.GetComponent<Dropdown>().value = 19;
+            else resolution.GetComponent<Dropdown>().value = 20;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 3840)
+        {
+            Cursor.SetCursor(cursorArrow96, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 21;
+        }
+        if (PlayerPrefs.GetInt("framerate") == 30) framerate.GetComponent<Dropdown>().value = 0;
+        else if (PlayerPrefs.GetInt("framerate") == 60) framerate.GetComponent<Dropdown>().value = 1;
+        else if (PlayerPrefs.GetInt("framerate") == 90) framerate.GetComponent<Dropdown>().value = 2;
+        else if (PlayerPrefs.GetInt("framerate") == 120) framerate.GetComponent<Dropdown>().value = 3;
+        else if (PlayerPrefs.GetInt("framerate") == 144) framerate.GetComponent<Dropdown>().value = 4;
+        else if (PlayerPrefs.GetInt("framerate") == 0) framerate.GetComponent<Dropdown>().value = 5;
+        fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;
+
+        confirmationMenu.SetActive(false);
     }
 }
