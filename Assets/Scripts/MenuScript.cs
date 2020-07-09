@@ -49,6 +49,7 @@ public class MenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        resolutionTime = 0.0f;
         mainMenu = GameObject.Find("MainMenu");
         LoadButton = GameObject.Find("Load");
         settingsMenu = GameObject.Find("SettingsMenu");
@@ -60,7 +61,7 @@ public class MenuScript : MonoBehaviour
         settingsMenu.SetActive(false);
         confirmationMenu.SetActive(false);
         //We initialize all the playerprefs on the awake
-        //The resolution width
+        //The resolution width        
         if (!PlayerPrefs.HasKey("resolutionW")) PlayerPrefs.SetInt("resolutionW", 1280);
         //The resolution height
         if (!PlayerPrefs.HasKey("resolutionH")) PlayerPrefs.SetInt("resolutionH", 720);
@@ -222,7 +223,6 @@ public class MenuScript : MonoBehaviour
 
     public void NewGame()
     {
-        PlayerPrefs.DeleteAll();
         //The mana level
         PlayerPrefs.SetInt("manaLevel", 1);
         //The dealt damage level
@@ -279,6 +279,8 @@ public class MenuScript : MonoBehaviour
         PlayerPrefs.SetInt("dieTutorial", 0);
         //The health level 
         PlayerPrefs.SetInt("healthLevel", 1);
+        //An int to save if the player has recovered the lost exp
+        PlayerPrefs.SetInt("recoveredExp", 0);
         //A float to save the current health
         PlayerPrefs.SetFloat("health", Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55);
         SceneManager.LoadScene(1);
@@ -467,6 +469,7 @@ public class MenuScript : MonoBehaviour
     {
         confirmationMenu.SetActive(false);
         settingsMenu.SetActive(false);
+        resolutionTime = 0.0f;
         mainMenu.SetActive(true);
     }
 

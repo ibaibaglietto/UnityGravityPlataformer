@@ -386,15 +386,15 @@ RectTransform:
   m_GameObject: {fileID: 48804053}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1912498, y: 1.1912498, z: 1.1912498}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1114773733}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.09125, y: 0.5755611}
   m_AnchorMax: {x: 0.24000001, y: 0.6311124}
-  m_AnchoredPosition: {x: 0.27001953, y: -0.23000336}
-  m_SizeDelta: {x: -20.389923, y: -5.0666885}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -0.0000076293945, y: 0.0000019073486}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &48804055
 MonoBehaviour:
@@ -586,8 +586,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
+      - m_Target: {fileID: 2134682921}
+        m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
         m_MethodName: ConfirmResolution
         m_Mode: 1
         m_Arguments:
@@ -2985,7 +2985,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.6787779, y: 0.21054131}
   m_AnchorMax: {x: 0.82000005, y: 0.27100003}
-  m_AnchoredPosition: {x: -0.000061035156, y: -0.1582489}
+  m_AnchoredPosition: {x: -0.000061035156, y: -0.15823364}
   m_SizeDelta: {x: -0.000015258789, y: -0.31649017}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &223880368
@@ -7396,7 +7396,7 @@ RectTransform:
   m_AnchorMin: {x: 0.34750003, y: 0.53555864}
   m_AnchorMax: {x: 0.6525, y: 0.66}
   m_AnchoredPosition: {x: 0.5500183, y: 0}
-  m_SizeDelta: {x: 1.1, y: -0.6499996}
+  m_SizeDelta: {x: 1.1, y: -0.0000014305115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &576061711
 MonoBehaviour:
@@ -8012,15 +8012,15 @@ RectTransform:
   m_GameObject: {fileID: 650140350}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1912498, y: 1.1912498, z: 1.1912498}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1114773733}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1025, y: 0.7485448}
   m_AnchorMax: {x: 0.8975, y: 0.95300007}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0.000045776367}
-  m_SizeDelta: {x: -102.10687, y: -14.769234}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &650140352
 MonoBehaviour:
@@ -8849,15 +8849,15 @@ RectTransform:
   m_GameObject: {fileID: 730829676}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.04352, y: 2.04352, z: 2.04352}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 218765857}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.68}
-  m_AnchorMax: {x: 1, y: 0.98188686}
-  m_AnchoredPosition: {x: -0.00024414062, y: 0.006439209}
-  m_SizeDelta: {x: -408.51843, y: -69.355484}
+  m_AnchorMin: {x: 0.0050000004, y: 0.6822219}
+  m_AnchorMax: {x: 0.99375, y: 0.98188686}
+  m_AnchoredPosition: {x: -0.00033569336, y: -0.000045776367}
+  m_SizeDelta: {x: -0.0007324219, y: -0.00012207031}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &730829678
 MonoBehaviour:
@@ -9480,8 +9480,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
+      - m_Target: {fileID: 2134682921}
+        m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
         m_MethodName: ReturnResolution
         m_Mode: 1
         m_Arguments:
@@ -10959,15 +10959,15 @@ RectTransform:
   m_GameObject: {fileID: 950358290}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.69758, y: 1.69758, z: 1.69758}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 218765857}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1025, y: 0.7485448}
   m_AnchorMax: {x: 0.8975, y: 0.95300007}
-  m_AnchoredPosition: {x: 0.00021362305, y: 0.000015258789}
-  m_SizeDelta: {x: -261.34924, y: -37.795242}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &950358292
 MonoBehaviour:
@@ -11299,8 +11299,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
+      - m_Target: {fileID: 2134682921}
+        m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
         m_MethodName: CloseNoSave
         m_Mode: 1
         m_Arguments:
@@ -13096,7 +13096,7 @@ RectTransform:
   m_GameObject: {fileID: 1114773732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.19375, y: 1.19375, z: 1.19375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1317018103}
   - {fileID: 650140351}
@@ -13115,7 +13115,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1118555654
@@ -13266,8 +13266,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
+      - m_Target: {fileID: 2134682921}
+        m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
         m_MethodName: CloseSave
         m_Mode: 1
         m_Arguments:
@@ -15161,15 +15161,15 @@ RectTransform:
   m_GameObject: {fileID: 1317018102}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4340099, y: 1.4340099, z: 1.4340099}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1114773733}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.68}
-  m_AnchorMax: {x: 1, y: 0.98188686}
-  m_AnchoredPosition: {x: -0.00024414062, y: 0.000030517578}
-  m_SizeDelta: {x: -242.12408, y: -41.124893}
+  m_AnchorMin: {x: 0.006, y: 0.68}
+  m_AnchorMax: {x: 0.994, y: 0.98188686}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1317018104
 MonoBehaviour:
@@ -17586,8 +17586,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.038749997, y: 0.066554}
   m_AnchorMax: {x: 0.96625, y: 0.68010795}
-  m_AnchoredPosition: {x: -0.099975586, y: -0.2999878}
-  m_SizeDelta: {x: -1.192627, y: -0.23571777}
+  m_AnchoredPosition: {x: 0.00012207031, y: -0.00012207031}
+  m_SizeDelta: {x: -120.429565, y: -44.817352}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1529132976
 MonoBehaviour:
@@ -18300,7 +18300,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1581659473}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2134682921}
+        m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
+        m_MethodName: OpenSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1581659473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23274,15 +23286,15 @@ RectTransform:
   m_GameObject: {fileID: 1945837073}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1912498, y: 1.1912498, z: 1.1912498}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1114773733}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.09125, y: 0.23333101}
   m_AnchorMax: {x: 0.24000001, y: 0.28666896}
-  m_AnchoredPosition: {x: 0.27001953, y: 0.049987793}
-  m_SizeDelta: {x: -20.389923, y: -4.066681}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -0.0000076293945, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945837075
 MonoBehaviour:
