@@ -129,6 +129,8 @@ public class MenuScript : MonoBehaviour
         if (!PlayerPrefs.HasKey("recoveredExp")) PlayerPrefs.SetInt("recoveredExp", 0);
         //A float to save the current health
         if (!PlayerPrefs.HasKey("health")) PlayerPrefs.SetFloat("health", Mathf.Sqrt(2000 * PlayerPrefs.GetInt("healthLevel")) + 55);
+        //An int to save the language
+        if (!PlayerPrefs.HasKey("language")) PlayerPrefs.SetInt("language", 0);
         if (PlayerPrefs.GetInt("lastDialogue") == 0) LoadButton.GetComponent<Button>().interactable = false;
         else LoadButton.GetComponent<Button>().interactable = true;
         if (PlayerPrefs.GetInt("fullScreen") == 0) fullScreen = false;

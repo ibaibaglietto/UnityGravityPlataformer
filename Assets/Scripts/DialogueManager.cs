@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
         dialogueText.enabled = false;
     }
 
-    public void StartDialogue (Dialogue dialogue, int gravity1, int gravity2)
+    public void StartDialogue (Dialogue dialogue, int gravity1, int gravity2, int faceRight)
     {
         player.GetComponent<PlayerMovement>().spendingMana = 0.0f;
         Time.timeScale = 1.0f;
@@ -56,6 +56,7 @@ public class DialogueManager : MonoBehaviour
                 player.GetComponent<PlayerMovement>().changeGravity(true, 0.0f, 0.0f, 0.0f, 0.5f);
             }
         }
+        if ((faceRight == 1 && !player.GetComponent<PlayerMovement>().m_FacingRight) || (faceRight == 0 && player.GetComponent<PlayerMovement>().m_FacingRight)) player.GetComponent<PlayerMovement>().Flip();
 
         player.GetComponent<PlayerMovement>().talking = true;
 
@@ -65,9 +66,26 @@ public class DialogueManager : MonoBehaviour
 
         sentences.Clear();
 
-        foreach (string sentence in dialogue.sentences)
+        if(PlayerPrefs.GetInt("language") == 0)
         {
-            sentences.Enqueue(sentence);
+            foreach (string sentence in dialogue.sentencesEnglish)
+            {
+                sentences.Enqueue(sentence);
+            }
+        }
+        else if (PlayerPrefs.GetInt("language") == 1)
+        {
+            foreach (string sentence in dialogue.sentencesSpanish)
+            {
+                sentences.Enqueue(sentence);
+            }
+        }
+        else if (PlayerPrefs.GetInt("language") == 2)
+        {
+            foreach (string sentence in dialogue.sentencesBasque)
+            {
+                sentences.Enqueue(sentence);
+            }
         }
 
         DisplayNextSentence();

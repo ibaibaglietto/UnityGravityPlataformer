@@ -7822,7 +7822,7 @@ MonoBehaviour:
   gravity1: 4
   gravity2: 4
   dialogueNumber: 0
-  faceRight: 0
+  faceRight: 2
 --- !u!4 &634774632
 Transform:
   m_ObjectHideFlags: 0
@@ -17684,7 +17684,7 @@ MonoBehaviour:
   gravity1: 6
   gravity2: 6
   dialogueNumber: 0
-  faceRight: 0
+  faceRight: 2
 --- !u!1 &1543025497
 GameObject:
   m_ObjectHideFlags: 0

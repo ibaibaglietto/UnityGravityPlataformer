@@ -17,8 +17,8 @@ public class DialogueTrigger : MonoBehaviour
     private GameObject bossBar;
     //The animator off the boss fight arena
     private Animator bossArena;
-    //the side the player will face
-    public bool faceRight;
+    //the side the player will face, 0--> left, 1 --> right, 2 --> don't matter
+    public int faceRight;
 
     void Start()
     {
@@ -32,18 +32,18 @@ public class DialogueTrigger : MonoBehaviour
         if (PlayerPrefs.GetInt("expTutorial") == 1 && gravity1 == 4)
         {
             PlayerPrefs.SetInt("expTutorial", 2);
-            FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0);
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0, 2);
         }
         if (PlayerPrefs.GetInt("trap") == 1 && gravity1 == 5)
         {
             PlayerPrefs.SetInt("trap", 2);
-            FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0);
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0, 2);
             PlayerPrefs.SetInt("lastDialogue", dialogueNumber);
         }
         if (PlayerPrefs.GetInt("dieTutorial") == 1 && gravity1 == 6)
         {
             PlayerPrefs.SetInt("dieTutorial", 2);
-            FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0);
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue, 0, 0, 2);
         }
     }
 
@@ -59,8 +59,7 @@ public class DialogueTrigger : MonoBehaviour
                     player.GetComponent<PlayerMovement>().approach = false;
                     bossBar.GetComponent<BossHealthController>().fighting = true;
                 }
-                if ((faceRight && !player.GetComponent<PlayerMovement>().m_FacingRight) || (!faceRight && player.GetComponent<PlayerMovement>().m_FacingRight)) player.GetComponent<PlayerMovement>().Flip();
-                FindObjectOfType<DialogueManager>().StartDialogue(dialogue, gravity1, gravity2);
+                FindObjectOfType<DialogueManager>().StartDialogue(dialogue, gravity1, gravity2, faceRight);
                 PlayerPrefs.SetInt("lastDialogue", dialogueNumber);
             }
             

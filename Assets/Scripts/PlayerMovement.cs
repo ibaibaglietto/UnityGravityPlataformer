@@ -471,7 +471,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //We attack using the left button of the mouse, choosing the side of the attack depending on where is the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina && !paused)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina && !paused && !takingDamage)
         {            
             attacking = true;
             animator.SetBool("isAttacking", true);

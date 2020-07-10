@@ -1754,7 +1754,7 @@ MonoBehaviour:
   gravity1: 0
   gravity2: 0
   dialogueNumber: 16
-  faceRight: 0
+  faceRight: 1
 --- !u!61 &192727473
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6218,7 +6218,7 @@ MonoBehaviour:
   gravity1: 6
   gravity2: 6
   dialogueNumber: 0
-  faceRight: 0
+  faceRight: 2
 --- !u!1001 &691306697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6652,7 +6652,7 @@ MonoBehaviour:
   gravity1: 0
   gravity2: 7
   dialogueNumber: 15
-  faceRight: 0
+  faceRight: 1
 --- !u!61 &718678337
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16337,7 +16337,7 @@ MonoBehaviour:
   gravity1: 4
   gravity2: 4
   dialogueNumber: 0
-  faceRight: 0
+  faceRight: 2
 --- !u!1 &1632822247
 GameObject:
   m_ObjectHideFlags: 0
