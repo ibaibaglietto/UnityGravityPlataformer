@@ -36,6 +36,9 @@ public class UIScript : MonoBehaviour
     public Texture2D cursorSword51;
     public Texture2D cursorSword64;
     public Texture2D cursorSword96;
+    //The cursors
+    private Texture2D cursorArrow;
+    private Texture2D cursorSword;
     //The gameobject of the player
     private GameObject player;
     //The gameobject of the lvl up interface
@@ -131,13 +134,9 @@ public class UIScript : MonoBehaviour
     private float resolutionTime;
     //The return configuration text
     private Text returnText;
-    //A boolean to see if the sword cursor is active
-    private bool swordCursorActive;
 
     private void Start()
     {
-        swordCursorActive = true;
-        resolutionTime = 0.0f;
         player = GameObject.Find("Player");
         lvlUp = GameObject.Find("Upgrade player");
         exp = GameObject.Find("LightNumb").GetComponent<Text>();
@@ -179,7 +178,6 @@ public class UIScript : MonoBehaviour
         fullScreenToggle = GameObject.Find("Windowed");
         confirmationMenu = GameObject.Find("ConfirmMenu");
         returnText = GameObject.Find("ReturnText").GetComponent<Text>();
-        pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
         confirmationMenu.SetActive(false);
         playerLight = player.transform.GetChild(1).gameObject.GetComponent<Light2D>();
@@ -217,66 +215,94 @@ public class UIScript : MonoBehaviour
         Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreen, PlayerPrefs.GetInt("framerate"));
         if (PlayerPrefs.GetInt("resolutionW") == 640)
         {
+            cursorArrow = cursorArrow16;
+            cursorSword = cursorSword16;
             resolution.GetComponent<Dropdown>().value = 0;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 800)
         {
+            cursorArrow = cursorArrow20;
+            cursorSword = cursorSword20;
             resolution.GetComponent<Dropdown>().value = 1;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1024)
         {
+            cursorArrow = cursorArrow26;
+            cursorSword = cursorSword26;
             if (PlayerPrefs.GetInt("resolutionH") == 576) resolution.GetComponent<Dropdown>().value = 2;
             else resolution.GetComponent<Dropdown>().value = 3;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1152)
         {
+            cursorArrow = cursorArrow29;
+            cursorSword = cursorSword29;
             resolution.GetComponent<Dropdown>().value = 4;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1280)
         {
+            cursorArrow = cursorArrow32;
+            cursorSword = cursorSword32;
             if (PlayerPrefs.GetInt("resolutionH") == 720) resolution.GetComponent<Dropdown>().value = 5;
             else if (PlayerPrefs.GetInt("resolutionH") == 800) resolution.GetComponent<Dropdown>().value = 6;
             else resolution.GetComponent<Dropdown>().value = 7;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1366)
         {
+            cursorArrow = cursorArrow34;
+            cursorSword = cursorSword34;
             resolution.GetComponent<Dropdown>().value = 8;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1400)
         {
+            cursorArrow = cursorArrow35;
+            cursorSword = cursorSword35;
             resolution.GetComponent<Dropdown>().value = 9;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1440)
         {
+            cursorArrow = cursorArrow36;
+            cursorSword = cursorSword36;
             if (PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 10;
             else resolution.GetComponent<Dropdown>().value = 11;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1600)
         {
+            cursorArrow = cursorArrow40;
+            cursorSword = cursorSword40;
             if (PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 12;
             else resolution.GetComponent<Dropdown>().value = 13;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1856)
         {
+            cursorArrow = cursorArrow46;
+            cursorSword = cursorSword46;
             resolution.GetComponent<Dropdown>().value = 14;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1920)
         {
+            cursorArrow = cursorArrow48;
+            cursorSword = cursorSword48;
             if (PlayerPrefs.GetInt("resolutionH") == 1080) resolution.GetComponent<Dropdown>().value = 15;
             else if (PlayerPrefs.GetInt("resolutionH") == 1200) resolution.GetComponent<Dropdown>().value = 16;
             else resolution.GetComponent<Dropdown>().value = 17;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 2048)
         {
+            cursorArrow = cursorArrow51;
+            cursorSword = cursorSword51;
             resolution.GetComponent<Dropdown>().value = 18;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 2560)
         {
+            cursorArrow = cursorArrow64;
+            cursorSword = cursorSword64;
             if (PlayerPrefs.GetInt("resolutionH") == 1440) resolution.GetComponent<Dropdown>().value = 19;
             else resolution.GetComponent<Dropdown>().value = 20;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 3840)
         {
+            cursorArrow = cursorArrow96;
+            cursorSword = cursorSword96;
             resolution.GetComponent<Dropdown>().value = 21;
         }
         if (PlayerPrefs.GetInt("framerate") == 30) framerate.GetComponent<Dropdown>().value = 0;
@@ -286,7 +312,7 @@ public class UIScript : MonoBehaviour
         else if (PlayerPrefs.GetInt("framerate") == 144) framerate.GetComponent<Dropdown>().value = 4;
         else if (PlayerPrefs.GetInt("framerate") == 0) framerate.GetComponent<Dropdown>().value = 5;
         fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;
-        setSwordCursor(PlayerPrefs.GetInt("resolutionW"));
+        Cursor.SetCursor(cursorSword, Vector2.zero, CursorMode.ForceSoftware);
     }
 
 
@@ -298,14 +324,17 @@ public class UIScript : MonoBehaviour
             PlayerPrefs.SetInt("lastDialogue", 15);
         }
         else finalText.SetActive(false);
-        if (player.GetComponent<PlayerMovement>().paused && (!pauseMenu.activeSelf && !settingsMenu.activeSelf))
+        if (player.GetComponent<PlayerMovement>().paused)
         {
             pauseMenu.SetActive(true);
-            setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
+            Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
         }
-        if (dieScreen.activeSelf && swordCursorActive) setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
-        if (player.GetComponent<PlayerMovement>().talking && swordCursorActive) setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
-        if (!player.GetComponent<PlayerMovement>().paused && !dieScreen.activeSelf && !player.GetComponent<PlayerMovement>().talking && !player.GetComponent<PlayerMovement>().sleeping && !swordCursorActive) setSwordCursor(PlayerPrefs.GetInt("resolutionW"));
+        else if(pauseMenu.activeSelf == true)
+        {
+            pauseMenu.SetActive(false);
+            Cursor.SetCursor(cursorSword, Vector2.zero, CursorMode.ForceSoftware);
+        }
+        if(dieScreen.activeSelf == true) Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
         //Check that all the numbers of the lvl up interface are up to date
         if (!lvlUp.activeSelf && player.GetComponent<PlayerMovement>().sleeping)
         {
@@ -334,22 +363,23 @@ public class UIScript : MonoBehaviour
             healingLevelMinus.SetActive(false);
             damageResistanceLevelMinus.SetActive(false);
             expGainingLevelMinus.SetActive(false);
-            setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
+            Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
         }
         //Show the light number on the interface
         exp.text = PlayerPrefs.GetInt("exp").ToString();
         if (PlayerPrefs.GetInt("needExp") > PlayerPrefs.GetInt("exp")) playerLight.pointLightOuterRadius = (float)PlayerPrefs.GetInt("exp") / (float)PlayerPrefs.GetInt("needExp") * 3.0f;
         else playerLight.pointLightOuterRadius = 3.0f;
+    }
 
-        //if to return to previous resolution automatically
-        if (resolutionTime != 0.0f && (Time.realtimeSinceStartup - resolutionTime) >= 10)
+    void FixedUpdate()
+    {
+        if (resolutionTime != 0.0f && (Time.fixedTime - resolutionTime) >= 10)
         {
             resolutionTime = 0.0f;
             ReturnResolution();
         }
-        else if (resolutionTime != 0.0f) returnText.text = "Return (" + (10 - (int)(Time.realtimeSinceStartup - resolutionTime)).ToString() + ")";
+        else if (resolutionTime != 0.0f) returnText.text = "Return (" + (10 - (int)(Time.fixedTime - resolutionTime)).ToString() + ")";
     }
-
 
     public void lvlUpPlayer(int atrib)
     {
@@ -495,7 +525,7 @@ public class UIScript : MonoBehaviour
         }
         player.GetComponent<Animator>().SetBool("isResting", false);
         lvlUp.SetActive(false);
-        setSwordCursor(PlayerPrefs.GetInt("resolutionW"));
+        Cursor.SetCursor(cursorSword, Vector2.zero, CursorMode.ForceSoftware);
     }
     public void loadMenu()
     {
@@ -505,8 +535,6 @@ public class UIScript : MonoBehaviour
 
     public void continueLevel()
     {
-        pauseMenu.SetActive(false);
-        setSwordCursor(PlayerPrefs.GetInt("resolutionW"));
         player.GetComponent<PlayerMovement>().paused = false;
         if(player.GetComponent<PlayerMovement>().changingGravity) Time.timeScale = 0.05f;
         else Time.timeScale = 1.0f;
@@ -663,9 +691,79 @@ public class UIScript : MonoBehaviour
         fullScreen = fullScreenToggle.GetComponent<Toggle>().isOn;
 
         Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreenToggle.GetComponent<Toggle>().isOn, PlayerPrefs.GetInt("framerate"));
-        
-        setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
-        resolutionTime = Time.realtimeSinceStartup;
+
+        if (PlayerPrefs.GetInt("resolutionW") == 640)
+        {
+            cursorArrow = cursorArrow16;
+            cursorSword = cursorSword16;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 800)
+        {
+            cursorArrow = cursorArrow20;
+            cursorSword = cursorSword20;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1024)
+        {
+            cursorArrow = cursorArrow26;
+            cursorSword = cursorSword26;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1152)
+        {
+            cursorArrow = cursorArrow29;
+            cursorSword = cursorSword29;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1280)
+        {
+            cursorArrow = cursorArrow32;
+            cursorSword = cursorSword32;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1366)
+        {
+            cursorArrow = cursorArrow34;
+            cursorSword = cursorSword34;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1400)
+        {
+            cursorArrow = cursorArrow35;
+            cursorSword = cursorSword35;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1440)
+        {
+            cursorArrow = cursorArrow36;
+            cursorSword = cursorSword36;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1600)
+        {
+            cursorArrow = cursorArrow40;
+            cursorSword = cursorSword40;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1856)
+        {
+            cursorArrow = cursorArrow46;
+            cursorSword = cursorSword46;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1920)
+        {
+            cursorArrow = cursorArrow48;
+            cursorSword = cursorSword48;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 2048)
+        {
+            cursorArrow = cursorArrow51;
+            cursorSword = cursorSword51;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 2560)
+        {
+            cursorArrow = cursorArrow64;
+            cursorSword = cursorSword64;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 3840)
+        {
+            cursorArrow = cursorArrow96;
+            cursorSword = cursorSword96;
+        }
+        Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
+        resolutionTime = Time.fixedTime;
         confirmationMenu.SetActive(true);
     }
 
@@ -673,7 +771,6 @@ public class UIScript : MonoBehaviour
     {
         confirmationMenu.SetActive(false);
         settingsMenu.SetActive(false);
-        resolutionTime = 0.0f;
         pauseMenu.SetActive(true);
     }
 
@@ -690,69 +787,96 @@ public class UIScript : MonoBehaviour
 
         if (PlayerPrefs.GetInt("resolutionW") == 640)
         {
+            cursorArrow = cursorArrow16;
+            cursorSword = cursorSword16;
             resolution.GetComponent<Dropdown>().value = 0;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 800)
         {
+            cursorArrow = cursorArrow20;
+            cursorSword = cursorSword20;
             resolution.GetComponent<Dropdown>().value = 1;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1024)
         {
+            cursorArrow = cursorArrow26;
+            cursorSword = cursorSword26;
             if (PlayerPrefs.GetInt("resolutionH") == 576) resolution.GetComponent<Dropdown>().value = 2;
             else resolution.GetComponent<Dropdown>().value = 3;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1152)
         {
+            cursorArrow = cursorArrow29;
+            cursorSword = cursorSword29;
             resolution.GetComponent<Dropdown>().value = 4;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1280)
         {
+            cursorArrow = cursorArrow32;
+            cursorSword = cursorSword32;
             if (PlayerPrefs.GetInt("resolutionH") == 720) resolution.GetComponent<Dropdown>().value = 5;
             else if (PlayerPrefs.GetInt("resolutionH") == 800) resolution.GetComponent<Dropdown>().value = 6;
             else resolution.GetComponent<Dropdown>().value = 7;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1366)
         {
+            cursorArrow = cursorArrow34;
+            cursorSword = cursorSword34;
             resolution.GetComponent<Dropdown>().value = 8;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1400)
         {
+            cursorArrow = cursorArrow35;
+            cursorSword = cursorSword35;
             resolution.GetComponent<Dropdown>().value = 9;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1440)
         {
+            cursorArrow = cursorArrow36;
+            cursorSword = cursorSword36;
             if (PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 10;
             else resolution.GetComponent<Dropdown>().value = 11;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1600)
         {
+            cursorArrow = cursorArrow40;
+            cursorSword = cursorSword40;
             if (PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 12;
             else resolution.GetComponent<Dropdown>().value = 13;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1856)
         {
+            cursorArrow = cursorArrow46;
+            cursorSword = cursorSword46;
             resolution.GetComponent<Dropdown>().value = 14;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 1920)
         {
+            cursorArrow = cursorArrow48;
+            cursorSword = cursorSword48;
             if (PlayerPrefs.GetInt("resolutionH") == 1080) resolution.GetComponent<Dropdown>().value = 15;
             else if (PlayerPrefs.GetInt("resolutionH") == 1200) resolution.GetComponent<Dropdown>().value = 16;
             else resolution.GetComponent<Dropdown>().value = 17;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 2048)
         {
+            cursorArrow = cursorArrow51;
+            cursorSword = cursorSword51;
             resolution.GetComponent<Dropdown>().value = 18;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 2560)
         {
+            cursorArrow = cursorArrow64;
+            cursorSword = cursorSword64;
             if (PlayerPrefs.GetInt("resolutionH") == 1440) resolution.GetComponent<Dropdown>().value = 19;
             else resolution.GetComponent<Dropdown>().value = 20;
         }
         else if (PlayerPrefs.GetInt("resolutionW") == 3840)
         {
+            cursorArrow = cursorArrow96;
+            cursorSword = cursorSword96;
             resolution.GetComponent<Dropdown>().value = 21;
         }
-        setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
         if (PlayerPrefs.GetInt("framerate") == 30) framerate.GetComponent<Dropdown>().value = 0;
         else if (PlayerPrefs.GetInt("framerate") == 60) framerate.GetComponent<Dropdown>().value = 1;
         else if (PlayerPrefs.GetInt("framerate") == 90) framerate.GetComponent<Dropdown>().value = 2;
@@ -760,48 +884,9 @@ public class UIScript : MonoBehaviour
         else if (PlayerPrefs.GetInt("framerate") == 144) framerate.GetComponent<Dropdown>().value = 4;
         else if (PlayerPrefs.GetInt("framerate") == 0) framerate.GetComponent<Dropdown>().value = 5;
         fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;
+        Cursor.SetCursor(cursorSword, Vector2.zero, CursorMode.ForceSoftware);
 
         confirmationMenu.SetActive(false);
     }
 
-
-    public void setArrowCursor(int resolutionW)
-    {
-        Debug.Log("fleicha");
-        swordCursorActive = false;
-        if (resolutionW == 640) Cursor.SetCursor(cursorArrow16, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 800) Cursor.SetCursor(cursorArrow20, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1024) Cursor.SetCursor(cursorArrow26, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1152) Cursor.SetCursor(cursorArrow29, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1280) Cursor.SetCursor(cursorArrow32, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1366) Cursor.SetCursor(cursorArrow34, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1400) Cursor.SetCursor(cursorArrow35, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1440) Cursor.SetCursor(cursorArrow36, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1600) Cursor.SetCursor(cursorArrow40, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1856) Cursor.SetCursor(cursorArrow46, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1920) Cursor.SetCursor(cursorArrow48, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 2048) Cursor.SetCursor(cursorArrow51, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 2560) Cursor.SetCursor(cursorArrow64, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 3840) Cursor.SetCursor(cursorArrow96, Vector2.zero, CursorMode.ForceSoftware);
-    }
-
-    public void setSwordCursor(int resolutionW)
-    {
-        Debug.Log("eispada");
-        swordCursorActive = true;
-        if (resolutionW == 640) Cursor.SetCursor(cursorSword16, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 800) Cursor.SetCursor(cursorSword20, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1024) Cursor.SetCursor(cursorSword26, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1152) Cursor.SetCursor(cursorSword29, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1280) Cursor.SetCursor(cursorSword32, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1366) Cursor.SetCursor(cursorSword34, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1400) Cursor.SetCursor(cursorSword35, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1440) Cursor.SetCursor(cursorSword36, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1600) Cursor.SetCursor(cursorSword40, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1856) Cursor.SetCursor(cursorSword46, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 1920) Cursor.SetCursor(cursorSword48, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 2048) Cursor.SetCursor(cursorSword51, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 2560) Cursor.SetCursor(cursorSword64, Vector2.zero, CursorMode.ForceSoftware);
-        else if (resolutionW == 3840) Cursor.SetCursor(cursorSword96, Vector2.zero, CursorMode.ForceSoftware);
-    }
 }
