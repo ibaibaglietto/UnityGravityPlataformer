@@ -1748,9 +1748,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - OK, now let's get out of this crappy place. I have people to rescue on an underground
       coliseum.
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 16
@@ -6206,7 +6208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Did I just die?
     - ...............................
     - Let's continue as if nothing happened.
@@ -6215,6 +6217,8 @@ MonoBehaviour:
       with a normal attack)
     - (If you die again the vital light will be lost forever. If you died with 0
       vital light, nothing will appear)
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 6
   gravity2: 6
   dialogueNumber: 0
@@ -6640,7 +6644,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Oh, hello big guy!
     - ..............
     - 'You won''t say anything? I don''t know, for example: '
@@ -6649,6 +6653,8 @@ MonoBehaviour:
     - ..................................................................
     - 'OK big guy, I gave you the chance to make your statements and you said nothing. '
     - 'Let''s kill each other with no reason. c:'
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 7
   dialogueNumber: 15
@@ -16330,10 +16336,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - 'Finally some ******* light. '
     - (When you kill enemies you get their vital light.)
     - (The amount of vital light you need to light up yourself depends on your level.)
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 4
   gravity2: 4
   dialogueNumber: 0

@@ -7002,9 +7002,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - I'm sure I've never seen an enemy like this before.
     - He has a shiled, so I must be carefull not to hit him when he blocks.
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 12
@@ -11898,7 +11900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Who had de brilliant idea of making a corridor full of spikes?
     - This makes zero sense to me, but i can pass with my power to controll gravity,
       so who cares?
@@ -11907,6 +11909,8 @@ MonoBehaviour:
     - '(First put for example a gravity of 0.1 to the left) '
     - '(When you think that you have the speed that you want, put the gravity to
       0) '
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 10
@@ -15504,10 +15508,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - 'Finally some ******* light. '
     - (When you kill enemies you get their vital light.)
     - (The amount of vital light you need to light up yourself depends on your level.)
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 4
   gravity2: 4
   dialogueNumber: 0
@@ -20981,7 +20987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Did I just die?
     - ...............................
     - Let's continue as if nothing happened.
@@ -20990,6 +20996,8 @@ MonoBehaviour:
       with a normal attack)
     - (If you die again the vital light will be lost forever. If you died with 0
       vital light, nothing will appear)
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 6
   gravity2: 6
   dialogueNumber: 0
@@ -22263,13 +22271,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Okay now I have a ******* wall on the way...
     - Maybe there is something I can press here to make the wall move.
     - 'That rock on the right seems really strange to me, '
     - maybe if I throw a shuriken something will happen.
     - '(Press and maintain E pressed to throw shurikens.) '
     - '(Shurikens can''t hurt enemies, so don''t lose time throwing them.) '
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 2
   gravity2: 2
   dialogueNumber: 11
@@ -23201,10 +23211,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - ............................................................
     - Is this a joke?
     - Let's find the way out of here.
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 5
   gravity2: 5
   dialogueNumber: 14
@@ -23659,9 +23671,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - This sign says that this is the way I mus follow, but it's closed...
     - The door looks like the one I opened before, let's look for a button.
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 13

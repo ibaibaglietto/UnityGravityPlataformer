@@ -1734,16 +1734,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Okay, I think it's time I left this crappy place.
-    - 'Probably all the enemies here are really weak and the platforming will be
-      very easy.
-
-'
+    - Probably all the enemies here are really weak and the platforming will be very
+      easy.
     - This is only a ******* tutorial, you can't expect challenges here.
     - (You move using WASD, jump with the space bar and attack with the left button
       of your mouse.)
     - (Make sure you put the mouse on the side you want to make the attack.)
+    sentencesSpanish:
+    - Bueno, ya es hora de que me vaya de este sitio de mierda.
+    - "Probablemente todos los enemigos de por aqu\xED sean muy "
+    - jeje xd
+    - jeje xd
+    - jeje xd
+    sentencesBasque:
+    - Egun ona izan.
+    - karkar ixade
   gravity1: 0
   gravity2: 0
   dialogueNumber: 1
@@ -4770,10 +4777,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Finally, I can see the exit of this place at the end of this corridor.
     - This time there are no spikes on the celling, so I can avoid the bandits.
     - But, on the other hand, their vital light can be very usefull for later...
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 9
@@ -5016,11 +5025,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Oh, I can see a bench with some blue torches there, how convinient for a tutorial!
     - There I can rest to restore my health and use that torches to restore mana.
     - Also I can upgrade my stats while I'm resting, spending the vital light that
       I stole to the guards.
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 6
@@ -5237,9 +5248,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Finally some light I can use to change the laws of gravity, **** you Newton!
-    - (Press and mantain F to absorb light. Blue torches will recharge when some
+    - (Press and maintain F to absorb light. Blue torches will recharge when some
       time passes.)
     - (You can't absorb light when enemies are attacking you.)
     - (Press Q to enter the gravity changing state. You can change gravity with WASD.)
@@ -5249,6 +5260,8 @@ MonoBehaviour:
       you want.)
     - (You can also activate the regeneration with R. You deactivate it pressing
       R again.)
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 3
@@ -7307,14 +7320,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - 'Mmmmmmmm, we have two ways here:'
-    - First, to the left, the way that explains the use of the dash and leads out
-      of this tutorial.
-    - Second, to the right, a way flooded by enemies that has no price at the end.
+    - First, to the left, a way that explains the use of the dash and leads out of
+      this tutorial.
+    - Second, to the right, a way flooded by enemies that has nothing at the end.
     - Seriously, take the way to the left and then jump to the right using the dash.
     - (To use the dash press the right button of the mouse.)
     - (While you are dashing you can pass through enemies).
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 2
@@ -7815,10 +7830,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - 'Finally some ******* light. '
     - (When you kill enemies you get their vital light.)
     - (The amount of vital light you need to light up yourself depends on your level.)
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 4
   gravity2: 4
   dialogueNumber: 0
@@ -8856,7 +8873,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.0050000004, y: 0.6822219}
   m_AnchorMax: {x: 0.99375, y: 0.98188686}
-  m_AnchoredPosition: {x: -0.00033569336, y: -0.000045776367}
+  m_AnchoredPosition: {x: -0.00030517578, y: -0.000045776367}
   m_SizeDelta: {x: -0.0007324219, y: -0.00012207031}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &730829678
@@ -17672,7 +17689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Did I just die?
     - ...............................
     - Let's continue as if nothing happened.
@@ -17681,6 +17698,8 @@ MonoBehaviour:
       with a normal attack)
     - (If you die again the vital light will be lost forever. If you died with 0
       vital light, nothing will appear)
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 6
   gravity2: 6
   dialogueNumber: 0
@@ -20676,10 +20695,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Okay, so I need to fight some bandits because someone put ******* spikes on
       the ceiling.
     - Let's clear the way quilckly so I can get out of here.
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 8
@@ -22952,7 +22973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - Now that I'm closer to this bench I can see that it is clearly too big for
       me.
     - .........................................................
@@ -22961,6 +22982,8 @@ MonoBehaviour:
     - After a littel break I should exit this pathetic tutorial going to the top-right
       corner.
     - (Enemies will respawn when you rest)
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 7
@@ -25073,7 +25096,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - I can't even see the platform I need to jump into...
     - I wonder what I need to do to get to places I can't with a normal jump...
     - Maybe putting the gravity to the ceiling and walking to the left?
@@ -25082,6 +25105,8 @@ MonoBehaviour:
     - (If you fall too quickly you may get hurt).
     - (To avoid that you can decrease the aceleration of your falling by putting
       the gravity low).
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 5
@@ -25144,12 +25169,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: (...)
-    sentences:
+    sentencesEnglish:
     - This normal torch will give me some mana too, but it won't recharge.
     - You may be thinking why that enemy isn't attacking me...
     - Well, he is respecting my time to speak and listening carefully, maybe I'm
       not agresive.
     - But he is wrong, **** you bandit!
+    sentencesSpanish: []
+    sentencesBasque: []
   gravity1: 0
   gravity2: 0
   dialogueNumber: 4
