@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6d43d198f5885db4ba5da74680c0e49a
+guid: 3230f6ea5b8a4204aa0f89f258aafa7a
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Deutsch Gothic
+  - Chomsky
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

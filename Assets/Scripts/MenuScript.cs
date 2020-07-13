@@ -225,7 +225,7 @@ public class MenuScript : MonoBehaviour
 
     public void NewGame()
     {
-        PlayerPrefs.SetInt("language", 0);
+        PlayerPrefs.SetInt("language", 2);
         //The mana level
         PlayerPrefs.SetInt("manaLevel", 1);
         //The dealt damage level

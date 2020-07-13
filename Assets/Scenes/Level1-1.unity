@@ -686,7 +686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -694,7 +694,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -1269,7 +1269,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -1348,7 +1348,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -1427,7 +1427,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -1735,7 +1735,7 @@ MonoBehaviour:
   dialogue:
     name: (...)
     sentencesEnglish:
-    - Okay, I think it's time I left this crappy place.
+    - 'Okay, I think it''s time I left this crappy place. '
     - Probably all the enemies here are really weak and the platforming will be very
       easy.
     - This is only a ******* tutorial, you can't expect challenges here.
@@ -1743,14 +1743,21 @@ MonoBehaviour:
       of your mouse.)
     - (Make sure you put the mouse on the side you want to make the attack.)
     sentencesSpanish:
-    - Bueno, ya es hora de que me vaya de este sitio de mierda.
-    - "Probablemente todos los enemigos de por aqu\xED sean muy "
-    - jeje xd
-    - jeje xd
-    - jeje xd
+    - Bueno, ya es hora de salir de este sitio de mierda.
+    - "Probablemente todos los enemigos de por aqu\xED sean muy d\xE9biles y el plataformeo
+      sea muy f\xE1cil."
+    - "Esto es solo un **** tutorial, no puedes esperar desaf\xEDos aqu\xED."
+    - "(Mu\xE9vete usando WASD, salta usando la barra espaciadora y ataca con el
+      bot\xF3n izquierdo de tu rat\xF3n.)"
+    - "(Aseg\xFArate de poner el rat\xF3n en el lado al que quieras atacar.)"
     sentencesBasque:
-    - Egun ona izan.
-    - karkar ixade
+    - Beno, toki ziztrin onetik irteteko ordua iritsi da.
+    - Ziur aski hemen aldeko etsai guztiak oso debilak izango dira eta plataformeaoa
+      oso erraza izango da.
+    - Tutorial ****  bat besterik ez da, ezin duzu erronkarik espero hemen.
+    - '(WASD teklak erabiliz mugitu, salto egin zuriune-barra erabiliz eta atakatu
+      arratoiaren ezkerreko botoiarekin.) '
+    - (Ziurtatu arratoia eraso egin nahi duzun aldean ipintzen duzula.)
   gravity1: 0
   gravity2: 0
   dialogueNumber: 1
@@ -3016,7 +3023,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -3462,7 +3469,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -4710,7 +4717,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -4778,11 +4785,18 @@ MonoBehaviour:
   dialogue:
     name: (...)
     sentencesEnglish:
-    - Finally, I can see the exit of this place at the end of this corridor.
+    - Finally, I can see the exit of this room at the end of this corridor.
     - This time there are no spikes on the celling, so I can avoid the bandits.
-    - But, on the other hand, their vital light can be very usefull for later...
-    sentencesSpanish: []
-    sentencesBasque: []
+    - But, on the other hand, their vital light can be very useful for later...
+    sentencesSpanish:
+    - "Por fin, puedo ver la salida de esta habitaci\xF3n al final de este pasillo."
+    - "Esta vez no hay pinchos en el techo, as\xED que puedo evitar a los bandidos."
+    - "Aunque, mir\xE1ndolo por otro lado, su luz vital me podr\xEDa ser \xFAtil
+      m\xE1s adelante..."
+    sentencesBasque:
+    - Azkenik, gela honen irteera ikus dezaket pasillo honen amaieran.
+    - Oraingoan ez dago arantzarik sabaian, ez dut bidelapurrekin borroka egin beharrik.
+    - Baina, beste aldetik begiratuz, bere bizi argia erabilgarria izan ahal da...
   gravity1: 0
   gravity2: 0
   dialogueNumber: 9
@@ -5026,12 +5040,24 @@ MonoBehaviour:
   dialogue:
     name: (...)
     sentencesEnglish:
-    - Oh, I can see a bench with some blue torches there, how convinient for a tutorial!
-    - There I can rest to restore my health and use that torches to restore mana.
-    - Also I can upgrade my stats while I'm resting, spending the vital light that
-      I stole to the guards.
-    sentencesSpanish: []
-    sentencesBasque: []
+    - Oh, I can see a bench with some blue torches there, how convenient for a tutorial!
+    - There I can rest to restore my health and use those torches to restore mana.
+    - I can also upgrade my stats while I'm resting, spending the vital light that
+      I stole to the bandits.
+    sentencesSpanish:
+    - "Oh, puedo ver un banco con algunas antorchas azules ah\xED delante, \xA1que
+      conveniente para un tutorial!"
+    - "Ah\xED puedo descansar para recuperar mi salud y usar esas antorchas para
+      recuperar mi mana."
+    - "Tambi\xE9n puedo mejorar mis estad\xEDsticas mientras descanso, gastando la
+      luz vital que les he robado a los bandidos."
+    sentencesBasque:
+    - Oh, hor aurrean banku bat eta antortxa urdin batzuk ikusten ditut, ze komenigarria
+      tutorial batentzat!
+    - Bertan deskantsatu ahal dut nire osasuna berreskuratzeko eta antortxa horiek
+      erabili nire mana betetzeko.
+    - Nire estatistikak hobe ditzaket ere bertan deskantsatuz, bidelapurrei lapurtu
+      diedan bizi argia erabiliz.
   gravity1: 0
   gravity2: 0
   dialogueNumber: 6
@@ -5254,14 +5280,41 @@ MonoBehaviour:
       time passes.)
     - (You can't absorb light when enemies are attacking you.)
     - (Press Q to enter the gravity changing state. You can change gravity with WASD.)
+    - (Maintain pressed the side you want to have more gravity.)
     - (Pressing Left Shift while you press the other buttons you can change the gravity
       faster.)
-    - (Doing the same with Left Control you can put a gravity of one on the direction
+    - (Doing the same with Left Control you can put normal gravity on the direction
       you want.)
     - (You can also activate the regeneration with R. You deactivate it pressing
       R again.)
-    sentencesSpanish: []
-    sentencesBasque: []
+    sentencesSpanish:
+    - "Por fin algo de luz que puedo usar para cambiar las leyes de la gravedad,
+      \xA1Que te ***** Newton!"
+    - "(Presiona y mant\xE9n F para absorber luz. Las antorchas azules se recargan
+      pasado un tiempo.)"
+    - "(No puedes absorber luz cuando hay enemigos atac\xE1ndote.)"
+    - (Presiona Q para entrar al estado de cambio de gravedad. Puedes cambiarla usando
+      WASD)
+    - "(Mant\xE9n pulsado el lado al que quieres a\xF1adirle gravedad.)"
+    - "(Presionando May\xFAs izquierdo mientras presionas los otros botones a la
+      vez cambiaras la gravedad m\xE1s r\xE1pido.)"
+    - (Haciendo lo mismo con Control izquierdo puedes poner gravedad normal hacia
+      el lado que quieras.)
+    - "(Tambi\xE9n puedes activar la regeneraci\xF3n con la tecla R. Puedes desactivarla
+      presionando R otra vez.)"
+    sentencesBasque:
+    - Azkenenik grabitatearen legeak aldatzeko erabili ahal dudan argi zerbait, joan
+      zaitez ******** Newton!
+    - (Sakatu eta eutsi F argia xurgatzeko. Antortxa urdinak debora bat pasa ondoren
+      birkargatuko dira.)
+    - (Ezin duzu argirik xurgatu etsaiak atakatzen ari direnean.)
+    - (Sakatu Q grabitatea aldatzeko moduan sartzeko. WASD erabiliz alda dezakezu.)
+    - (Sakatu eta eutsi grabitatea gehitu nahi diozun aldeari.)
+    - (Shift ezkerra sakatuz beste botoiak sakatzen dituzun bitartean grabitatea
+      azkarrago alda dezakezu.)
+    - (Ctrl ezkerrarekin berdina eginez grabitate normala ipini dezakezu nahi duzun
+      alderantz.)
+    - (R teklarekin erregenerazioa aktiba dezakezu. R berriro sakatuz desaktiba dezakezu.)
   gravity1: 0
   gravity2: 0
   dialogueNumber: 3
@@ -5565,7 +5618,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -6369,7 +6422,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -6854,7 +6907,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -7023,7 +7076,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -7328,8 +7381,24 @@ MonoBehaviour:
     - Seriously, take the way to the left and then jump to the right using the dash.
     - (To use the dash press the right button of the mouse.)
     - (While you are dashing you can pass through enemies).
-    sentencesSpanish: []
-    sentencesBasque: []
+    sentencesSpanish:
+    - 'Mmmmmmmm, tenemos dos opciones:'
+    - Primero, a la izquierda, un camino que explica el uso de la embestida y lleva
+      a la salida de este tutorial.
+    - Segundo, a la derecha, un camino lleno de enemigos que no lleva a ninguna parte.
+    - En serio, sigue el camino de la izquierda y luego salta a la derecha usando
+      la embestida.
+    - "(Para usar la embestida presiona el bot\xF3n derecho del rat\xF3n.)"
+    - (Mientras estas embistiendo puedes atravesar enemigos.)
+    sentencesBasque:
+    - 'Mmmmmmmm, bi aukera ditugu:'
+    - Lehenengo, ezkerrera, desplazamenduaren erabilera azaltzen eta tutorialaren
+      amaierara eramaten duen bidea dugu.
+    - Bigarren, eskuinera, etsaiez betetako eta irteerarik gabeko bidea dugu.
+    - Benetan, jarraitu ezkerreko bidea eta gero salto egin eskuinera desplazamendua
+      erabiliz.
+    - (Desplazamendua erabiltzeko arratoiaren eskuineko botoia sakatu.)
+    - '(Desplazamendua erabiltzen ari zaren bitartean etsaiak zeharka ditzakezu.) '
   gravity1: 0
   gravity2: 0
   dialogueNumber: 2
@@ -7831,11 +7900,17 @@ MonoBehaviour:
   dialogue:
     name: (...)
     sentencesEnglish:
-    - 'Finally some ******* light. '
+    - Finally some ******* light.
     - (When you kill enemies you get their vital light.)
     - (The amount of vital light you need to light up yourself depends on your level.)
-    sentencesSpanish: []
-    sentencesBasque: []
+    sentencesSpanish:
+    - Por fin algo de **** luz.
+    - (Cuando mates enemigos obtienes su luz vital.)
+    - (La cantidad de luz vital que necesitas para encenderte depende de tu nivel.)
+    sentencesBasque:
+    - Behingoz argi ********* zerbait.
+    - (Etsaiak hiltzerakoan beraien bizi argia lortzen duzu.)
+    - (Pizteko behar duzun bizi argiaren kantitatea zure mailaren araberakoa da.)
   gravity1: 4
   gravity2: 4
   dialogueNumber: 0
@@ -8034,10 +8109,10 @@ RectTransform:
   m_Father: {fileID: 1114773733}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1025, y: 0.7485448}
-  m_AnchorMax: {x: 0.8975, y: 0.95300007}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.27625, y: 0.7485597}
+  m_AnchorMax: {x: 0.72375, y: 0.9663458}
+  m_AnchoredPosition: {x: 0, y: -0.099990845}
+  m_SizeDelta: {x: -0.51724243, y: -0.14872742}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &650140352
 MonoBehaviour:
@@ -8060,7 +8135,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -9850,7 +9925,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -10928,7 +11003,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -10981,10 +11056,10 @@ RectTransform:
   m_Father: {fileID: 218765857}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1025, y: 0.7485448}
-  m_AnchorMax: {x: 0.8975, y: 0.95300007}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.27625, y: 0.7552201}
+  m_AnchorMax: {x: 0.72249997, y: 0.9641197}
+  m_AnchoredPosition: {x: 0.1000061, y: 0.13000488}
+  m_SizeDelta: {x: 0.22418213, y: -1.3178406}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &950358292
 MonoBehaviour:
@@ -11007,7 +11082,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -11552,7 +11627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11560,7 +11635,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -11927,7 +12002,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -12381,7 +12456,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -12758,7 +12833,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -12837,7 +12912,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -12985,7 +13060,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -14690,7 +14765,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -15284,7 +15359,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -15437,7 +15512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15445,7 +15520,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -15885,11 +15960,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
-    m_FontSize: 30
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 2
     m_MaxSize: 300
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -15897,9 +15972,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Dialogue text.
-
-'
+  m_Text: 'Dialogue text. '
 --- !u!222 &1392206264
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16122,7 +16195,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -17593,7 +17666,7 @@ RectTransform:
   m_GameObject: {fileID: 1529132974}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.19375, y: 1.19375, z: 1.19375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 278494130}
   - {fileID: 50801880}
@@ -17603,8 +17676,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.038749997, y: 0.066554}
   m_AnchorMax: {x: 0.96625, y: 0.68010795}
-  m_AnchoredPosition: {x: 0.00012207031, y: -0.00012207031}
-  m_SizeDelta: {x: -120.429565, y: -44.817352}
+  m_AnchoredPosition: {x: -0.00024414062, y: -0.0001373291}
+  m_SizeDelta: {x: -0.0004272461, y: -0.00030517578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1529132976
 MonoBehaviour:
@@ -17693,13 +17766,29 @@ MonoBehaviour:
     - Did I just die?
     - ...............................
     - Let's continue as if nothing happened.
-    - (When you die you will lose all the vital light you gained)
+    - (When you die you will lose all the vital light you gained.)
     - (You can recover it breaking the shining barrel that appeared where you died
-      with a normal attack)
+      with a normal attack.)
     - (If you die again the vital light will be lost forever. If you died with 0
-      vital light, nothing will appear)
-    sentencesSpanish: []
-    sentencesBasque: []
+      vital light nothing will appear.)
+    sentencesSpanish:
+    - "\xBFAcabo de morir?"
+    - ...............................
+    - "Ser\xE1 mejor que contin\xFAe como si no hubiera pasado nada."
+    - "(Cuando mueres pierdes toda la luz vital que hab\xEDas conseguido.)"
+    - (Puedes recuperarla rompiendo con un ataque normal el barril brillante que
+      aparece donde moriste.)
+    - "(Si mueres otra vez la luz vital se perder\xE1 para siempre. Si mueres con
+      0 de luz vital no aparecer\xE1 nada.)"
+    sentencesBasque:
+    - Hil egin naiz?
+    - ...............................
+    - Hobe ezer gertatu ez balitz bezala jarraitzen badut.
+    - (Hiltzerakoan lortutako bizi argi guztia galtzen duzu.)
+    - (Hau errekuperatzeko hil zaren tokian agertzen den upel distiratsua apurtu
+      beharko duzu eraso normal batekin.)
+    - (Berriro hiltzen bazara bizi argia betirako galduko da. 0 bizi argirekin hiltzen
+      bazara ez da ezer agertuko.)
   gravity1: 6
   gravity2: 6
   dialogueNumber: 0
@@ -17762,7 +17851,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -18858,7 +18947,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -19531,7 +19620,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -19610,7 +19699,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -19768,7 +19857,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -19847,7 +19936,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -20698,9 +20787,15 @@ MonoBehaviour:
     sentencesEnglish:
     - Okay, so I need to fight some bandits because someone put ******* spikes on
       the ceiling.
-    - Let's clear the way quilckly so I can get out of here.
-    sentencesSpanish: []
-    sentencesBasque: []
+    - Let's clear the way quickly so I can get out of here.
+    sentencesSpanish:
+    - "Bien, as\xED que tengo que pelear con estos bandidos porque alguien puso *****
+      pinchos en el techo."
+    - "Ser\xE1 mejor que limpie el camino r\xE1pido para poder salir de aqu\xED."
+    sentencesBasque:
+    - Ze ondo, bidelapur batzuekin borroka egin behar dut norbaitek arantza *****
+      sabaian ipini dituelako.
+    - Hemendik azkar irten ahal izateko onena bidea azkar garbitzea izango da.
   gravity1: 0
   gravity2: 0
   dialogueNumber: 8
@@ -21002,7 +21097,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -22416,7 +22511,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -22604,10 +22699,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 22
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 300
     m_Alignment: 4
@@ -22683,7 +22778,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -22977,13 +23072,31 @@ MonoBehaviour:
     - Now that I'm closer to this bench I can see that it is clearly too big for
       me.
     - .........................................................
-    - Well, I'll just lean on the side of the bench, why can't they make benches
+    - Well, I'll just lean on the side of the bench. Why can't they make benches
       for small people...
-    - After a littel break I should exit this pathetic tutorial going to the top-right
+    - After a little break I should exit this pathetic tutorial going to the top-left
       corner.
-    - (Enemies will respawn when you rest)
-    sentencesSpanish: []
-    sentencesBasque: []
+    - (You can rest pressing S near a bench. Enemies and red torches will respawn
+      when you rest.)
+    sentencesSpanish:
+    - "Ahora que estoy m\xE1s cerca del banco veo que es claramente demasiado grande
+      para m\xED."
+    - .........................................................
+    - "Bueno, me apoyar\xE9 en un lado y fuera. Por qu\xE9 no hacen bancos para gente
+      peque\xF1a..."
+    - "Despu\xE9s de un peque\xF1o descanso deber\xEDa salir de este pat\xE9tico
+      tutorial continuando por la parte de arriba a la izquierda."
+    - "(Puedes descansar pulsando S cerca de un banco. Los enemigos y las antorchas
+      rojas volver\xE1n a aparecer cuando descanses.)"
+    sentencesBasque:
+    - Banku horretatik gertuago nagoela niretzat handiegia dela argi ikusten dut.
+    - .........................................................
+    - Beno, alde batean apoiatuko naiz eta listo. Zergatik ez dute bankurik egiten
+      pertsona txikientzat...
+    - Deskantsu txiki baten ondoren tutorial penagarri onetatik irten beharko nintzen
+      goi-ezkerraldeko aldetik jarraituz.
+    - (Deskantsatzeko S pultsatu bankutik gertu. Etsaiak eta antortxa gorriak berriro
+      agertuko dira deskantsatzen duzunean.)
   gravity1: 0
   gravity2: 0
   dialogueNumber: 7
@@ -23498,7 +23611,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -23849,7 +23962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -23857,7 +23970,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -24527,7 +24640,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6d43d198f5885db4ba5da74680c0e49a, type: 3}
+    m_Font: {fileID: 12800000, guid: 3230f6ea5b8a4204aa0f89f258aafa7a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -25102,11 +25215,29 @@ MonoBehaviour:
     - Maybe putting the gravity to the ceiling and walking to the left?
     - Or just fall to the left without knowing what is there, I don't know, do what
       you want.
-    - (If you fall too quickly you may get hurt).
-    - (To avoid that you can decrease the aceleration of your falling by putting
-      the gravity low).
-    sentencesSpanish: []
-    sentencesBasque: []
+    - (If you fall too quickly you may get hurt.)
+    - (To avoid that you can decrease the acceleration of your falling by putting
+      the gravity low.)
+    sentencesSpanish:
+    - Ni veo la plataforma a la que tengo que saltar...
+    - "Me pregunto que tendr\xE9 que hacer para llegar a sitios a los que no puedo
+      llegar con un salto normal..."
+    - "\xBFPuede que cambiar la gravedad hacia el techo y caminar hacia la izquierda?"
+    - "O simplemente salta hacia la izquierda sin saber que hay ah\xED, yo qu\xE9
+      s\xE9, haz lo que quieras."
+    - "(Si caes demasiado r\xE1pido recibir\xE1s da\xF1o.)"
+    - "(Para evitarlo puedes bajar la aceleraci\xF3n de tu ca\xEDda poniendo la gravedad
+      baja.)"
+    sentencesBasque:
+    - Ez dut ikusi ere egiten sato egin behar dudan plataforma...
+    - Zer egin beharko dut salto normal batekin heldu ezin naizen plataforma batera
+      ailegatzeko...
+    - Igual grabitatea sabairantz ipini eta ezkerrerantz ibili?
+    - ' Edo ezkerrerantz erori bertan zer dagoen jakin gabe, nik zer dakit, nahi
+      duzuna egin.'
+    - (Azkarregi erortzen bazara min har dezakezu.)
+    - (Hau ez gertatzeko zure eroriaren azelerazioa jaitsi dezakezu grabitate txikia
+      ipiniz.)
   gravity1: 0
   gravity2: 0
   dialogueNumber: 5
@@ -25171,12 +25302,22 @@ MonoBehaviour:
     name: (...)
     sentencesEnglish:
     - This normal torch will give me some mana too, but it won't recharge.
-    - You may be thinking why that enemy isn't attacking me...
+    - You may be wondering why that enemy isn't attacking me...
     - Well, he is respecting my time to speak and listening carefully, maybe I'm
-      not agresive.
-    - But he is wrong, **** you bandit!
-    sentencesSpanish: []
-    sentencesBasque: []
+      not aggressive.
+    - But he is wrong, **** you, bandit!
+    sentencesSpanish:
+    - "Esta antorcha normal tambi\xE9n me dar\xE1 algo de luz, pero no se recargar\xE1."
+    - "Te estar\xE1s preguntando por qu\xE9 ese enemigo no me est\xE1 atacando..."
+    - "Bueno, est\xE1 respetando mi turno de palabra y escuchando atentamente, puede
+      que no sea hostil."
+    - "Pero no est\xE1 en lo cierto, \xA1que te *****, bandido!"
+    sentencesBasque:
+    - Antortxa normal honek argi zerbait emango dit ere, baina ez da birkargatuko.
+    - Zure buruari galdezka egongo zara ea zergatik etsai honek ez didan eraso egiten...
+    - Beno, nire hitz egiteko txanda errespetatzen eta adi entzuten ari da, igual
+      ez naiz erasokorra.
+    - Baina ez da horrela, joan zaitez ********, bidelapur!
   gravity1: 0
   gravity2: 0
   dialogueNumber: 4
