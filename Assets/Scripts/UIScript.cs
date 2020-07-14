@@ -78,8 +78,6 @@ public class UIScript : MonoBehaviour
     private GameObject expGainingLevelMinus;
     //The settings menu
     private GameObject settingsMenu;
-    //The final text
-    private GameObject finalText;
     //The next maximum health
     private Text healthLevelNext;
     //The next maximum mana
@@ -133,6 +131,43 @@ public class UIScript : MonoBehaviour
     private Text returnText;
     //A boolean to see if the sword cursor is active
     private bool swordCursorActive;
+    //The texts we need to translate
+    private Text PauseTitle;
+    private Text ContinueText;
+    private Text MainMenuText;
+    private Text SettingsText;
+    private Text ExitText;
+    private GameObject finalText;
+    private Text FinalReturnText;
+    private Text DieText;
+    private Text RespawnText;
+    private Text UpgradeTitleText;
+    private Text UpgradeCostText;
+    private Text PlayerLevelText;
+    private Text LightLeftText;
+    private Text HealthDecription;
+    private Text ManaDescription;
+    private Text StaminaDescription;
+    private Text DamageDealtDescription;
+    private Text HealingDescription;
+    private Text DamageResistanceDescription;
+    private Text ExpGainDescription;
+    private Text ConfirmUpgradeText;
+    private Text DialogueNextText;
+
+    private Text SettingsTitle;
+    private Text ResolutionText;
+    private Text FullScreenText;
+    private Text FrameRateText;
+    private Text MainVolumeText;
+    private Text MusicText;
+    private Text EffectsText;
+    private Text LanguageText;
+    private Dropdown LanguageDropdown;
+    private Text ReturnSaveText;
+    private Text ReturnNoSaveText;
+    private Text ConfirmationText;
+    private Text SaveConfirmText;
 
     private void Start()
     {
@@ -179,6 +214,43 @@ public class UIScript : MonoBehaviour
         fullScreenToggle = GameObject.Find("Windowed");
         confirmationMenu = GameObject.Find("ConfirmMenu");
         returnText = GameObject.Find("ReturnText").GetComponent<Text>();
+
+        PauseTitle = GameObject.Find("PauseTitle").GetComponent<Text>();
+        ContinueText = GameObject.Find("ContinueText").GetComponent<Text>();
+        MainMenuText = GameObject.Find("MainMenuText").GetComponent<Text>();
+        SettingsText = GameObject.Find("SettingsText").GetComponent<Text>();
+        ExitText = GameObject.Find("ExitText").GetComponent<Text>();
+        FinalReturnText = GameObject.Find("FinalReturnText").GetComponent<Text>();
+        DieText = GameObject.Find("DieText").GetComponent<Text>();
+        RespawnText = GameObject.Find("RespawnText").GetComponent<Text>();
+        UpgradeTitleText = GameObject.Find("UpgradeTitleText").GetComponent<Text>();
+        UpgradeCostText = GameObject.Find("UpgradeCostText").GetComponent<Text>();
+        PlayerLevelText = GameObject.Find("PlayerLevelText").GetComponent<Text>();
+        LightLeftText = GameObject.Find("LightLeftText").GetComponent<Text>();
+        HealthDecription = GameObject.Find("HealthDescription").GetComponent<Text>();
+        ManaDescription = GameObject.Find("ManaDescription").GetComponent<Text>();
+        StaminaDescription = GameObject.Find("StaminaDescription").GetComponent<Text>();
+        DamageDealtDescription = GameObject.Find("DamageDealtDescription").GetComponent<Text>();
+        HealingDescription = GameObject.Find("HealingDescription").GetComponent<Text>();
+        DamageResistanceDescription = GameObject.Find("DamageResistanceDescription").GetComponent<Text>();
+        ExpGainDescription = GameObject.Find("ExpGainDescription").GetComponent<Text>();
+        ConfirmUpgradeText = GameObject.Find("ConfirmUpgradeText").GetComponent<Text>();
+        //DialogueNextText = GameObject.Find("DialogueNextText").GetComponent<Text>();
+
+        SettingsTitle = GameObject.Find("SettingsTitle").GetComponent<Text>();
+        ResolutionText = GameObject.Find("ResolutionText").GetComponent<Text>();
+        FullScreenText = GameObject.Find("FullScreenText").GetComponent<Text>();
+        FrameRateText = GameObject.Find("FrameRateText").GetComponent<Text>();
+        MainVolumeText = GameObject.Find("MasterSoundText").GetComponent<Text>();
+        MusicText = GameObject.Find("MusicText").GetComponent<Text>();
+        EffectsText = GameObject.Find("EffectsText").GetComponent<Text>();
+        LanguageText = GameObject.Find("LanguageText").GetComponent<Text>();
+        LanguageDropdown = GameObject.Find("DropdownLanguage").GetComponent<Dropdown>();
+        ReturnSaveText = GameObject.Find("ReturnSaveText").GetComponent<Text>();
+        ReturnNoSaveText = GameObject.Find("ReturnNoSaveText").GetComponent<Text>();
+        ConfirmationText = GameObject.Find("ConfirmationText").GetComponent<Text>();
+        SaveConfirmText = GameObject.Find("SaveConfirmText").GetComponent<Text>();
+
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
         confirmationMenu.SetActive(false);
@@ -287,6 +359,125 @@ public class UIScript : MonoBehaviour
         else if (PlayerPrefs.GetInt("framerate") == 0) framerate.GetComponent<Dropdown>().value = 5;
         fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;
         setSwordCursor(PlayerPrefs.GetInt("resolutionW"));
+
+        if (PlayerPrefs.GetInt("language") == 0)
+        {
+            LanguageDropdown.value = 0;
+            PauseTitle.text = "Paused";
+            ContinueText.text = "Continue";
+            MainMenuText.text = "Menu";
+            SettingsText.text = "Settings";
+            ExitText.text = "Exit";
+            finalText.GetComponent<Text>().text = "Thanks for playing!";
+            FinalReturnText.text = "Return to main menu";
+            DieText.text = "YOU DIED";
+            RespawnText.text = "Respawn";
+            UpgradeTitleText.text = "Upgrade";
+            UpgradeCostText.text = "Upgrade cost:";
+            PlayerLevelText.text = "Level:";
+            LightLeftText.text = "Light left:";
+            HealthDecription.text = "Max health:";
+            ManaDescription.text = "Max mana:";
+            StaminaDescription.text = "Max stamina:";
+            DamageDealtDescription.text = "Damage dealt:";
+            HealingDescription.text = "Heal per second:";
+            DamageResistanceDescription.text = "Damage reduction(%):";
+            ExpGainDescription.text = "Exp multiplier";
+            ConfirmUpgradeText.text = "Confirm changes";
+            //DialogueNextText.text = "Continue >>";
+
+            SettingsTitle.text = "Settings";
+            ResolutionText.text = "Resolution";
+            FullScreenText.text = "Full Screen";
+            FrameRateText.text = "Framerate";
+            MainVolumeText.text = "Main volume";
+            MusicText.text = "Music";
+            EffectsText.text = "Effects";
+            LanguageText.text = "Language";
+            ReturnSaveText.text = "Save and return";
+            ReturnNoSaveText.text = "Return without saving";
+            ConfirmationText.text = "Confirm if you can see this window correctly. You will return to the previous configuration if you do not confirm.";
+            SaveConfirmText.text = "Save changes";
+        }
+        else if (PlayerPrefs.GetInt("language") == 1)
+        {
+            LanguageDropdown.value = 1;
+            PauseTitle.text = "Pausado";
+            ContinueText.text = "Continuar";
+            MainMenuText.text = "Menú";
+            SettingsText.text = "Ajustes";
+            ExitText.text = "Salir";
+            finalText.GetComponent<Text>().text = "¡Gracias por jugar!";
+            FinalReturnText.text = "Volver al menú principal";
+            DieText.text = "HAS MUERTO";
+            RespawnText.text = "Reaparecer";
+            UpgradeTitleText.text = "Mejorar";
+            UpgradeCostText.text = "Coste de mejora:";
+            PlayerLevelText.text = "Nivel:";
+            LightLeftText.text = "Luz restante:";
+            HealthDecription.text = "Vida max:";
+            ManaDescription.text = "Mana max:";
+            StaminaDescription.text = "Resistencia max:";
+            DamageDealtDescription.text = "Daño realizado:";
+            HealingDescription.text = "Cura por segundo:";
+            DamageResistanceDescription.text = "Reducción de daño(%):";
+            ExpGainDescription.text = "Multiplicador de exp:";
+            ConfirmUpgradeText.text = "Confirmar cambios";
+            //DialogueNextText.text = "Continuar >>";
+
+            SettingsTitle.text = "Ajustes";
+            ResolutionText.text = "Resolución";
+            FullScreenText.text = "Pantalla completa";
+            FrameRateText.text = "Imágenes por segundo";
+            MainVolumeText.text = "Volumen maestro";
+            MusicText.text = "Música";
+            EffectsText.text = "Efectos";
+            LanguageText.text = "Idioma";
+            ReturnSaveText.text = "Guardar y volver";
+            ReturnNoSaveText.text = "Volver sin guardar";
+            ConfirmationText.text = "Confirma que puedes ver esta ventana correctamente. Volverás a la configuración previa si no confirmas.";
+            SaveConfirmText.text = "Guardar los cambios";
+        }
+        else if (PlayerPrefs.GetInt("language") == 2)
+        {
+            LanguageDropdown.value = 2;
+            PauseTitle.text = "Pausatua";
+            ContinueText.text = "Jarraitu";
+            MainMenuText.text = "Menua";
+            SettingsText.text = "Ezarpenak";
+            ExitText.text = "Irten";
+            finalText.GetComponent<Text>().text = "Eskerrik asko jolasteagatik!";
+            FinalReturnText.text = "Hasiera menura itzuli";
+            DieText.text = "HIL ZARA";
+            RespawnText.text = "Biragertu";
+            UpgradeTitleText.text = "Hobetu";
+            UpgradeCostText.text = "Hobetzearen kostua:";
+            PlayerLevelText.text = "Nibela:";
+            LightLeftText.text = "Gainerako argia:";
+            HealthDecription.text = "Bizitza max:";
+            ManaDescription.text = "Mana max:";
+            StaminaDescription.text = "Erresistentzia max:";
+            DamageDealtDescription.text = "Egindako mina:";
+            HealingDescription.text = "Sendaketa segunduko:";
+            DamageResistanceDescription.text = "Min erredukzioa(%):";
+            ExpGainDescription.text = "Exp bidertzailea:";
+            ConfirmUpgradeText.text = "Aldaketak gorde";
+            //DialogueNextText.text = "Jarraitu >>";
+
+            SettingsTitle.text = "Ezarpenak";
+            ResolutionText.text = "Erresoluzioa";
+            FullScreenText.text = "Pantaila osoa";
+            FrameRateText.text = "Irudiak segunduko";
+            MainVolumeText.text = "Bolumen nagusia";
+            MusicText.text = "Musika";
+            EffectsText.text = "Efektuak";
+            LanguageText.text = "Hizkuntzak";
+            ReturnSaveText.text = "Gorde eta itzuli";
+            ReturnNoSaveText.text = "Itzuli gorde gabe";
+            ConfirmationText.text = "Lehio hau ondo ikus dezakezula ziurtatu. Ez baduzu baieztatzen lehengo konfiguraziora itzuliko zara.";
+            SaveConfirmText.text = "Aldaketak gorde";
+        }
+
     }
 
 
@@ -665,8 +856,17 @@ public class UIScript : MonoBehaviour
         Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreenToggle.GetComponent<Toggle>().isOn, PlayerPrefs.GetInt("framerate"));
         
         setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
-        resolutionTime = Time.realtimeSinceStartup;
-        confirmationMenu.SetActive(true);
+
+        if (prevW == PlayerPrefs.GetInt("resolutionW") && prevH == PlayerPrefs.GetInt("resolutionH") && prevFS == fullScreen)
+        {
+            settingsMenu.SetActive(false);
+            pauseMenu.SetActive(true);
+        }
+        else
+        {
+            resolutionTime = Time.realtimeSinceStartup;
+            confirmationMenu.SetActive(true);
+        }       
     }
 
     public void ConfirmResolution()
@@ -803,5 +1003,124 @@ public class UIScript : MonoBehaviour
         else if (resolutionW == 2048) Cursor.SetCursor(cursorSword51, Vector2.zero, CursorMode.ForceSoftware);
         else if (resolutionW == 2560) Cursor.SetCursor(cursorSword64, Vector2.zero, CursorMode.ForceSoftware);
         else if (resolutionW == 3840) Cursor.SetCursor(cursorSword96, Vector2.zero, CursorMode.ForceSoftware);
+    }
+
+    public void ChangeLanguage()
+    {
+        PlayerPrefs.SetInt("language", LanguageDropdown.value);
+        if (PlayerPrefs.GetInt("language") == 0)
+        {
+            PauseTitle.text = "Paused";
+            ContinueText.text = "Continue";
+            MainMenuText.text = "Menu";
+            SettingsText.text = "Settings";
+            ExitText.text = "Exit";
+            finalText.GetComponent<Text>().text = "Thanks for playing!";
+            FinalReturnText.text = "Return to main menu";
+            DieText.text = "YOU DIED";
+            RespawnText.text = "Respawn";
+            UpgradeTitleText.text = "Upgrade";
+            UpgradeCostText.text = "Upgrade cost:";
+            PlayerLevelText.text = "Level:";
+            LightLeftText.text = "Light left:";
+            HealthDecription.text = "Max health:";
+            ManaDescription.text = "Max mana:";
+            StaminaDescription.text = "Max stamina:";
+            DamageDealtDescription.text = "Damage dealt:";
+            HealingDescription.text = "Heal per second:";
+            DamageResistanceDescription.text = "Damage reduction(%):";
+            ExpGainDescription.text = "Exp multiplier";
+            ConfirmUpgradeText.text = "Confirm changes";
+            //DialogueNextText.text = "Continue >>";
+
+            SettingsTitle.text = "Settings";
+            ResolutionText.text = "Resolution";
+            FullScreenText.text = "Full Screen";
+            FrameRateText.text = "Framerate";
+            MainVolumeText.text = "Main volume";
+            MusicText.text = "Music";
+            EffectsText.text = "Effects";
+            LanguageText.text = "Language";
+            ReturnSaveText.text = "Save and return";
+            ReturnNoSaveText.text = "Return without saving";
+            ConfirmationText.text = "Confirm if you can see this window correctly. You will return to the previous configuration if you do not confirm.";
+            SaveConfirmText.text = "Save changes";
+        }
+        else if (PlayerPrefs.GetInt("language") == 1)
+        {
+            PauseTitle.text = "Pausado";
+            ContinueText.text = "Continuar";
+            MainMenuText.text = "Menú";
+            SettingsText.text = "Ajustes";
+            ExitText.text = "Salir";
+            finalText.GetComponent<Text>().text = "¡Gracias por jugar!";
+            FinalReturnText.text = "Volver al menú principal";
+            DieText.text = "HAS MUERTO";
+            RespawnText.text = "Reaparecer";
+            UpgradeTitleText.text = "Mejorar";
+            UpgradeCostText.text = "Coste de mejora:";
+            PlayerLevelText.text = "Nivel:";
+            LightLeftText.text = "Luz restante:";
+            HealthDecription.text = "Vida max:";
+            ManaDescription.text = "Mana max:";
+            StaminaDescription.text = "Resistencia max:";
+            DamageDealtDescription.text = "Daño realizado:";
+            HealingDescription.text = "Cura por segundo:";
+            DamageResistanceDescription.text = "Reducción de daño(%):";
+            ExpGainDescription.text = "Multiplicador de exp:";
+            ConfirmUpgradeText.text = "Confirmar cambios";
+            //DialogueNextText.text = "Continuar >>";
+
+            SettingsTitle.text = "Ajustes";
+            ResolutionText.text = "Resolución";
+            FullScreenText.text = "Pantalla completa";
+            FrameRateText.text = "Imágenes por segundo";
+            MainVolumeText.text = "Volumen maestro";
+            MusicText.text = "Música";
+            EffectsText.text = "Efectos";
+            LanguageText.text = "Idioma";
+            ReturnSaveText.text = "Guardar y volver";
+            ReturnNoSaveText.text = "Volver sin guardar";
+            ConfirmationText.text = "Confirma que puedes ver esta ventana correctamente. Volverás a la configuración previa si no confirmas.";
+            SaveConfirmText.text = "Guardar los cambios";
+        }
+        else if (PlayerPrefs.GetInt("language") == 2)
+        {
+            PauseTitle.text = "Pausatua";
+            ContinueText.text = "Jarraitu";
+            MainMenuText.text = "Menua";
+            SettingsText.text = "Ezarpenak";
+            ExitText.text = "Irten";
+            finalText.GetComponent<Text>().text = "Eskerrik asko jolasteagatik!";
+            FinalReturnText.text = "Hasiera menura itzuli";
+            DieText.text = "HIL ZARA";
+            RespawnText.text = "Biragertu";
+            UpgradeTitleText.text = "Hobetu";
+            UpgradeCostText.text = "Hobetzearen kostua:";
+            PlayerLevelText.text = "Nibela:";
+            LightLeftText.text = "Gainerako argia:";
+            HealthDecription.text = "Bizitza max:";
+            ManaDescription.text = "Mana max:";
+            StaminaDescription.text = "Erresistentzia max:";
+            DamageDealtDescription.text = "Egindako mina:";
+            HealingDescription.text = "Sendaketa segunduko:";
+            DamageResistanceDescription.text = "Min erredukzioa(%):";
+            ExpGainDescription.text = "Exp bidertzailea:";
+            ConfirmUpgradeText.text = "Aldaketak gorde";
+            //DialogueNextText.text = "Jarraitu >>";
+
+            SettingsTitle.text = "Ezarpenak";
+            ResolutionText.text = "Erresoluzioa";
+            FullScreenText.text = "Pantaila osoa";
+            FrameRateText.text = "Irudiak segunduko";
+            MainVolumeText.text = "Bolumen nagusia";
+            MusicText.text = "Musika";
+            EffectsText.text = "Efektuak";
+            LanguageText.text = "Hizkuntzak";
+            ReturnSaveText.text = "Gorde eta itzuli";
+            ReturnNoSaveText.text = "Itzuli gorde gabe";
+            ConfirmationText.text = "Lehio hau ondo ikus dezakezula ziurtatu. Ez baduzu baieztatzen lehengo konfiguraziora itzuliko zara.";
+            SaveConfirmText.text = "Aldaketak gorde";
+        }
     }
 }

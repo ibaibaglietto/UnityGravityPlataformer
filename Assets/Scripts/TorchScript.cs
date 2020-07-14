@@ -94,5 +94,14 @@ public class TorchScript : MonoBehaviour
             }            
             absorbed = 0.0f;
         }
+        if (player.GetComponent<PlayerMovement>().sleeping && !blueTorch && torchLight.pointLightOuterRadius < 4.5f)
+        {
+            torchLight.pointLightOuterRadius = 4.5f;
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            torchLight.enabled = true;
+            flame.SetActive(true);
+            flame.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            absorbed = 0.0f;
+        }
     }
 }

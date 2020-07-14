@@ -46,6 +46,24 @@ public class MenuScript : MonoBehaviour
     private float resolutionTime;
     //The confirmation window
     private GameObject confirmationMenu;
+    //The texts we need to translate
+    private Text NewGameText;
+    private Text LoadText;
+    private Text SettingsText;
+    private Text ExitText;
+    private Text SettingsTitle;
+    private Text ResolutionText;
+    private Text FullScreenText;
+    private Text FrameRateText;
+    private Text MainVolumeText;
+    private Text MusicText;
+    private Text EffectsText;
+    private Text LanguageText;
+    private Dropdown LanguageDropdown;
+    private Text ReturnSaveText;
+    private Text ReturnNoSaveText;
+    private Text ConfirmationText;
+    private Text SaveConfirmText;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +76,23 @@ public class MenuScript : MonoBehaviour
         fullScreenToggle = GameObject.Find("Windowed");
         confirmationMenu = GameObject.Find("ConfirmMenu");
         returnText = GameObject.Find("ReturnText").GetComponent<Text>();
+        NewGameText = GameObject.Find("NewGameText").GetComponent<Text>();
+        LoadText = GameObject.Find("LoadText").GetComponent<Text>();
+        SettingsText = GameObject.Find("SettingsText").GetComponent<Text>();
+        ExitText = GameObject.Find("ExitText").GetComponent<Text>();
+        SettingsTitle = GameObject.Find("SettingsTitle").GetComponent<Text>();
+        ResolutionText = GameObject.Find("ResolutionText").GetComponent<Text>();
+        FullScreenText = GameObject.Find("FullScreenText").GetComponent<Text>();
+        FrameRateText = GameObject.Find("FrameRateText").GetComponent<Text>();
+        MainVolumeText = GameObject.Find("MasterSoundText").GetComponent<Text>();
+        MusicText = GameObject.Find("MusicText").GetComponent<Text>();
+        EffectsText = GameObject.Find("EffectsText").GetComponent<Text>();
+        LanguageText = GameObject.Find("LanguageText").GetComponent<Text>();
+        LanguageDropdown = GameObject.Find("DropdownLanguage").GetComponent<Dropdown>();
+        ReturnSaveText = GameObject.Find("ReturnSaveText").GetComponent<Text>();
+        ReturnNoSaveText = GameObject.Find("ReturnNoSaveText").GetComponent<Text>();
+        ConfirmationText = GameObject.Find("ConfirmationText").GetComponent<Text>();
+        SaveConfirmText = GameObject.Find("SaveConfirmText").GetComponent<Text>();
         settingsMenu.SetActive(false);
         confirmationMenu.SetActive(false);
         //We initialize all the playerprefs on the awake
@@ -221,11 +256,71 @@ public class MenuScript : MonoBehaviour
         else if (PlayerPrefs.GetInt("framerate") == 144) framerate.GetComponent<Dropdown>().value = 4;
         else if (PlayerPrefs.GetInt("framerate") == 0) framerate.GetComponent<Dropdown>().value = 5;
         fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;        
+        if (PlayerPrefs.GetInt("language") == 0)
+        {
+            LanguageDropdown.value = 0;
+            NewGameText.text = "New game";
+            LoadText.text = "Load";
+            SettingsText.text = "Settings";
+            ExitText.text = "Exit";
+            SettingsTitle.text = "Settings";
+            ResolutionText.text = "Resolution";
+            FullScreenText.text = "Full Screen";
+            FrameRateText.text = "Framerate";
+            MainVolumeText.text = "Main volume";
+            MusicText.text = "Music";
+            EffectsText.text = "Effects";
+            LanguageText.text = "Language";
+            ReturnSaveText.text = "Save and return";
+            ReturnNoSaveText.text = "Return without saving";
+            ConfirmationText.text = "Confirm if you can see this window correctly. You will return to the previous configuration if you do not confirm.";
+            SaveConfirmText.text = "Save changes";
+        }
+        else if (PlayerPrefs.GetInt("language") == 1)
+        {
+            LanguageDropdown.value = 1;
+            NewGameText.text = "Nueva partida";
+            LoadText.text = "Cargar";
+            SettingsText.text = "Ajustes";
+            ExitText.text = "Salir";
+            SettingsTitle.text = "Ajustes";
+            ResolutionText.text = "Resolución";
+            FullScreenText.text = "Pantalla completa";
+            FrameRateText.text = "Imágenes por segundo";
+            MainVolumeText.text = "Volumen maestro";
+            MusicText.text = "Música";
+            EffectsText.text = "Efectos";
+            LanguageText.text = "Idioma";
+            ReturnSaveText.text = "Guardar y volver";
+            ReturnNoSaveText.text = "Volver sin guardar";
+            ConfirmationText.text = "Confirma que puedes ver esta ventana correctamente. Volverás a la configuración previa si no confirmas.";
+            SaveConfirmText.text = "Guardar los cambios";
+        }
+        else if (PlayerPrefs.GetInt("language") == 2)
+        {
+            LanguageDropdown.value = 2;
+            NewGameText.text = "Partida berria";
+            LoadText.text = "Kargatu";
+            SettingsText.text = "Ezarpenak";
+            ExitText.text = "Irten";
+            SettingsTitle.text = "Ezarpenak";
+            ResolutionText.text = "Erresoluzioa";
+            FullScreenText.text = "Pantaila osoa";
+            FrameRateText.text = "Irudiak segunduko";
+            MainVolumeText.text = "Bolumen nagusia";
+            MusicText.text = "Musika";
+            EffectsText.text = "Efektuak";
+            LanguageText.text = "Hizkuntzak";
+            ReturnSaveText.text = "Gorde eta itzuli";
+            ReturnNoSaveText.text = "Itzuli gorde gabe";
+            ConfirmationText.text = "Lehio hau ondo ikus dezakezula ziurtatu. Ez baduzu baieztatzen lehengo konfiguraziora itzuliko zara.";
+            SaveConfirmText.text = "Aldaketak gorde";
+        }
+
     }
 
     public void NewGame()
     {
-        PlayerPrefs.SetInt("language", 2);
         //The mana level
         PlayerPrefs.SetInt("manaLevel", 1);
         //The dealt damage level
@@ -295,7 +390,12 @@ public class MenuScript : MonoBehaviour
             resolutionTime = 0.0f;
             ReturnResolution();
         }
-        else if (resolutionTime != 0.0f) returnText.text = "Return (" + (10 - (int)(Time.fixedTime - resolutionTime)).ToString() +")";
+        else if (resolutionTime != 0.0f)
+        {
+            if (PlayerPrefs.GetInt("language") == 0) returnText.text = "Return (" + (10 - (int)(Time.fixedTime - resolutionTime)).ToString() + ")";
+            else if (PlayerPrefs.GetInt("language") == 1) returnText.text = "Volver (" + (10 - (int)(Time.fixedTime - resolutionTime)).ToString() + ")";
+            else if (PlayerPrefs.GetInt("language") == 2) returnText.text = "Itzuli (" + (10 - (int)(Time.fixedTime - resolutionTime)).ToString() + ")";
+        }
     }
 
     public void LoadLevel()
@@ -464,8 +564,16 @@ public class MenuScript : MonoBehaviour
         else if (PlayerPrefs.GetInt("resolutionW") == 2560) Cursor.SetCursor(cursorArrow64, Vector2.zero, CursorMode.ForceSoftware);
         else if (PlayerPrefs.GetInt("resolutionW") == 3840) Cursor.SetCursor(cursorArrow96, Vector2.zero, CursorMode.ForceSoftware);
 
-        resolutionTime = Time.fixedTime;
-        confirmationMenu.SetActive(true);
+        if(prevW == PlayerPrefs.GetInt("resolutionW") && prevH == PlayerPrefs.GetInt("resolutionH") && prevFS == fullScreen)
+        {
+            settingsMenu.SetActive(false);
+            mainMenu.SetActive(true);
+        }
+        else
+        {
+            resolutionTime = Time.fixedTime;
+            confirmationMenu.SetActive(true);
+        }
     }
 
     public void ConfirmResolution()
@@ -575,5 +683,67 @@ public class MenuScript : MonoBehaviour
         fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;
 
         confirmationMenu.SetActive(false);
+    }
+
+    public void ChangeLanguage()
+    {
+        PlayerPrefs.SetInt("language", LanguageDropdown.value);
+        if (PlayerPrefs.GetInt("language") == 0)
+        {
+            NewGameText.text = "New game";
+            LoadText.text = "Load";
+            SettingsText.text = "Settings";
+            ExitText.text = "Exit";
+            SettingsTitle.text = "Settings";
+            ResolutionText.text = "Resolution";
+            FullScreenText.text = "Full Screen";
+            FrameRateText.text = "Framerate";
+            MainVolumeText.text = "Main volume";
+            MusicText.text = "Music";
+            EffectsText.text = "Effects";
+            LanguageText.text = "Language";
+            ReturnSaveText.text = "Save and return";
+            ReturnNoSaveText.text = "Return without saving";
+            ConfirmationText.text = "Confirm if you can see this window correctly. You will return to the previous configuration if you do not confirm.";
+            SaveConfirmText.text = "Save changes";
+        }
+        else if (PlayerPrefs.GetInt("language") == 1)
+        {
+            NewGameText.text = "Nueva partida";
+            LoadText.text = "Cargar";
+            SettingsText.text = "Ajustes";
+            ExitText.text = "Salir";
+            SettingsTitle.text = "Ajustes";
+            ResolutionText.text = "Resolución";
+            FullScreenText.text = "Pantalla completa";
+            FrameRateText.text = "Imágenes por segundo";
+            MainVolumeText.text = "Volumen maestro";
+            MusicText.text = "Música";
+            EffectsText.text = "Efectos";
+            LanguageText.text = "Idioma";
+            ReturnSaveText.text = "Guardar y volver";
+            ReturnNoSaveText.text = "Volver sin guardar";
+            ConfirmationText.text = "Confirma que puedes ver esta ventana correctamente. Volverás a la configuración previa si no confirmas.";
+            SaveConfirmText.text = "Guardar los cambios";
+        }
+        else if (PlayerPrefs.GetInt("language") == 2)
+        {
+            NewGameText.text = "Partida berria";
+            LoadText.text = "Kargatu";
+            SettingsText.text = "Ezarpenak";
+            ExitText.text = "Irten";
+            SettingsTitle.text = "Ezarpenak";
+            ResolutionText.text = "Erresoluzioa";
+            FullScreenText.text = "Pantaila osoa";
+            FrameRateText.text = "Irudiak segunduko";
+            MainVolumeText.text = "Bolumen nagusia";
+            MusicText.text = "Musika";
+            EffectsText.text = "Efektuak";
+            LanguageText.text = "Hizkuntzak";
+            ReturnSaveText.text = "Gorde eta itzuli";
+            ReturnNoSaveText.text = "Itzuli gorde gabe";
+            ConfirmationText.text = "Lehio hau ondo ikus dezakezula ziurtatu. Ez baduzu baieztatzen lehengo konfiguraziora itzuliko zara.";
+            SaveConfirmText.text = "Aldaketak gorde";
+        }
     }
 }
