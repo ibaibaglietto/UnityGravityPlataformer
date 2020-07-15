@@ -38,6 +38,8 @@ public class HeavyBanditScript : MonoBehaviour
     public Vector3 startPos;
     //A boolean to save where is looking the bandit when spawned. 0->left, 1-> right
     public int looking;
+    //A float to save the time that the bandit jumped
+    private float jumpTime;
 
 
     // Start is called before the first frame update
@@ -97,51 +99,43 @@ public class HeavyBanditScript : MonoBehaviour
                 gameObject.transform.position = prevPos;
             }
             prevPos = gameObject.transform.position;
-        }        
-    }
-
-    void FixedUpdate()
-    {
+        }
         if (health <= 0.0f && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
         {
             gameObject.GetComponent<Animator>().SetBool("IsDead", true);
             combo = 0;
             if (gameObject.GetComponent<Animator>().GetBool("IsFighting")) player.GetComponent<PlayerMovement>().attacked -= 1;
         }
-        if (gameObject.GetComponent<Animator>().GetBool("IsJumping") && gameObject.GetComponent<Rigidbody2D>().velocity.x == 0.0f && gameObject.GetComponent<Rigidbody2D>().velocity.y == 0.0f)
+        if (gameObject.GetComponent<Animator>().GetBool("IsJumping") && gameObject.GetComponent<Rigidbody2D>().velocity.x == 0.0f && gameObject.GetComponent<Rigidbody2D>().velocity.y == 0.0f && (Time.realtimeSinceStartup - jumpTime) > 0.25f)
         {
             gameObject.GetComponent<Animator>().SetBool("IsJumping", false);
             attacking = false;
             moving = false;
         }
         if (damage > 0.0f)
-        {            
+        {
             health -= damage;
             damage = 0.0f;
         }
-        if (combo == 6 && health > 0.0)
-        {
-            if (player.transform.position.x < gameObject.transform.position.x)
-            {
-                moving = true;
-                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(8000, 0));
-            }
-            else
-            {
-                moving = true;
-                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-8000, 0));
-            }
+        if (combo > 4 && health > 0.0)
+        {            
             combo = 0;
             gameObject.GetComponent<Animator>().SetBool("TakeDamage", false);
             gameObject.GetComponent<Animator>().SetBool("IsAttacking", false);
             gameObject.GetComponent<Animator>().SetBool("IsJumping", true);
+            jumpTime = Time.realtimeSinceStartup;
         }
+    }
+
+    void FixedUpdate()
+    {
+        
         if (gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsJumping") && health > 0.0)
         {
             if (player.transform.position.x < gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.75f))
             {
                 if (!lookingLeft) Flip();
-                if (gameObject.transform.position.x - player.transform.position.x > 1.25f)
+                if (gameObject.transform.position.x - player.transform.position.x > 1.4f)
                 {
                     moving = true;
                     targetVelocity = new Vector2(-6f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
@@ -157,7 +151,7 @@ public class HeavyBanditScript : MonoBehaviour
             else if (player.transform.position.x >= gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.75f))
             {
                 if (lookingLeft) Flip();
-                if (player.transform.position.x - gameObject.transform.position.x > 1.25f)
+                if (player.transform.position.x - gameObject.transform.position.x > 1.4f)
                 {
                     moving = true;
                     targetVelocity = new Vector2(6f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
@@ -191,9 +185,12 @@ public class HeavyBanditScript : MonoBehaviour
     //function to instantiate the damage collider
     public void startAttack()
     {
-        if(!lookingLeft) attack = Instantiate(attackPrefab, new Vector2(transform.position.x + 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
-        else attack = Instantiate(attackPrefab, new Vector2(transform.position.x - 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
-        lastAttack = Time.fixedTime;
+        if (!gameObject.GetComponent<Animator>().GetBool("TakeDamage"))
+        {
+            if (!lookingLeft) attack = Instantiate(attackPrefab, new Vector2(transform.position.x + 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
+            else attack = Instantiate(attackPrefab, new Vector2(transform.position.x - 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
+            lastAttack = Time.fixedTime;
+        }
     }
 
     //function to end the attack
@@ -216,5 +213,19 @@ public class HeavyBanditScript : MonoBehaviour
         if(PlayerPrefs.GetInt("expTutorial") == 0) PlayerPrefs.SetInt("expTutorial", 1);
     }
 
+    //function to start the jump movement
+    public void startJump()
+    {
+        if (player.transform.position.x < gameObject.transform.position.x)
+        {
+            moving = true;
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(8000, 0));
+        }
+        else
+        {
+            moving = true;
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-8000, 0));
+        }
+    }
 
 }

@@ -160,6 +160,8 @@ public class PlayerMovement : MonoBehaviour
     public bool dead;
     //A bool to check if the player is inside a trap
     public bool trap;
+    //A float to save the time of the last gravity change
+    private float gravityTime;
 
     [Header("Events")]
     [Space]
@@ -354,9 +356,127 @@ public class PlayerMovement : MonoBehaviour
             prevGravityUp = gravityUp;
             prevGravityLeft = gravityLeft;
             prevGravityRight = gravityRight;
+            gravityTime = Time.realtimeSinceStartup + 0.1f;
         }
         else if (changingGravity)
         {
+            if ((Time.realtimeSinceStartup - gravityTime)>0.3f)
+            {
+                //We'll change gravity with the movement keys. If we press left shift while doping it it will grow 5 times more in that direction.
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    if (Input.GetKey(KeyCode.W) && !rotating)
+                    {
+                        if (prevGravityDown >= 0.5f) prevGravityDown -= 0.5f;
+                        else if (prevGravityUp >= 9.5f) prevGravityUp = 10.0f;
+                        else
+                        {
+                            prevGravityUp += 0.5f - prevGravityDown;
+                            prevGravityDown = 0.0f;
+                        }
+                        gravityTime = Time.realtimeSinceStartup;
+                    }
+                    else if (Input.GetKey(KeyCode.S) && !rotating)
+                    {
+                        if (prevGravityUp >= 0.5f) prevGravityUp -= 0.5f;
+                        else if (prevGravityDown >= 9.5f) prevGravityDown = 10.0f;
+                        else
+                        {
+                            prevGravityDown += 0.5f - prevGravityUp;
+                            prevGravityUp = 0.0f;
+                        }
+                        gravityTime = Time.realtimeSinceStartup;
+                    }
+                    else if (Input.GetKey(KeyCode.A) && !rotating)
+                    {
+                        if (prevGravityRight >= 0.5f) prevGravityRight -= 0.5f;
+                        else if (prevGravityLeft >= 9.5f) prevGravityLeft = 10.0f;
+                        else
+                        {
+                            prevGravityLeft += 0.5f - prevGravityRight;
+                            prevGravityRight = 0.0f;
+                        }
+                        gravityTime = Time.realtimeSinceStartup;
+                    }
+                    else if (Input.GetKey(KeyCode.D) && !rotating)
+                    {
+                        if (prevGravityLeft >= 0.5f) prevGravityLeft -= 0.5f;
+                        else if (prevGravityRight >= 9.5f) prevGravityRight = 10.0f;
+                        else
+                        {
+                            prevGravityRight += 0.5f - prevGravityLeft;
+                            prevGravityLeft = 0.0f;
+                        }
+                        gravityTime = Time.realtimeSinceStartup;
+                    }
+                }
+                else if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    if (Input.GetKey(KeyCode.W) && !rotating)
+                    {
+                        prevGravityDown = 0.0f;
+                        prevGravityUp = 1.0f;
+                        prevGravityLeft = 0.0f;
+                        prevGravityRight = 0.0f;
+                    }
+                    else if (Input.GetKey(KeyCode.S) && !rotating)
+                    {
+                        prevGravityDown = 1.0f;
+                        prevGravityUp = 0.0f;
+                        prevGravityLeft = 0.0f;
+                        prevGravityRight = 0.0f;
+                    }
+                    else if (Input.GetKey(KeyCode.A) && !rotating)
+                    {
+                        prevGravityDown = 0.0f;
+                        prevGravityUp = 0.0f;
+                        prevGravityLeft = 1.0f;
+                        prevGravityRight = 0.0f;
+                    }
+                    else if (Input.GetKey(KeyCode.D) && !rotating)
+                    {
+                        prevGravityDown = 0.0f;
+                        prevGravityUp = 0.0f;
+                        prevGravityLeft = 0.0f;
+                        prevGravityRight = 1.0f;
+                    }
+                }
+                else
+                {
+                    if (Input.GetKey(KeyCode.W) && !rotating)
+                    {
+                        if (prevGravityDown > 0.1f) prevGravityDown -= 0.1f;
+                        else if (prevGravityDown > 0.0f) prevGravityDown = 0.0f;
+                        else if (prevGravityUp >= 9.9f) prevGravityUp = 10.0f;
+                        else prevGravityUp += 0.1f;
+                        gravityTime = Time.realtimeSinceStartup;
+                    }
+                    else if (Input.GetKey(KeyCode.S) && !rotating)
+                    {
+                        if (prevGravityUp > 0.1f) prevGravityUp -= 0.1f;
+                        else if (prevGravityUp > 0.0f) prevGravityUp = 0.0f;
+                        else if (prevGravityDown >= 9.9f) prevGravityDown = 10.0f;
+                        else prevGravityDown += 0.1f;
+                        gravityTime = Time.realtimeSinceStartup;
+                    }
+                    else if (Input.GetKey(KeyCode.A) && !rotating)
+                    {
+                        if (prevGravityRight > 0.1f) prevGravityRight -= 0.1f;
+                        else if (prevGravityRight > 0.0f) prevGravityRight = 0.0f;
+                        else if (prevGravityLeft >= 9.9f) prevGravityLeft = 10.0f;
+                        else prevGravityLeft += 0.1f;
+                        gravityTime = Time.realtimeSinceStartup;
+                    }
+                    else if (Input.GetKey(KeyCode.D) && !rotating)
+                    {
+                        if (prevGravityLeft > 0.1f) prevGravityLeft -= 0.1f;
+                        else if (prevGravityLeft > 0.0f) prevGravityLeft = 0.0f;
+                        else if (prevGravityRight >= 9.9f) prevGravityRight = 10.0f;
+                        else prevGravityRight += 0.1f;
+                        gravityTime = Time.realtimeSinceStartup;
+                    }
+                }
+            }
             //Return to normal when Q is pressed again
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -562,115 +682,7 @@ public class PlayerMovement : MonoBehaviour
         }
         //We apply the gravity
         gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(gravityRight - gravityLeft, gravityUp - gravityDown);
-        if (changingGravity)
-        {
-            //We'll change gravity with the movement keys. If we press left shift while doping it it will grow 5 times more in that direction.
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                if (Input.GetKey(KeyCode.W) && !rotating)
-                {
-                    if (prevGravityDown >= 0.5f) prevGravityDown -= 0.5f;
-                    else if (prevGravityUp >= 9.5f) prevGravityUp = 10.0f;
-                    else
-                    {
-                        prevGravityUp += 0.5f - prevGravityDown;
-                        prevGravityDown = 0.0f;
-                    }
-                }
-                else if (Input.GetKey(KeyCode.S) && !rotating)
-                {
-                    if (prevGravityUp >= 0.5f) prevGravityUp -= 0.5f;
-                    else if (prevGravityDown >= 9.5f) prevGravityDown = 10.0f;
-                    else
-                    {
-                        prevGravityDown += 0.5f - prevGravityUp;
-                        prevGravityUp = 0.0f;
-                    }
-                }
-                else if (Input.GetKey(KeyCode.A) && !rotating)
-                {
-                    if (prevGravityRight >= 0.5f) prevGravityRight -= 0.5f;
-                    else if (prevGravityLeft >= 9.5f) prevGravityLeft = 10.0f;
-                    else
-                    {
-                        prevGravityLeft += 0.5f - prevGravityRight;
-                        prevGravityRight = 0.0f;
-                    }
-                }
-                else if (Input.GetKey(KeyCode.D) && !rotating)
-                {
-                    if (prevGravityLeft >= 0.5f) prevGravityLeft -= 0.5f;
-                    else if (prevGravityRight >= 9.5f) prevGravityRight = 10.0f;
-                    else
-                    {
-                        prevGravityRight += 0.5f - prevGravityLeft;
-                        prevGravityLeft = 0.0f;
-                    }
-                }
-            }
-            else if (Input.GetKey(KeyCode.LeftControl))
-            {
-                if (Input.GetKey(KeyCode.W) && !rotating)
-                {
-                    prevGravityDown = 0.0f;
-                    prevGravityUp = 1.0f;
-                    prevGravityLeft = 0.0f;
-                    prevGravityRight = 0.0f;
-                }
-                else if (Input.GetKey(KeyCode.S) && !rotating)
-                {
-                    prevGravityDown = 1.0f;
-                    prevGravityUp = 0.0f;
-                    prevGravityLeft = 0.0f;
-                    prevGravityRight = 0.0f;
-                }
-                else if (Input.GetKey(KeyCode.A) && !rotating)
-                {
-                    prevGravityDown = 0.0f;
-                    prevGravityUp = 0.0f;
-                    prevGravityLeft = 1.0f;
-                    prevGravityRight = 0.0f;
-                }
-                else if (Input.GetKey(KeyCode.D) && !rotating)
-                {
-                    prevGravityDown = 0.0f;
-                    prevGravityUp = 0.0f;
-                    prevGravityLeft = 0.0f;
-                    prevGravityRight = 1.0f;
-                }
-            }
-            else 
-            {
-                if (Input.GetKey(KeyCode.W) && !rotating)
-                {
-                    if (prevGravityDown > 0.1f) prevGravityDown -= 0.1f;
-                    else if (prevGravityDown > 0.0f) prevGravityDown = 0.0f;
-                    else if (prevGravityUp >= 9.9f) prevGravityUp = 10.0f;
-                    else prevGravityUp += 0.1f;
-                }
-                else if (Input.GetKey(KeyCode.S) && !rotating)
-                {
-                    if (prevGravityUp > 0.1f) prevGravityUp -= 0.1f;
-                    else if (prevGravityUp > 0.0f) prevGravityUp = 0.0f;
-                    else if (prevGravityDown >= 9.9f) prevGravityDown = 10.0f;
-                    else prevGravityDown += 0.1f;
-                }
-                else if (Input.GetKey(KeyCode.A) && !rotating)
-                {
-                    if (prevGravityRight > 0.1f) prevGravityRight -= 0.1f;
-                    else if (prevGravityRight > 0.0f) prevGravityRight = 0.0f;
-                    else if (prevGravityLeft >= 9.9f) prevGravityLeft = 10.0f;
-                    else prevGravityLeft += 0.1f;
-                }
-                else if (Input.GetKey(KeyCode.D) && !rotating)
-                {
-                    if (prevGravityLeft > 0.1f) prevGravityLeft -= 0.1f;
-                    else if (prevGravityLeft > 0.0f) prevGravityLeft = 0.0f;
-                    else if (prevGravityRight >= 9.9f) prevGravityRight = 10.0f;
-                    else prevGravityRight += 0.1f;
-                }
-            }
-        }
+        
         //We call the move function
         Move(horizontalMove * Time.fixedDeltaTime, jump, gravity, changingGravity || paused);
         jump = false;
@@ -907,25 +919,25 @@ public class PlayerMovement : MonoBehaviour
         if(gravity == 0)
         {
             if (m_FacingRight) slashPos = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z);
-            else slashPos = new Vector3(transform.position.x - 0.75f, transform.position.y, transform.position.z);
+            else slashPos = new Vector3(transform.position.x - 1.0f, transform.position.y, transform.position.z);
             slashRotation = 90;
         }
         if (gravity == 1)
         {
             if (m_FacingRight) slashPos = new Vector3(transform.position.x + 1.0f, transform.position.y, transform.position.z);
-            else slashPos = new Vector3(transform.position.x - 0.75f, transform.position.y, transform.position.z);
+            else slashPos = new Vector3(transform.position.x - 1.0f, transform.position.y, transform.position.z);
             slashRotation = 90;
         }
         if (gravity == 2)
         {
             if (m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
-            else slashPos = new Vector3(transform.position.x, transform.position.y - 0.75f, transform.position.z);
+            else slashPos = new Vector3(transform.position.x, transform.position.y - 1.0f, transform.position.z);
             slashRotation = 0;
         }
         if (gravity == 3)
         {
             if (m_FacingRight) slashPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
-            else slashPos = new Vector3(transform.position.x, transform.position.y - 0.75f, transform.position.z);
+            else slashPos = new Vector3(transform.position.x, transform.position.y - 1.0f, transform.position.z);
             slashRotation = 0;
         }
         Instantiate(slashPrefab, slashPos, Quaternion.AngleAxis(slashRotation, Vector3.forward));

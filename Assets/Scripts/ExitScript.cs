@@ -31,7 +31,7 @@ public class ExitScript : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!player.GetComponent<PlayerMovement>().enteringScene)
+        if (!player.GetComponent<PlayerMovement>().enteringScene && collision == player.GetComponent<Collider2D>())
         {
             if (player.GetComponent<PlayerMovement>().changingGravity) player.GetComponent<PlayerMovement>().changingGravity = false;
             if (player.GetComponent<PlayerMovement>().healing) player.GetComponent<PlayerMovement>().healing = false;

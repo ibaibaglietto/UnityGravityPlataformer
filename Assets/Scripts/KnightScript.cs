@@ -50,7 +50,6 @@ public class KnightScript : MonoBehaviour
     //A boolean to save where is looking the bandit when spawned. 0->left, 1-> right
     public int looking;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -144,7 +143,7 @@ public class KnightScript : MonoBehaviour
             if (player.transform.position.x < gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.5f))
             {
                 if (lookingRight) Flip();
-                if (gameObject.transform.position.x - player.transform.position.x > 1.25f)
+                if (gameObject.transform.position.x - player.transform.position.x > 1.4f)
                 {
                     moving = true;
                     targetVelocity = new Vector2(-6f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
@@ -160,7 +159,7 @@ public class KnightScript : MonoBehaviour
             else if (player.transform.position.x >= gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.5f))
             {
                 if (!lookingRight) Flip();
-                if (player.transform.position.x - gameObject.transform.position.x > 1.25f)
+                if (player.transform.position.x - gameObject.transform.position.x > 1.4f)
                 {
                     moving = true;
                     targetVelocity = new Vector2(6f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
