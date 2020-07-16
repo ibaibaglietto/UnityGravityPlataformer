@@ -115,6 +115,10 @@ public class UIScript : MonoBehaviour
     private int prevH;
     private bool prevFS;
     private int prevFR;
+    private float prevMaster;
+    private float prevMusic;
+    private float prevEffect;
+    private int prevLanguage;
     //the screen mode
     private bool fullScreen;
     //The resolution selector dropdown
@@ -125,6 +129,10 @@ public class UIScript : MonoBehaviour
     private GameObject fullScreenToggle;
     //The confirmation window
     private GameObject confirmationMenu;
+    //The sound sliders
+    private Slider MasterSlider;
+    private Slider MusicSlider;
+    private Slider EffectsSlider;
     //The time the resolution changes were made
     private float resolutionTime;
     //The return configuration text
@@ -214,7 +222,6 @@ public class UIScript : MonoBehaviour
         fullScreenToggle = GameObject.Find("Windowed");
         confirmationMenu = GameObject.Find("ConfirmMenu");
         returnText = GameObject.Find("ReturnText").GetComponent<Text>();
-
         PauseTitle = GameObject.Find("PauseTitle").GetComponent<Text>();
         ContinueText = GameObject.Find("ContinueText").GetComponent<Text>();
         MainMenuText = GameObject.Find("MainMenuText").GetComponent<Text>();
@@ -235,7 +242,7 @@ public class UIScript : MonoBehaviour
         DamageResistanceDescription = GameObject.Find("DamageResistanceDescription").GetComponent<Text>();
         ExpGainDescription = GameObject.Find("ExpGainDescription").GetComponent<Text>();
         ConfirmUpgradeText = GameObject.Find("ConfirmUpgradeText").GetComponent<Text>();
-        //DialogueNextText = GameObject.Find("DialogueNextText").GetComponent<Text>();
+
 
         SettingsTitle = GameObject.Find("SettingsTitle").GetComponent<Text>();
         ResolutionText = GameObject.Find("ResolutionText").GetComponent<Text>();
@@ -250,6 +257,13 @@ public class UIScript : MonoBehaviour
         ReturnNoSaveText = GameObject.Find("ReturnNoSaveText").GetComponent<Text>();
         ConfirmationText = GameObject.Find("ConfirmationText").GetComponent<Text>();
         SaveConfirmText = GameObject.Find("SaveConfirmText").GetComponent<Text>();
+        MasterSlider = GameObject.Find("MasterSoundSlider").GetComponent<Slider>();
+        MusicSlider = GameObject.Find("MusicSlider").GetComponent<Slider>();
+        EffectsSlider = GameObject.Find("EffectsSlider").GetComponent<Slider>();
+
+        MasterSlider.value = PlayerPrefs.GetFloat("masterAudio");
+        MusicSlider.value = PlayerPrefs.GetFloat("musicAudio");
+        EffectsSlider.value = PlayerPrefs.GetFloat("effectsAudio");
 
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
@@ -719,12 +733,105 @@ public class UIScript : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(true);
+        prevMaster = PlayerPrefs.GetFloat("masterAudio");
+        prevMusic = PlayerPrefs.GetFloat("musicAudio");
+        prevEffect = PlayerPrefs.GetFloat("effectsAudio");
+        prevLanguage = PlayerPrefs.GetInt("language");
     }
 
     public void CloseNoSave()
     {
         settingsMenu.SetActive(false);
         pauseMenu.SetActive(true);
+        if (PlayerPrefs.GetInt("resolutionW") == 640)
+        {
+            Cursor.SetCursor(cursorArrow16, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 0;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 800)
+        {
+            Cursor.SetCursor(cursorArrow20, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 1;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1024)
+        {
+            Cursor.SetCursor(cursorArrow26, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 576) resolution.GetComponent<Dropdown>().value = 2;
+            else resolution.GetComponent<Dropdown>().value = 3;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1152)
+        {
+            Cursor.SetCursor(cursorArrow29, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 4;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1280)
+        {
+            Cursor.SetCursor(cursorArrow32, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 720) resolution.GetComponent<Dropdown>().value = 5;
+            else if (PlayerPrefs.GetInt("resolutionH") == 800) resolution.GetComponent<Dropdown>().value = 6;
+            else resolution.GetComponent<Dropdown>().value = 7;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1366)
+        {
+            Cursor.SetCursor(cursorArrow34, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 8;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1400)
+        {
+            Cursor.SetCursor(cursorArrow35, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 9;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1440)
+        {
+            Cursor.SetCursor(cursorArrow36, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 10;
+            else resolution.GetComponent<Dropdown>().value = 11;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1600)
+        {
+            Cursor.SetCursor(cursorArrow40, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 900) resolution.GetComponent<Dropdown>().value = 12;
+            else resolution.GetComponent<Dropdown>().value = 13;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1856)
+        {
+            Cursor.SetCursor(cursorArrow46, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 14;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 1920)
+        {
+            Cursor.SetCursor(cursorArrow48, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 1080) resolution.GetComponent<Dropdown>().value = 15;
+            else if (PlayerPrefs.GetInt("resolutionH") == 1200) resolution.GetComponent<Dropdown>().value = 16;
+            else resolution.GetComponent<Dropdown>().value = 17;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 2048)
+        {
+            Cursor.SetCursor(cursorArrow51, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 18;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 2560)
+        {
+            Cursor.SetCursor(cursorArrow64, Vector2.zero, CursorMode.ForceSoftware);
+            if (PlayerPrefs.GetInt("resolutionH") == 1440) resolution.GetComponent<Dropdown>().value = 19;
+            else resolution.GetComponent<Dropdown>().value = 20;
+        }
+        else if (PlayerPrefs.GetInt("resolutionW") == 3840)
+        {
+            Cursor.SetCursor(cursorArrow96, Vector2.zero, CursorMode.ForceSoftware);
+            resolution.GetComponent<Dropdown>().value = 21;
+        }
+        if (PlayerPrefs.GetInt("framerate") == 30) framerate.GetComponent<Dropdown>().value = 0;
+        else if (PlayerPrefs.GetInt("framerate") == 60) framerate.GetComponent<Dropdown>().value = 1;
+        else if (PlayerPrefs.GetInt("framerate") == 90) framerate.GetComponent<Dropdown>().value = 2;
+        else if (PlayerPrefs.GetInt("framerate") == 120) framerate.GetComponent<Dropdown>().value = 3;
+        else if (PlayerPrefs.GetInt("framerate") == 144) framerate.GetComponent<Dropdown>().value = 4;
+        else if (PlayerPrefs.GetInt("framerate") == 0) framerate.GetComponent<Dropdown>().value = 5;
+        fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;
+        LanguageDropdown.value = prevLanguage;
+        MasterSlider.value = prevMaster;
+        MusicSlider.value = prevMusic;
+        EffectsSlider.value = prevEffect;
     }
 
     public void CloseSave()
@@ -866,7 +973,10 @@ public class UIScript : MonoBehaviour
         {
             resolutionTime = Time.realtimeSinceStartup;
             confirmationMenu.SetActive(true);
-        }       
+        }
+        PlayerPrefs.SetFloat("masterAudio", MasterSlider.value);
+        PlayerPrefs.SetFloat("musicAudio", MusicSlider.value);
+        PlayerPrefs.SetFloat("effectsAudio", EffectsSlider.value);
     }
 
     public void ConfirmResolution()

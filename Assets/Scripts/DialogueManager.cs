@@ -10,6 +10,7 @@ public class DialogueManager : MonoBehaviour
     private Animator animator;
     private GameObject next;
     private GameObject player;
+    private AudioSource speak;
 
     private Queue<string> sentences;
 
@@ -25,6 +26,7 @@ public class DialogueManager : MonoBehaviour
         next.GetComponent<Button>().interactable = false;
         nameText.enabled = false;
         dialogueText.enabled = false;
+        speak = GameObject.Find("ConversationSource").GetComponent<AudioSource>();
     }
 
     public void StartDialogue (Dialogue dialogue, int gravity1, int gravity2, int faceRight)
@@ -109,6 +111,7 @@ public class DialogueManager : MonoBehaviour
         dialogueText.text = "";
         foreach (char letter in sentence.ToCharArray())
         {
+            speak.Play();
             dialogueText.text += letter;
             yield return new WaitForFixedUpdate();
         }

@@ -40,6 +40,10 @@ public class MenuScript : MonoBehaviour
     private int prevH;
     private bool prevFS;
     private int prevFR;
+    private float prevMaster;
+    private float prevMusic;
+    private float prevEffect;
+    private int prevLanguage;
     //The return configuration text
     private Text returnText;
     //The time the resolution changes were made
@@ -48,6 +52,10 @@ public class MenuScript : MonoBehaviour
     private GameObject confirmationMenu;
     //The language selection menu
     private GameObject LanguageSelectionMenu;
+    //The sound sliders
+    private Slider MasterSlider;
+    private Slider MusicSlider;
+    private Slider EffectsSlider;
     //The texts we need to translate
     private Text NewGameText;
     private Text LoadText;
@@ -102,6 +110,9 @@ public class MenuScript : MonoBehaviour
         LanguageChooseText = GameObject.Find("LanguageChooseText").GetComponent<Text>();
         LanguageChooseDropdown = GameObject.Find("DropdownChooseLanguage").GetComponent<Dropdown>();
         SaveLanguageText = GameObject.Find("SaveLanguageText").GetComponent<Text>();
+        MasterSlider = GameObject.Find("MasterSoundSlider").GetComponent<Slider>();
+        MusicSlider = GameObject.Find("MusicSlider").GetComponent<Slider>();
+        EffectsSlider = GameObject.Find("EffectsSlider").GetComponent<Slider>();
         settingsMenu.SetActive(false);
         confirmationMenu.SetActive(false);
         //We initialize all the playerprefs on the awake
@@ -177,6 +188,15 @@ public class MenuScript : MonoBehaviour
         if (!PlayerPrefs.HasKey("language")) PlayerPrefs.SetInt("language", 0);
         //An int to save if the player has choosen any language
         if (!PlayerPrefs.HasKey("languageChoosen")) PlayerPrefs.SetInt("languageChoosen", 0);
+        //A float to set the Master audio mixer
+        if (!PlayerPrefs.HasKey("masterAudio")) PlayerPrefs.SetFloat("masterAudio", 1.0f);
+        //A float to set the music audio mixer
+        if (!PlayerPrefs.HasKey("musicAudio")) PlayerPrefs.SetFloat("musicAudio", 1.0f);
+        //A float to set the effects audio mixer
+        if (!PlayerPrefs.HasKey("effectsAudio")) PlayerPrefs.SetFloat("effectsAudio", 1.0f);
+        MasterSlider.value = PlayerPrefs.GetFloat("masterAudio");
+        MusicSlider.value = PlayerPrefs.GetFloat("musicAudio");
+        EffectsSlider.value = PlayerPrefs.GetFloat("effectsAudio");
         if (PlayerPrefs.GetInt("languageChoosen") == 0)
         {
             LanguageSelectionMenu.SetActive(true);
@@ -435,6 +455,10 @@ public class MenuScript : MonoBehaviour
     {
         mainMenu.SetActive(false);
         settingsMenu.SetActive(true);
+        prevMaster = PlayerPrefs.GetFloat("masterAudio"); 
+        prevMusic = PlayerPrefs.GetFloat("musicAudio");
+        prevEffect = PlayerPrefs.GetFloat("effectsAudio");
+        prevLanguage = PlayerPrefs.GetInt("language");
     }
 
     public void CloseNoSave()
@@ -526,9 +550,10 @@ public class MenuScript : MonoBehaviour
         else if (PlayerPrefs.GetInt("framerate") == 144) framerate.GetComponent<Dropdown>().value = 4;
         else if (PlayerPrefs.GetInt("framerate") == 0) framerate.GetComponent<Dropdown>().value = 5;
         fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;
-        if (PlayerPrefs.GetInt("language") == 0) LanguageDropdown.value = 0;
-        else if (PlayerPrefs.GetInt("language") == 1) LanguageDropdown.value = 1;
-        else if (PlayerPrefs.GetInt("language") == 2) LanguageDropdown.value = 2;
+        LanguageDropdown.value = prevLanguage;
+        MasterSlider.value = prevMaster;
+        MusicSlider.value = prevMusic;
+        EffectsSlider.value = prevEffect;
     }
 
     public void CloseSave()
@@ -537,7 +562,6 @@ public class MenuScript : MonoBehaviour
         prevH = PlayerPrefs.GetInt("resolutionH");
         prevFS = fullScreen;
         prevFR = PlayerPrefs.GetInt("framerate");
-        ChangeLanguage(false);
         if (resolution.GetComponent<Dropdown>().value == 0)
         {
             PlayerPrefs.SetInt("resolutionW", 640);
@@ -685,6 +709,9 @@ public class MenuScript : MonoBehaviour
             resolutionTime = Time.fixedTime;
             confirmationMenu.SetActive(true);
         }
+        PlayerPrefs.SetFloat("masterAudio", MasterSlider.value);
+        PlayerPrefs.SetFloat("musicAudio", MusicSlider.value);
+        PlayerPrefs.SetFloat("effectsAudio", EffectsSlider.value);
     }
 
     public void ConfirmResolution()
