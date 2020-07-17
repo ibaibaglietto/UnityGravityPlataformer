@@ -32,6 +32,15 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     //Boolean to check if we are changing the gravity
     public bool changingGravity = false;
+    //The sounds we are going to use
+    public AudioClip deathClip;
+    public AudioClip damageClip;
+    public AudioClip attackClip;
+    public AudioClip shurikenClip;
+    public AudioClip jumpClip;
+    public AudioClip dashClip;
+    public AudioClip gravityClip;
+
 
     //The prefab of the shuriken
     public GameObject shurikenPrefab;
@@ -480,6 +489,8 @@ public class PlayerMovement : MonoBehaviour
             //Return to normal when Q is pressed again
             if (Input.GetKeyDown(KeyCode.Q))
             {
+                gameObject.GetComponent<AudioSource>().clip = gravityClip;
+                gameObject.GetComponent<AudioSource>().Play();
                 gravityDown = prevGravityDown;
                 gravityUp = prevGravityUp;
                 gravityLeft = prevGravityLeft;
@@ -575,6 +586,8 @@ public class PlayerMovement : MonoBehaviour
         //We dash using the right button of the mouse
         if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina && !paused)
         {
+            gameObject.GetComponent<AudioSource>().clip = dashClip;
+            gameObject.GetComponent<AudioSource>().Play();
             animator.SetBool("isDashing", true);
             if (gravity == 0 && m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(3200f, 0));
             else if (gravity == 0 && !m_FacingRight) gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-3200f, 0));
@@ -692,6 +705,8 @@ public class PlayerMovement : MonoBehaviour
             Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             var rot = Quaternion.AngleAxis(angle, Vector3.forward);
+            gameObject.GetComponent<AudioSource>().clip = shurikenClip;
+            gameObject.GetComponent<AudioSource>().Play();
             shuriken = Instantiate(shurikenPrefab, transform.position, rot);
             dir.Normalize();
             shuriken.GetComponent<Rigidbody2D>().velocity = dir * 10.0f;
@@ -905,6 +920,12 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isDashing", false);
         Physics2D.IgnoreLayerCollision(8, 9, false);
     }
+    //function to start the damage audio
+    public void startDamage()
+    {
+        gameObject.GetComponent<AudioSource>().clip = damageClip;
+        gameObject.GetComponent<AudioSource>().Play();
+    }
 
     //function to end the getting damage state
     public void endDamage()
@@ -940,6 +961,8 @@ public class PlayerMovement : MonoBehaviour
             else slashPos = new Vector3(transform.position.x, transform.position.y - 1.0f, transform.position.z);
             slashRotation = 0;
         }
+        gameObject.GetComponent<AudioSource>().clip = attackClip;
+        gameObject.GetComponent<AudioSource>().Play();
         Instantiate(slashPrefab, slashPos, Quaternion.AngleAxis(slashRotation, Vector3.forward));
     }
 
@@ -1072,6 +1095,8 @@ public class PlayerMovement : MonoBehaviour
         if (m_Grounded && jump)
         {
             // Add a vertical force to the player.
+            gameObject.GetComponent<AudioSource>().clip = jumpClip;
+            gameObject.GetComponent<AudioSource>().Play();
             m_Grounded = false;
             if (gravity == 0) m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             else if (gravity == 1) m_Rigidbody2D.AddForce(new Vector2(0f, -m_JumpForce));
@@ -1150,7 +1175,13 @@ public class PlayerMovement : MonoBehaviour
             Time.timeScale = 0.0f;
         }
     }
-
+    //function to start the death audio
+    public void startDie()
+    {
+        gameObject.GetComponent<AudioSource>().clip = deathClip;
+        gameObject.GetComponent<AudioSource>().Play();
+    }
+    //function to enter the dead state
     public void endDie()
     {
         dead = true;

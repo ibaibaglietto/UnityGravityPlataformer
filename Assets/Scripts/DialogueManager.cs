@@ -98,6 +98,7 @@ public class DialogueManager : MonoBehaviour
         if (sentences.Count == 0)
         {
             EndDialogue();
+            StopAllCoroutines();
             return;
         }
         string sentence = sentences.Dequeue();
