@@ -49,6 +49,15 @@ public class KnightScript : MonoBehaviour
     public Vector3 startPos;
     //A boolean to save where is looking the bandit when spawned. 0->left, 1-> right
     public int looking;
+    //The sounds we are going to use
+    public AudioClip deathClip;
+    public AudioClip damageClip;
+    public AudioClip attack1Clip;
+    public AudioClip attack2Clip;
+    public AudioClip attack3Clip;
+    public AudioClip rollClip;
+    public AudioClip shieldClip;
+
 
     // Start is called before the first frame update
     void Start()
@@ -118,12 +127,16 @@ public class KnightScript : MonoBehaviour
     {
         if (health <= 0.0f && !gameObject.GetComponent<Animator>().GetBool("isDead"))
         {
+            gameObject.GetComponent<AudioSource>().clip = deathClip;
+            gameObject.GetComponent<AudioSource>().Play();
             gameObject.GetComponent<Animator>().SetBool("isDead", true);
             combo = 0;
             if(fighting) player.GetComponent<PlayerMovement>().attacked -= 1;
         }
         if (damage > 0.0f)
         {
+            gameObject.GetComponent<AudioSource>().clip = damageClip;
+            gameObject.GetComponent<AudioSource>().Play();
             health -= damage;
             damage = 0.0f;
         }
@@ -193,6 +206,8 @@ public class KnightScript : MonoBehaviour
     //function to instantiate the first damage collider
     public void firstComboAttack()
     {
+        gameObject.GetComponent<AudioSource>().clip = attack1Clip;
+        gameObject.GetComponent<AudioSource>().Play();
         if (lookingRight) firstAttack = Instantiate(firstAttackPrefab, new Vector2(transform.position.x + 0.9764156f, transform.position.y + 0.4553868f), Quaternion.identity);
         else firstAttack = Instantiate(firstAttackPrefab, new Vector2(transform.position.x - 0.9764156f, transform.position.y + 0.4553868f), Quaternion.identity);
     }
@@ -200,6 +215,8 @@ public class KnightScript : MonoBehaviour
     //function to instantiate the second damage collider
     public void secondComboAttack()
     {
+        gameObject.GetComponent<AudioSource>().clip = attack2Clip;
+        gameObject.GetComponent<AudioSource>().Play();
         if (lookingRight) secondAttack = Instantiate(secondAttackPrefab, new Vector2(transform.position.x + 1.00466f, transform.position.y + 0.1953509f), Quaternion.identity);
         else secondAttack = Instantiate(secondAttackPrefab, new Vector2(transform.position.x - 1.00466f, transform.position.y + 0.1953509f), Quaternion.identity);
     }
@@ -207,6 +224,8 @@ public class KnightScript : MonoBehaviour
     //function to instantiate the third damage collider
     public void thirdComboAttack()
     {
+        gameObject.GetComponent<AudioSource>().clip = attack3Clip;
+        gameObject.GetComponent<AudioSource>().Play();
         if (lookingRight) thirdAttack = Instantiate(thirdAttackPrefab, new Vector2(transform.position.x + 1.204221f, transform.position.y + 0.19383f), Quaternion.identity);
         else thirdAttack = Instantiate(thirdAttackPrefab, new Vector2(transform.position.x - 1.204221f, transform.position.y + 0.19383f), Quaternion.identity);
     }
@@ -217,6 +236,8 @@ public class KnightScript : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("isAttacking", false);
         attacking = false;
         lastAttack = Time.fixedTime;
+        gameObject.GetComponent<AudioSource>().clip = shieldClip;
+        gameObject.GetComponent<AudioSource>().Play();
         gameObject.GetComponent<Animator>().SetBool("isShielding", true);
         shieldTime = Time.fixedTime;
         if (player.transform.position.x < gameObject.transform.position.x && lookingRight) Flip();
@@ -234,6 +255,8 @@ public class KnightScript : MonoBehaviour
     //function to start the roll movement
     public void startRoll()
     {
+        gameObject.GetComponent<AudioSource>().clip = rollClip;
+        gameObject.GetComponent<AudioSource>().Play();
         if (player.transform.position.x < gameObject.transform.position.x)
         {
             moving = true;

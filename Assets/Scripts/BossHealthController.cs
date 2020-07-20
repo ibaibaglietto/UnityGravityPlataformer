@@ -19,8 +19,13 @@ public class BossHealthController : MonoBehaviour
     private GameObject player;
     //A boolean to see if the fight has started
     public bool fighting;
-    //The animator off the boss fight arena
+    //The animator of the boss fight arena
     private Animator bossArena;
+    //The music
+    public AudioClip normalMusic;
+    public AudioClip bossMusic;
+    //The musicSource
+    private AudioSource musicSource;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +36,7 @@ public class BossHealthController : MonoBehaviour
         backBar = GameObject.Find("BossHealthBar");
         health = maxHealth;
         player = GameObject.Find("Player");
+        musicSource = GameObject.Find("MusicSource").GetComponent<AudioSource>();
         backBar.GetComponent<Image>().enabled = false;
         healthBar.GetComponent<Image>().enabled = false;
         fighting = false;
@@ -41,8 +47,10 @@ public class BossHealthController : MonoBehaviour
     void Update()
     {
         healthBar.GetComponent<Image>().fillAmount = health / maxHealth;
-        if(fighting && !king.GetComponent<Animator>().GetBool("IsDead") && !player.GetComponent<PlayerMovement>().talking)
+        if(fighting && !king.GetComponent<Animator>().GetBool("IsDead") && !player.GetComponent<PlayerMovement>().talking && !backBar.GetComponent<Image>().enabled)
         {
+            musicSource.clip = bossMusic;
+            musicSource.Play();
             backBar.GetComponent<Image>().enabled = true;
             healthBar.GetComponent<Image>().enabled = true;
             king.GetComponent<KingScript>().fighting = true;
@@ -59,8 +67,10 @@ public class BossHealthController : MonoBehaviour
                 king.GetComponent<KingScript>().damage = 0f;
                 if (health < 750.0f && !king.GetComponent<KingScript>().fase2) king.GetComponent<Animator>().SetBool("EnterFase2", true);
             }
-            else
+            else if(backBar.GetComponent<Image>().enabled)
             {
+                musicSource.clip = normalMusic;
+                musicSource.Play();
                 king.GetComponent<Animator>().SetBool("IsDead", true);
                 bossArena.SetBool("Close", false);
                 backBar.GetComponent<Image>().enabled = false;

@@ -40,6 +40,11 @@ public class HeavyBanditScript : MonoBehaviour
     public int looking;
     //A float to save the time that the bandit jumped
     private float jumpTime;
+    //The sounds we are going to use
+    public AudioClip deathClip;
+    public AudioClip damageClip;
+    public AudioClip attackClip;
+    public AudioClip jumpClip;
 
 
     // Start is called before the first frame update
@@ -103,6 +108,8 @@ public class HeavyBanditScript : MonoBehaviour
         if (health <= 0.0f && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
         {
             gameObject.GetComponent<Animator>().SetBool("IsDead", true);
+            gameObject.GetComponent<AudioSource>().clip = deathClip;
+            gameObject.GetComponent<AudioSource>().Play();
             combo = 0;
             if (gameObject.GetComponent<Animator>().GetBool("IsFighting")) player.GetComponent<PlayerMovement>().attacked -= 1;
         }
@@ -114,11 +121,15 @@ public class HeavyBanditScript : MonoBehaviour
         }
         if (damage > 0.0f)
         {
+            gameObject.GetComponent<AudioSource>().clip = damageClip;
+            gameObject.GetComponent<AudioSource>().Play();
             health -= damage;
             damage = 0.0f;
         }
         if (combo > 4 && health > 0.0)
-        {            
+        {
+            gameObject.GetComponent<AudioSource>().clip = jumpClip;
+            gameObject.GetComponent<AudioSource>().Play();
             combo = 0;
             gameObject.GetComponent<Animator>().SetBool("TakeDamage", false);
             gameObject.GetComponent<Animator>().SetBool("IsAttacking", false);
@@ -187,6 +198,8 @@ public class HeavyBanditScript : MonoBehaviour
     {
         if (!gameObject.GetComponent<Animator>().GetBool("TakeDamage"))
         {
+            gameObject.GetComponent<AudioSource>().clip = attackClip;
+            gameObject.GetComponent<AudioSource>().Play();
             if (!lookingLeft) attack = Instantiate(attackPrefab, new Vector2(transform.position.x + 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
             else attack = Instantiate(attackPrefab, new Vector2(transform.position.x - 0.3711176f, transform.position.y + 0.3996654f), Quaternion.identity);
             lastAttack = Time.fixedTime;

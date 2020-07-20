@@ -52,6 +52,12 @@ public class KingScript : MonoBehaviour
     public bool fighting;
     //boolean to see if the king has already tried to teleport this attack
     private bool teleportAttack;
+    //The sounds we are going to use
+    public AudioClip attack1Clip;
+    public AudioClip attack2Clip;
+    public AudioClip teleportClip;
+    public AudioClip groundClip;
+    public AudioClip deathClip;
 
     void Start()
     {
@@ -86,6 +92,8 @@ public class KingScript : MonoBehaviour
         {
             if ((gameObject.transform.position.y > 2.5 && player.transform.position.y < 2.5) || (gameObject.transform.position.y < 2.5 && player.transform.position.y > 2.5))
             {
+                gameObject.GetComponent<AudioSource>().clip = teleportClip;
+                gameObject.GetComponent<AudioSource>().Play();
                 gameObject.GetComponent<Animator>().SetBool("StartTeleport", true);
                 teleporting = true;
             }
@@ -94,6 +102,8 @@ public class KingScript : MonoBehaviour
                 r = Random.Range(0.0f, 100.0f);
                 if (r < 30.0f && !teleportAttack)
                 {
+                    gameObject.GetComponent<AudioSource>().clip = teleportClip;
+                    gameObject.GetComponent<AudioSource>().Play();
                     gameObject.GetComponent<Animator>().SetBool("StartTeleport", true);
                     teleporting = true;
                 }
@@ -173,6 +183,8 @@ public class KingScript : MonoBehaviour
 
     public void Combo1Appear()
     {
+        gameObject.GetComponent<AudioSource>().clip = attack1Clip;
+        gameObject.GetComponent<AudioSource>().Play();
         combo1 = Instantiate(combo1Prefab, transform.position, Quaternion.identity);
     }
 
@@ -184,6 +196,8 @@ public class KingScript : MonoBehaviour
 
     public void Combo2Appear()
     {
+        gameObject.GetComponent<AudioSource>().clip = attack2Clip;
+        gameObject.GetComponent<AudioSource>().Play();
         if (lookingRight) combo2 = Instantiate(combo2Prefab, new Vector2(transform.position.x + 3.246086f, transform.position.y), Quaternion.identity);
         else combo2 = Instantiate(combo2Prefab, new Vector2(transform.position.x - 3.246086f, transform.position.y), Quaternion.identity);
     }
@@ -195,6 +209,8 @@ public class KingScript : MonoBehaviour
 
     public void GroundAttackAppear()
     {
+        gameObject.GetComponent<AudioSource>().clip = groundClip;
+        gameObject.GetComponent<AudioSource>().Play();
         if (lookingRight) groundAttack = Instantiate(groundAttackPrefab, new Vector2(transform.position.x - 0.3566999f, transform.position.y), Quaternion.identity);
         else groundAttack = Instantiate(groundAttackPrefab, new Vector2(transform.position.x + 0.3566999f, transform.position.y), Quaternion.identity);
     }
@@ -294,6 +310,12 @@ public class KingScript : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("EnterFase2", false);
         fase2 = true;
+    }
+
+    public void deathAudio()
+    {
+        gameObject.GetComponent<AudioSource>().clip = deathClip;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     //function to enable the light

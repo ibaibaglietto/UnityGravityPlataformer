@@ -40,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip jumpClip;
     public AudioClip dashClip;
     public AudioClip gravityClip;
+    public AudioClip deathMusicClip;
+    //The musicSource
+    private AudioSource musicSource;
 
 
     //The prefab of the shuriken
@@ -203,6 +206,8 @@ public class PlayerMovement : MonoBehaviour
         healthBar = GameObject.Find("Healthbar");
         //Find the die screen
         dieScreen = GameObject.Find("DieScreen");
+        //find the music source
+        musicSource = GameObject.Find("MusicSource").GetComponent<AudioSource>();
         //Initialize all the variables we are going to use to manage the actions of the player
         trap = false;
         dead = false;
@@ -286,17 +291,19 @@ public class PlayerMovement : MonoBehaviour
             paused = true;
             Time.timeScale = 0.0f;
         }
-        if (dead && m_Grounded )
+        if (dead && m_Grounded && !dieScreen.activeSelf)
         {
             if (!trap)
             {
                 PlayerPrefs.SetFloat("diedx", gameObject.transform.position.x);
                 PlayerPrefs.SetFloat("diedy", gameObject.transform.position.y - 0.257f);
             }
+            musicSource.clip = deathMusicClip;
+            musicSource.Play();
             dieScreen.SetActive(true);
             PlayerPrefs.SetInt("diedscene", gameObject.GetComponent<PlayerMovement>().scene);
         }
-        else dieScreen.SetActive(false);
+        else if (!dead || !m_Grounded) dieScreen.SetActive(false);
         //stop throwing shurikens when the player is damaged or is dead
         if (animator.GetBool("isDead") || animator.GetBool("takeDamage"))
         {
@@ -1178,6 +1185,7 @@ public class PlayerMovement : MonoBehaviour
     //function to start the death audio
     public void startDie()
     {
+        musicSource.Stop();
         gameObject.GetComponent<AudioSource>().clip = deathClip;
         gameObject.GetComponent<AudioSource>().Play();
     }

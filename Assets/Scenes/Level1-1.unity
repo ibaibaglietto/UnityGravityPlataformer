@@ -1150,6 +1150,22 @@ PrefabInstance:
       propertyPath: looking
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1001 &86457714
@@ -1223,6 +1239,22 @@ PrefabInstance:
       propertyPath: looking
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1 &86700253
@@ -1371,6 +1403,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: 34.80927
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!4 &94938084 stripped
@@ -2552,6 +2600,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1001 &181936828
@@ -2765,6 +2829,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: -3.003
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1 &196195110
@@ -3364,6 +3444,22 @@ PrefabInstance:
       propertyPath: looking
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1 &223880366
@@ -3591,6 +3687,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: 16.34927
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1001 &254043587
@@ -3664,6 +3776,22 @@ PrefabInstance:
       propertyPath: looking
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1001 &257183549
@@ -4451,6 +4579,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: 16.34427
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!4 &317144973 stripped
@@ -4705,6 +4849,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: 25.98927
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!4 &333707745 stripped
@@ -7407,6 +7567,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: 34.82927
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1 &490953107
@@ -8990,6 +9166,22 @@ PrefabInstance:
       propertyPath: looking
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1 &607721214
@@ -15411,6 +15603,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: -2.98
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1 &1096301788
@@ -16454,6 +16662,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1 &1170790702
@@ -18649,6 +18873,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: 25.98
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!4 &1397505129 stripped
@@ -20397,6 +20637,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: 25.98927
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!4 &1547594176 stripped
@@ -20731,6 +20987,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1001 &1563261698
@@ -22100,6 +22372,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1 &1656866842
@@ -23166,6 +23454,22 @@ PrefabInstance:
       propertyPath: startPos.y
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 495c2cff734db314eb229d71040a1fae, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c346d38432a045e49a699616d460d7b9, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa931e2f5823a5248b806057f1d4f309, type: 3}
+    - target: {fileID: 8778456445968590588, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 753d3cff6ddfeca438ba394c6df12a98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3651e5c04d9e50140b3bac5444f39c26, type: 3}
 --- !u!1 &1754980504
@@ -24937,6 +25241,7 @@ MonoBehaviour:
   jumpClip: {fileID: 8300000, guid: edfc54d3cab482b44a9f03fa26207c8d, type: 3}
   dashClip: {fileID: 8300000, guid: 2a490e1339aa23345975aa7f1c6ebe30, type: 3}
   gravityClip: {fileID: 8300000, guid: 7055b0001b6380944ae5a7206cd1f0b5, type: 3}
+  deathMusicClip: {fileID: 8300000, guid: 0402e4b83caa6d34b9b812e2c09614ca, type: 3}
   shurikenPrefab: {fileID: 4412963757090139932, guid: 4ee8b18b587ebbe4dac8ed2fba6f9c0b, type: 3}
   dashPrefab: {fileID: 1194732918599153005, guid: 70669708f97ef894b886428e2f40d8fe, type: 3}
   slashPrefab: {fileID: 7270114559968982954, guid: a7b9745b76887554b804fdadc6cf9d7a, type: 3}
