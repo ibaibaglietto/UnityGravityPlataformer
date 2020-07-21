@@ -192,6 +192,11 @@ MonoBehaviour:
   damage: 0
   fase2: 0
   fighting: 0
+  attack1Clip: {fileID: 0}
+  attack2Clip: {fileID: 0}
+  teleportClip: {fileID: 0}
+  groundClip: {fileID: 0}
+  deathClip: {fileID: 0}
 --- !u!82 &8448984919538259225
 AudioSource:
   m_ObjectHideFlags: 0
@@ -212,7 +217,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

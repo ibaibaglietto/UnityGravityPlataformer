@@ -434,6 +434,7 @@ public class PlayerMovement : MonoBehaviour
                         prevGravityUp = 1.0f;
                         prevGravityLeft = 0.0f;
                         prevGravityRight = 0.0f;
+                        gravityTime = Time.realtimeSinceStartup - 0.1f;
                     }
                     else if (Input.GetKey(KeyCode.S) && !rotating)
                     {
@@ -441,6 +442,7 @@ public class PlayerMovement : MonoBehaviour
                         prevGravityUp = 0.0f;
                         prevGravityLeft = 0.0f;
                         prevGravityRight = 0.0f;
+                        gravityTime = Time.realtimeSinceStartup - 0.1f;
                     }
                     else if (Input.GetKey(KeyCode.A) && !rotating)
                     {
@@ -448,6 +450,7 @@ public class PlayerMovement : MonoBehaviour
                         prevGravityUp = 0.0f;
                         prevGravityLeft = 1.0f;
                         prevGravityRight = 0.0f;
+                        gravityTime = Time.realtimeSinceStartup - 0.1f;
                     }
                     else if (Input.GetKey(KeyCode.D) && !rotating)
                     {
@@ -455,6 +458,7 @@ public class PlayerMovement : MonoBehaviour
                         prevGravityUp = 0.0f;
                         prevGravityLeft = 0.0f;
                         prevGravityRight = 1.0f;
+                        gravityTime = Time.realtimeSinceStartup - 0.1f;
                     }
                 }
                 else

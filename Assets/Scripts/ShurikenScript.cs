@@ -24,6 +24,8 @@ public class ShurikenScript : MonoBehaviour
     {
         if (collision.tag == "Button")
         {
+            collision.transform.parent.gameObject.GetComponent<AudioSource>().Play();
+            collision.GetComponent<AudioSource>().Play();
             collision.transform.parent.gameObject.GetComponent<Animator>().SetTrigger("Open");
             if (PlayerPrefs.GetInt("trap") == 0)
             {

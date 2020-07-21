@@ -194,6 +194,13 @@ MonoBehaviour:
   combo: 0
   startPos: {x: 0, y: 0, z: 0}
   looking: 0
+  deathClip: {fileID: 0}
+  damageClip: {fileID: 0}
+  attack1Clip: {fileID: 0}
+  attack2Clip: {fileID: 0}
+  attack3Clip: {fileID: 0}
+  rollClip: {fileID: 0}
+  shieldClip: {fileID: 0}
 --- !u!82 &4980485942892596716
 AudioSource:
   m_ObjectHideFlags: 0
@@ -214,7 +221,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

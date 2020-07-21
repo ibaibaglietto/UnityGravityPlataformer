@@ -23,6 +23,10 @@ public class TorchScript : MonoBehaviour
     public bool blueTorch;
     //A bool to see if it's the boss light
     public bool bossLight;
+    //The time the last absorbtion was done
+    private float absorbTime;
+    //A bool to see if the player is absorbing
+    private bool absorbing;
 
     void Start()
     {
@@ -31,6 +35,7 @@ public class TorchScript : MonoBehaviour
         torchLight = gameObject.transform.GetChild(0).gameObject.GetComponent<Light2D>();
         playerNear = false;
         manaBar = GameObject.Find("Manabar");
+        absorbTime = Time.fixedTime;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -62,6 +67,12 @@ public class TorchScript : MonoBehaviour
     {
         if (player.GetComponent<PlayerMovement>().isAbsorbing && playerNear)
         {
+            if (!absorbing)
+            {
+                absorbing = true;
+                gameObject.GetComponent<AudioSource>().Play();
+            }
+            if (blueTorch) absorbTime = Time.fixedTime;
             if(!bossLight) flame.transform.localScale -= new Vector3(0.01f, 0.01f, 0.0f);
             torchLight.pointLightOuterRadius -= 0.045f;
             manaBar.GetComponent<ManaController>().mana += 0.2f;
@@ -72,13 +83,18 @@ public class TorchScript : MonoBehaviour
             dir.Normalize();
             energy.GetComponent<Rigidbody2D>().velocity = dir * 5.0f;
         }
+        else
+        {
+            absorbing = false;
+            gameObject.GetComponent<AudioSource>().Stop();
+        }
         if (torchLight.pointLightOuterRadius <= 0.0f)
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             if (!bossLight) flame.SetActive(false);
             torchLight.enabled = false;
         }
-        if ((blueTorch || bossLight) && torchLight.pointLightOuterRadius < 4.5f && !player.GetComponent<PlayerMovement>().isAbsorbing)
+        if ((blueTorch || bossLight) && torchLight.pointLightOuterRadius < 4.5f && !player.GetComponent<PlayerMovement>().isAbsorbing && (Time.fixedTime - absorbTime) > 5.0f)
         {
             torchLight.pointLightOuterRadius += 0.006f;
             if (!gameObject.GetComponent<BoxCollider2D>().enabled)
