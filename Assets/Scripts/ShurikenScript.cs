@@ -24,13 +24,13 @@ public class ShurikenScript : MonoBehaviour
     {
         if (collision.tag == "Button")
         {
-            collision.transform.parent.gameObject.GetComponent<AudioSource>().Play();
             collision.GetComponent<AudioSource>().Play();
             collision.transform.parent.gameObject.GetComponent<Animator>().SetTrigger("Open");
             if (PlayerPrefs.GetInt("trap") == 0)
             {
                 if (collision.transform.parent.gameObject.transform.position.x == -81.48338f) PlayerPrefs.SetInt("trap",1);
-            }            
+            }
+            collision.GetComponent<BoxCollider2D>().enabled = false;
         }
         else if (collision.tag == "Wall") Destroy(gameObject);
     }

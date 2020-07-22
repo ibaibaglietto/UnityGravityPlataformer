@@ -55,14 +55,14 @@ public class DialogueTrigger : MonoBehaviour
             {
                 if(dialogueNumber == 15)
                 {
+                    bossArena.gameObject.GetComponent<AudioSource>().Play();
                     bossArena.SetBool("Close",true);
                     player.GetComponent<PlayerMovement>().approach = false;
                     bossBar.GetComponent<BossHealthController>().fighting = true;
                 }
                 FindObjectOfType<DialogueManager>().StartDialogue(dialogue, gravity1, gravity2, faceRight);
                 PlayerPrefs.SetInt("lastDialogue", dialogueNumber);
-            }
-            
+            }            
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }

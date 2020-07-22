@@ -72,6 +72,7 @@ public class BossHealthController : MonoBehaviour
                 musicSource.clip = normalMusic;
                 musicSource.Play();
                 king.GetComponent<Animator>().SetBool("IsDead", true);
+                bossArena.gameObject.GetComponent<AudioSource>().Play();
                 bossArena.SetBool("Close", false);
                 backBar.GetComponent<Image>().enabled = false;
                 healthBar.GetComponent<Image>().enabled = false;
