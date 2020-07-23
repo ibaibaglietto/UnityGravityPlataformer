@@ -92,8 +92,6 @@ public class KingScript : MonoBehaviour
         {
             if ((gameObject.transform.position.y > 2.5 && player.transform.position.y < 2.5) || (gameObject.transform.position.y < 2.5 && player.transform.position.y > 2.5))
             {
-                gameObject.GetComponent<AudioSource>().clip = teleportClip;
-                gameObject.GetComponent<AudioSource>().Play();
                 gameObject.GetComponent<Animator>().SetBool("StartTeleport", true);
                 teleporting = true;
             }
@@ -101,9 +99,7 @@ public class KingScript : MonoBehaviour
             {
                 r = Random.Range(0.0f, 100.0f);
                 if (r < 30.0f && !teleportAttack)
-                {
-                    gameObject.GetComponent<AudioSource>().clip = teleportClip;
-                    gameObject.GetComponent<AudioSource>().Play();
+                {                    
                     gameObject.GetComponent<Animator>().SetBool("StartTeleport", true);
                     teleporting = true;
                 }
@@ -218,6 +214,12 @@ public class KingScript : MonoBehaviour
     public void GroundAttackDisappear()
     {
         Destroy(groundAttack);
+    }
+
+    public void TeleportSound()
+    {
+        gameObject.GetComponent<AudioSource>().clip = teleportClip;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     //function to make the sprite renderer dissapear when the king is teleporting

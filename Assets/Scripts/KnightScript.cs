@@ -140,7 +140,7 @@ public class KnightScript : MonoBehaviour
             health -= damage;
             damage = 0.0f;
         }
-        if (combo == 6 && health > 0.0)
+        if (combo > 4 && health > 0.0)
         {            
             combo = 0;
             gameObject.GetComponent<Animator>().SetBool("isTakingDamage", false);

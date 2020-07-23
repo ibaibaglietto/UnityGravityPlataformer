@@ -121,7 +121,7 @@ public class MenuScript : MonoBehaviour
         //The resolution height
         if (!PlayerPrefs.HasKey("resolutionH")) PlayerPrefs.SetInt("resolutionH", 720);
         //The full screen mode: 0-> windowed, 1-> full screen
-        if (!PlayerPrefs.HasKey("fullScreen")) PlayerPrefs.SetInt("fullScreen", 0);
+        if (!PlayerPrefs.HasKey("fullScreen")) PlayerPrefs.SetInt("fullScreen", 1);
         //The preferred refresh rate
         if (!PlayerPrefs.HasKey("framerate")) PlayerPrefs.SetInt("framerate", 0);
         //The mana level

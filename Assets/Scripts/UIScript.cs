@@ -146,7 +146,6 @@ public class UIScript : MonoBehaviour
     private Text SettingsText;
     private Text ExitText;
     private GameObject finalText;
-    private Text FinalReturnText;
     private Text DieText;
     private Text RespawnText;
     private Text UpgradeTitleText;
@@ -227,7 +226,6 @@ public class UIScript : MonoBehaviour
         MainMenuText = GameObject.Find("MainMenuText").GetComponent<Text>();
         SettingsText = GameObject.Find("SettingsText").GetComponent<Text>();
         ExitText = GameObject.Find("ExitText").GetComponent<Text>();
-        FinalReturnText = GameObject.Find("FinalReturnText").GetComponent<Text>();
         DieText = GameObject.Find("DieText").GetComponent<Text>();
         RespawnText = GameObject.Find("RespawnText").GetComponent<Text>();
         UpgradeTitleText = GameObject.Find("UpgradeTitleText").GetComponent<Text>();
@@ -382,8 +380,6 @@ public class UIScript : MonoBehaviour
             MainMenuText.text = "Menu";
             SettingsText.text = "Settings";
             ExitText.text = "Exit";
-            finalText.GetComponent<Text>().text = "Thanks for playing!";
-            FinalReturnText.text = "Return to main menu";
             DieText.text = "YOU DIED";
             RespawnText.text = "Respawn";
             UpgradeTitleText.text = "Upgrade";
@@ -421,8 +417,6 @@ public class UIScript : MonoBehaviour
             MainMenuText.text = "Menú";
             SettingsText.text = "Ajustes";
             ExitText.text = "Salir";
-            finalText.GetComponent<Text>().text = "¡Gracias por jugar!";
-            FinalReturnText.text = "Volver al menú principal";
             DieText.text = "HAS MUERTO";
             RespawnText.text = "Reaparecer";
             UpgradeTitleText.text = "Mejorar";
@@ -460,8 +454,6 @@ public class UIScript : MonoBehaviour
             MainMenuText.text = "Menua";
             SettingsText.text = "Ezarpenak";
             ExitText.text = "Irten";
-            finalText.GetComponent<Text>().text = "Eskerrik asko jolasteagatik!";
-            FinalReturnText.text = "Hasiera menura itzuli";
             DieText.text = "HIL ZARA";
             RespawnText.text = "Biragertu";
             UpgradeTitleText.text = "Hobetu";
@@ -497,12 +489,13 @@ public class UIScript : MonoBehaviour
 
     void Update()
     {
-        if (player.GetComponent<PlayerMovement>().ended)
+        if (player.GetComponent<PlayerMovement>().ended && !finalText.activeSelf)
         {
+            setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
             finalText.SetActive(true);
             PlayerPrefs.SetInt("lastDialogue", 15);
         }
-        else finalText.SetActive(false);
+        else if(!player.GetComponent<PlayerMovement>().ended) finalText.SetActive(false);
         if (player.GetComponent<PlayerMovement>().paused && (!pauseMenu.activeSelf && !settingsMenu.activeSelf))
         {
             pauseMenu.SetActive(true);
@@ -510,7 +503,7 @@ public class UIScript : MonoBehaviour
         }
         if (dieScreen.activeSelf && swordCursorActive) setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
         if (player.GetComponent<PlayerMovement>().talking && swordCursorActive) setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
-        if (!player.GetComponent<PlayerMovement>().paused && !dieScreen.activeSelf && !player.GetComponent<PlayerMovement>().talking && !player.GetComponent<PlayerMovement>().sleeping && !swordCursorActive) setSwordCursor(PlayerPrefs.GetInt("resolutionW"));
+        if (!player.GetComponent<PlayerMovement>().paused && !dieScreen.activeSelf && !player.GetComponent<PlayerMovement>().talking && !player.GetComponent<PlayerMovement>().sleeping && !swordCursorActive && !player.GetComponent<PlayerMovement>().ended) setSwordCursor(PlayerPrefs.GetInt("resolutionW"));
         //Check that all the numbers of the lvl up interface are up to date
         if (!lvlUp.activeSelf && player.GetComponent<PlayerMovement>().sleeping)
         {
@@ -1125,8 +1118,6 @@ public class UIScript : MonoBehaviour
             MainMenuText.text = "Menu";
             SettingsText.text = "Settings";
             ExitText.text = "Exit";
-            finalText.GetComponent<Text>().text = "Thanks for playing!";
-            FinalReturnText.text = "Return to main menu";
             DieText.text = "YOU DIED";
             RespawnText.text = "Respawn";
             UpgradeTitleText.text = "Upgrade";
@@ -1141,7 +1132,6 @@ public class UIScript : MonoBehaviour
             DamageResistanceDescription.text = "Damage reduction(%):";
             ExpGainDescription.text = "Exp multiplier";
             ConfirmUpgradeText.text = "Confirm changes";
-            //DialogueNextText.text = "Continue >>";
 
             SettingsTitle.text = "Settings";
             ResolutionText.text = "Resolution";
@@ -1163,8 +1153,6 @@ public class UIScript : MonoBehaviour
             MainMenuText.text = "Menú";
             SettingsText.text = "Ajustes";
             ExitText.text = "Salir";
-            finalText.GetComponent<Text>().text = "¡Gracias por jugar!";
-            FinalReturnText.text = "Volver al menú principal";
             DieText.text = "HAS MUERTO";
             RespawnText.text = "Reaparecer";
             UpgradeTitleText.text = "Mejorar";
@@ -1179,7 +1167,6 @@ public class UIScript : MonoBehaviour
             DamageResistanceDescription.text = "Reducción de daño(%):";
             ExpGainDescription.text = "Multiplicador de exp:";
             ConfirmUpgradeText.text = "Confirmar cambios";
-            //DialogueNextText.text = "Continuar >>";
 
             SettingsTitle.text = "Ajustes";
             ResolutionText.text = "Resolución";
@@ -1201,8 +1188,6 @@ public class UIScript : MonoBehaviour
             MainMenuText.text = "Menua";
             SettingsText.text = "Ezarpenak";
             ExitText.text = "Irten";
-            finalText.GetComponent<Text>().text = "Eskerrik asko jolasteagatik!";
-            FinalReturnText.text = "Hasiera menura itzuli";
             DieText.text = "HIL ZARA";
             RespawnText.text = "Biragertu";
             UpgradeTitleText.text = "Hobetu";
@@ -1217,7 +1202,6 @@ public class UIScript : MonoBehaviour
             DamageResistanceDescription.text = "Min erredukzioa(%):";
             ExpGainDescription.text = "Exp bidertzailea:";
             ConfirmUpgradeText.text = "Aldaketak gorde";
-            //DialogueNextText.text = "Jarraitu >>";
 
             SettingsTitle.text = "Ezarpenak";
             ResolutionText.text = "Erresoluzioa";

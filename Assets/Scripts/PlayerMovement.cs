@@ -286,7 +286,7 @@ public class PlayerMovement : MonoBehaviour
         if (attacked == -1) attacked = 0;
         //we set the trap int to make the doors to be opened
         if (PlayerPrefs.GetInt("trap") == 2 && PlayerPrefs.GetFloat("respawnx") == -62.63f) PlayerPrefs.SetInt("trap", 3);
-        if (Input.GetKeyDown(KeyCode.Escape) && !animator.GetBool("isDead") && !resting)
+        if (Input.GetKeyDown(KeyCode.Escape) && !animator.GetBool("isDead") && !resting && !ended)
         {
             paused = true;
             Time.timeScale = 0.0f;
@@ -347,7 +347,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //We check if the player can absorb, if so it tries to absorb pressing F
-        if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking && !changingScene && !enteringScene && attacked == 0)
+        if (Input.GetKey(KeyCode.F) && !changingGravity && animator.GetFloat("Speed") < 0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) &&!talking && !changingScene && !enteringScene && attacked == 0 && PlayerPrefs.GetInt("lastDialogue") != 16 && !approach)
         {
             if (canAbsorb && !fullMana) isAbsorbing = true;
             else isAbsorbing = false;
@@ -362,7 +362,7 @@ public class PlayerMovement : MonoBehaviour
         //The player tries to absorb automatically when sleeping
         if (sleeping && !fullMana) isAbsorbing = true;
         //Activate gravity change when player presses Q
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && !approach)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Q) && !animator.GetBool("isDead") && hasMana && !dashing && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && !approach && !ended && PlayerPrefs.GetInt("lastDialogue") != 16)
         {
             //Time will slow down while changing the gravity
             Time.timeScale = 0.05f;
@@ -593,9 +593,9 @@ public class PlayerMovement : MonoBehaviour
         if (Time.fixedTime - lastDash <= 0.5f && m_Grounded) wasGround = true;
         if (Time.fixedTime - lastDash > 0.5f && (m_Grounded || wasGround)) canDash = true;
         //We activate/deactivate the healing using the R button
-        if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && !paused) healing = !healing;
+        if (!changingGravity && Input.GetKeyDown(KeyCode.R) && !animator.GetBool("isDead") && hasMana && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && !paused && !ended && PlayerPrefs.GetInt("lastDialogue") != 16 && !approach) healing = !healing;
         //We dash using the right button of the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina && !paused)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse1) && !animator.GetBool("isDead") && canDash && !takingDamage && !attacking && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina && !paused && !ended && PlayerPrefs.GetInt("lastDialogue") != 16 && !approach)
         {
             gameObject.GetComponent<AudioSource>().clip = dashClip;
             gameObject.GetComponent<AudioSource>().Play();
@@ -615,14 +615,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //We attack using the left button of the mouse, choosing the side of the attack depending on where is the mouse
-        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina && !paused && !takingDamage)
+        if (!changingGravity && Input.GetKeyDown(KeyCode.Mouse0) && !dashing && !animator.GetBool("isDead") && !animator.GetBool("isSpinning") && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && hasStamina && !paused && !takingDamage && !ended && PlayerPrefs.GetInt("lastDialogue") != 16 && !approach)
         {            
             attacking = true;
             animator.SetBool("isAttacking", true);
             animator.SetBool("isSpinning", false);
         }
         //We throw shurikens using the E key. 
-        if (!changingGravity && Input.GetKey(KeyCode.E) && !dashing && !animator.GetBool("isDead") && m_Grounded && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && !paused)
+        if (!changingGravity && Input.GetKey(KeyCode.E) && !dashing && !animator.GetBool("isDead") && m_Grounded && !resting && !tryAbsorb && !talking && !changingScene && !enteringScene && !paused && !ended && PlayerPrefs.GetInt("lastDialogue") != 16 && !approach)
         {
             attacking = true;
             animator.SetBool("isSpinning", true);
@@ -634,7 +634,7 @@ public class PlayerMovement : MonoBehaviour
         }       
 
         //We'll save the movement if the player is not dead or is attacking or is changing gravity or trying to absorb or talking
-        if (!changingGravity && !paused)
+        if (!changingGravity && !paused && !ended)
         {           
             if (!attacking)
             {
@@ -646,17 +646,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (m_FacingRight) horizontalMove = runSpeed;
                 else horizontalMove = -runSpeed;
-            }
+            }            
             animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
-            if (Input.GetButtonDown("Jump") && !animator.GetBool("isDead") && !takingDamage && !resting && !attacking && !tryAbsorb && !talking && !changingScene && !enteringScene)
+            if (Input.GetButtonDown("Jump") && !animator.GetBool("isDead") && !takingDamage && !resting && !attacking && !tryAbsorb && !talking && !changingScene && !enteringScene && PlayerPrefs.GetInt("lastDialogue") != 16 && !approach)
             {
                 jump = true;
             }
         }
-        
+        else if (ended) horizontalMove = 0.0f;
+
         //We'll activate the jumping animation if the player is not on the ground
-        if(!m_Grounded) animator.SetBool("isJumping", true);
+        if (!m_Grounded) animator.SetBool("isJumping", true);
         //We'll activate the falling animation depending on the gravity
         if (gravity == 0)
         {
