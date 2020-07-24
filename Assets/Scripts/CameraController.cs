@@ -97,7 +97,7 @@ public class CameraController : MonoBehaviour
             else yAct = yObj;
 
             transform.position = new Vector3(xAct, yAct, transform.position.z);
-            if (player.GetComponent<PlayerMovement>().rotation == player.GetComponent<Rigidbody2D>().rotation && xAct == xObj && yAct == yObj) player.GetComponent<PlayerMovement>().rotated = true;
+            if (Mathf.Abs(player.GetComponent<PlayerMovement>().rotation - player.GetComponent<Rigidbody2D>().rotation)<1.0f && xAct == xObj && yAct == yObj) player.GetComponent<PlayerMovement>().rotated = true;
         }
     }
 

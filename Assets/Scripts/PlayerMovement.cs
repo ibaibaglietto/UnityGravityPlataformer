@@ -498,7 +498,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
             //Return to normal when Q is pressed again
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q) && !rotating)
             {
                 gameObject.GetComponent<AudioSource>().clip = gravityClip;
                 gameObject.GetComponent<AudioSource>().Play();
@@ -752,18 +752,18 @@ public class PlayerMovement : MonoBehaviour
         //We make the player rotate depending on her actual rotation and aim rotation
         if (gameObject.GetComponent<Rigidbody2D>().rotation != rotation && rotating)
         {
-            if ((rotation > gameObject.GetComponent<Rigidbody2D>().rotation) && !(rotation == 270 && gameObject.GetComponent<Rigidbody2D>().rotation == 0))
+            if ((rotation > gameObject.GetComponent<Rigidbody2D>().rotation) && !(rotation == 270 && gameObject.GetComponent<Rigidbody2D>().rotation < 1.0f))
             {
                 if ((rotation - gameObject.GetComponent<Rigidbody2D>().rotation) < 5.0f) gameObject.GetComponent<Rigidbody2D>().rotation = rotation;
                 else gameObject.GetComponent<Rigidbody2D>().rotation += 10.0f;
             }
-            else if ((rotation < gameObject.GetComponent<Rigidbody2D>().rotation) && !(rotation == 0 && gameObject.GetComponent<Rigidbody2D>().rotation == 270))
+            else if ((rotation < gameObject.GetComponent<Rigidbody2D>().rotation) && !(rotation == 0 && gameObject.GetComponent<Rigidbody2D>().rotation > 269.0f))
             {
                 if ((gameObject.GetComponent<Rigidbody2D>().rotation - rotation) < 5.0f) gameObject.GetComponent<Rigidbody2D>().rotation = rotation;
                 else gameObject.GetComponent<Rigidbody2D>().rotation -= 10.0f;
             }
-            else if (gameObject.GetComponent<Rigidbody2D>().rotation == 0 && rotation == 270) gameObject.GetComponent<Rigidbody2D>().rotation = 360;
-            else if (gameObject.GetComponent<Rigidbody2D>().rotation == 270 && rotation == 0) gameObject.GetComponent<Rigidbody2D>().rotation = -90;
+            else if (gameObject.GetComponent<Rigidbody2D>().rotation < 1.0f && rotation == 270) gameObject.GetComponent<Rigidbody2D>().rotation = 360;
+            else if (gameObject.GetComponent<Rigidbody2D>().rotation > 269.0f && rotation == 0) gameObject.GetComponent<Rigidbody2D>().rotation = -90;
         }
         //else if (gameObject.GetComponent<Rigidbody2D>().rotation == rotation && rotating) rotated = true;
         gravityDamage = 0.0f;
