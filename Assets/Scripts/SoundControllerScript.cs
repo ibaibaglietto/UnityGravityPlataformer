@@ -5,8 +5,10 @@ using UnityEngine.Audio;
 
 public class SoundControllerScript : MonoBehaviour
 {
+    //The audio mixer
     public AudioMixer mixer;
 
+    //3 functions to set the master, music and effects volumes
     public void SetMasterLevel (float sliderValue)
     {
         mixer.SetFloat("Master", Mathf.Log10(sliderValue) * 20);

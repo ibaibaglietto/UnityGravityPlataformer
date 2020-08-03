@@ -8,21 +8,21 @@ using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Amount of force added when the player jumps.
+    //Amount of force added when the player jumps.
     private float m_JumpForce = 800f;
-    // How much to smooth out the movement
+    //How much to smooth out the movement
     private float m_MovementSmoothing = .05f;
-    // A mask determining what is ground to the character
+    //A mask determining what is ground to the character
     [SerializeField] private LayerMask m_WhatIsGround;
-    // A position marking where to check if the player is grounded.
+    //A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_GroundCheck;
 
-    // Radius of the overlap circle to determine if grounded
+    //Radius of the overlap circle to determine if grounded
     const float k_GroundedRadius = .2f;
-    // Whether or not the player is grounded.
+    //Whether or not the player is grounded.
     public bool m_Grounded;            
     private Rigidbody2D m_Rigidbody2D;
-    // For determining which way the player is currently facing.
+    //For determining which way the player is currently facing.
     public bool m_FacingRight = true;  
     private Vector3 m_Velocity = Vector3.zero;
 
@@ -175,19 +175,18 @@ public class PlayerMovement : MonoBehaviour
     //A float to save the time of the last gravity change
     private float gravityTime;
 
+    //The on land event
     [Header("Events")]
     [Space]
-
     public UnityEvent OnLandEvent;
-
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
 
     private void Awake()
     {
+        //We find the rigidbody and initialize the onlandevent
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
-        if (OnLandEvent == null)
-            OnLandEvent = new UnityEvent();
+        if (OnLandEvent == null) OnLandEvent = new UnityEvent();
     }
 
 
@@ -237,16 +236,20 @@ public class PlayerMovement : MonoBehaviour
         benchScene = 0;
         staminaSpent = 0;
         //Save the gameobject of the fadeInOut
-        fadeInOut = GameObject.Find("FadeInOut");
-        //We put the player and the camera on their starting position
+        fadeInOut = GameObject.Find("FadeInOut");        
         if (PlayerPrefs.GetInt("hasDied") != 0)
         {
+            //We put the player and the camera on their starting position
             cam.transform.position = new Vector3(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny") + 1.381f, -10.0f);
+            //We put the player on the respawn position
             gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("respawnx"), PlayerPrefs.GetFloat("respawny"));
+            //We set the spawning animation and resting state
             animator.SetTrigger("isSpawning");
             resting = true;
+            //We check where the player must face
             if (PlayerPrefs.GetInt("respawnface") == 0 && m_FacingRight) Flip();
             else if (PlayerPrefs.GetInt("respawnface") == 1 && !m_FacingRight) Flip();
+            //If the player has died we set all the playerprefs to match this.
             if (PlayerPrefs.GetInt("hasDied") == 2)
             {
                 PlayerPrefs.SetInt("recoveredExp", 0);
@@ -256,11 +259,13 @@ public class PlayerMovement : MonoBehaviour
                 if (PlayerPrefs.GetInt("dieTutorial") == 0) PlayerPrefs.SetInt("dieTutorial", 1);
             }
             else PlayerPrefs.SetInt("exp", PlayerPrefs.GetInt("restExp"));
+            //We instantiate the die exp if the player is in the same level she died
             if (PlayerPrefs.GetInt("diedscene") == PlayerPrefs.GetInt("respawnscene") && PlayerPrefs.GetInt("diedexp") != 0)
             {
                 Instantiate(dieExpPrefab, new Vector2(PlayerPrefs.GetFloat("diedx"), PlayerPrefs.GetFloat("diedy")), transform.rotation);
             }
         }
+        //If the player is changing scene we check the side she is entering and instantiate the die exp if the player is in the same level she died
         else
         {
             if (PlayerPrefs.GetInt("spawnface") == 0 && m_FacingRight) Flip();
@@ -278,19 +283,23 @@ public class PlayerMovement : MonoBehaviour
             enteringScene = true;
             if (PlayerPrefs.GetInt("diedscene") == PlayerPrefs.GetInt("spawnscene") && PlayerPrefs.GetInt("diedexp") != 0) Instantiate(dieExpPrefab, new Vector2(PlayerPrefs.GetFloat("diedx"), PlayerPrefs.GetFloat("diedy")), transform.rotation);
         }
-        
+        //We put the playerpref in alive mode and make the fadeInOut image disappear
         PlayerPrefs.SetInt("hasDied", 1);
         fadeInOut.GetComponent<Animator>().SetBool("Clear", true);
     }
     void Update(){
+        //If we have a negative amount of enemies attacking we put it to 0
         if (attacked == -1) attacked = 0;
         //we set the trap int to make the doors to be opened
         if (PlayerPrefs.GetInt("trap") == 2 && PlayerPrefs.GetFloat("respawnx") == -62.63f) PlayerPrefs.SetInt("trap", 3);
+        //We pause the game pressing ESC
         if (Input.GetKeyDown(KeyCode.Escape) && !animator.GetBool("isDead") && !resting && !ended)
         {
             paused = true;
             Time.timeScale = 0.0f;
         }
+        //We put the coords of the die exp where the player lands when she dies, always looking that it isnt a trap.
+        //We also start the dead music, active the die screen and save the scene the player died
         if (dead && m_Grounded && !dieScreen.activeSelf)
         {
             if (!trap)
@@ -311,22 +320,25 @@ public class PlayerMovement : MonoBehaviour
             attacking = false;
             animator.SetBool("isSpinning", false);
         }
+        //We make the player move if she is changing scene or finishing the last dialogue
         if (m_Grounded && (changingScene || PlayerPrefs.GetInt("lastDialogue") == 16 ) && !talking)
         {
             if (!m_FacingRight && PlayerPrefs.GetInt("lastDialogue") == 16) Flip();
             gravityDown = 1.0f;
             fadeInOut.GetComponent<Animator>().SetBool("Clear",false);
         }
+        //We check the ended bool if the player has seen the 16 dialogue and the screen is black
         if (PlayerPrefs.GetInt("lastDialogue") == 16 && fadeInOut.GetComponent<Image>().color.a == 1)
         {
             ended = true;
         }
+        //We check if the player has arrived to her spawn position correctly
         if (enteringScene)
         {
             if (m_FacingRight && PlayerPrefs.GetFloat("spawnx") <= gameObject.transform.position.x) enteringScene = false;
             else if (!m_FacingRight && PlayerPrefs.GetFloat("spawnx") >= gameObject.transform.position.x) enteringScene = false;
         }
-        //We check if the player can rest, and if so it startes to rest when we press the S button
+        //We check if the player can rest, and if so it starts to rest when we press the S button
         if (canRest && !changingGravity && Input.GetKeyDown(KeyCode.S) && animator.GetFloat("Speed")<0.5 && !animator.GetBool("isJumping") && !animator.GetBool("isFalling") && !attacking && !animator.GetBool("isDead") && !animator.GetBool("isResting") && !resting && GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f) && !tryAbsorb && attacked == 0 && !changingScene && !enteringScene)
         {
             gameObject.GetComponent<PlayerMovement>().changeGravity(true, 1.0f, 0.0f, 0.0f, 0.0f);
@@ -376,6 +388,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (changingGravity)
         {
+            //We check that 0.3 seconds have passed to controll better the gravity change
             if ((Time.realtimeSinceStartup - gravityTime)>0.3f)
             {
                 //We'll change gravity with the movement keys. If we press left shift while doping it it will grow 5 times more in that direction.
@@ -426,6 +439,7 @@ public class PlayerMovement : MonoBehaviour
                         gravityTime = Time.realtimeSinceStartup;
                     }
                 }
+                //If we press lef control we will put normal gravity to the direction we want
                 else if (Input.GetKey(KeyCode.LeftControl))
                 {
                     if (Input.GetKey(KeyCode.W) && !rotating)
@@ -461,6 +475,7 @@ public class PlayerMovement : MonoBehaviour
                         gravityTime = Time.realtimeSinceStartup - 0.1f;
                     }
                 }
+                //if we only press the direction we will change the gravity slowly
                 else
                 {
                     if (Input.GetKey(KeyCode.W) && !rotating)
@@ -582,6 +597,7 @@ public class PlayerMovement : MonoBehaviour
                 else if (gravity == 3) rotation = 90.0f;
             }
         }
+        //If the player has already rotated she will start moving and spending mana
         if (rotated)
         {
             GetComponent<Rigidbody2D>().velocity = prevVelocity;
@@ -590,6 +606,7 @@ public class PlayerMovement : MonoBehaviour
             rotating = false;
             rotated = false;
         }
+        //We can dash again if 0.5 seconds have passed
         if (Time.fixedTime - lastDash <= 0.5f && m_Grounded) wasGround = true;
         if (Time.fixedTime - lastDash > 0.5f && (m_Grounded || wasGround)) canDash = true;
         //We activate/deactivate the healing using the R button
@@ -694,7 +711,6 @@ public class PlayerMovement : MonoBehaviour
         m_Grounded = false;
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-        // This can be done using layers instead but Sample Assets will not overwrite your project settings.
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -733,6 +749,7 @@ public class PlayerMovement : MonoBehaviour
             else if (gameObject.GetComponent<Rigidbody2D>().velocity.y < -199) gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.GetComponent<Rigidbody2D>().velocity.x, -199.0f);
             if (!rotated && rotating) gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
         }
+        //If the player is dashing we instantiate the dash shadows
         if (dashing)
         {
             dash = Instantiate(dashPrefab, transform.position, transform.rotation);
@@ -765,7 +782,6 @@ public class PlayerMovement : MonoBehaviour
             else if (gameObject.GetComponent<Rigidbody2D>().rotation < 1.0f && rotation == 270) gameObject.GetComponent<Rigidbody2D>().rotation = 360;
             else if (gameObject.GetComponent<Rigidbody2D>().rotation > 269.0f && rotation == 0) gameObject.GetComponent<Rigidbody2D>().rotation = -90;
         }
-        //else if (gameObject.GetComponent<Rigidbody2D>().rotation == rotation && rotating) rotated = true;
         gravityDamage = 0.0f;
         //if the player is on the floor and has 3 gravity or more she takes damage per second
         if (m_Grounded && (gravityDown > 3.05f || gravityUp > 3.05f || gravityLeft > 3.05f || gravityRight > 3.05f))
@@ -837,6 +853,7 @@ public class PlayerMovement : MonoBehaviour
         lastVelocity = gameObject.GetComponent<Rigidbody2D>().velocity;
 
     }
+    //Function to start the attack
     public void startAttack()
     {
         //we make the player aim where the mouse is aiming
@@ -1083,30 +1100,22 @@ public class PlayerMovement : MonoBehaviour
         if (!pausedMove)
         {
             Vector3 targetVelocity;
-            // Move the character by finding the target velocity
+            //Move the character by finding the target velocity
             if (gravity < 2) targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
             else targetVelocity = new Vector2(m_Rigidbody2D.velocity.x, move * 10f);
 
-            // And then smoothing it out and applying it to the character
+            //And then smoothing it out and applying it to the character
             m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
-            // If the input is moving the player right and the player is facing left...
-            if (move > 0 && !m_FacingRight)
-            {
-                // ... flip the player.
-                Flip();
-            }
-            // Otherwise if the input is moving the player left and the player is facing right...
-            else if (move < 0 && m_FacingRight)
-            {
-                // ... flip the player.
-                Flip();
-            }
+            //If the input is moving the player right and the player is facing left flip the player
+            if (move > 0 && !m_FacingRight) Flip();
+            //Otherwise if the input is moving the player left and the player is facing right flip the player
+            else if (move < 0 && m_FacingRight) Flip(); 
         }
-        // If the player should jump...
+        //If the player should jump
         if (m_Grounded && jump)
         {
-            // Add a vertical force to the player.
+            //Add a vertical force to the player.
             gameObject.GetComponent<AudioSource>().clip = jumpClip;
             gameObject.GetComponent<AudioSource>().Play();
             m_Grounded = false;
@@ -1129,6 +1138,7 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = theScale;
     }
 
+    //The player can deal damage to the enemies falling into them, but she will take damage too
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.transform.tag == "HeavyBandit")
@@ -1179,6 +1189,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //When we click outside the game the menu will open 
     private void OnApplicationPause(bool appPause)
     {
         if (appPause && !resting && !animator.GetBool("isDead"))

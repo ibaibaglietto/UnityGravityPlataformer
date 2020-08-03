@@ -17,17 +17,19 @@ public class StaminaController : MonoBehaviour
     private float staminaTime;
 
 
-    // Start is called before the first frame update
     void Start()
     {
+        //we initialize the stamina depending on the players level
         maxStamina = (Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f);
+        stamina = maxStamina;
+        //We find the player and the stamina bar
         player = GameObject.Find("Player");
         staminaBar = GameObject.Find("Playerstamina");
-        stamina = maxStamina;
+        //We initialize the stamina time
         staminaTime = Time.fixedTime;
     }
 
-    // Update is called once per frame
+    //We update the stamina bar every frame
     void Update()
     {
         staminaBar.GetComponent<Image>().fillAmount = stamina / maxStamina;
@@ -35,12 +37,14 @@ public class StaminaController : MonoBehaviour
 
     void FixedUpdate()
     {
+        //If the player has stamina it can be spent
         if (stamina > player.GetComponent<PlayerMovement>().staminaSpent && player.GetComponent<PlayerMovement>().staminaSpent !=0)
         {
             stamina -= player.GetComponent<PlayerMovement>().staminaSpent;
             staminaTime = Time.fixedTime;
             player.GetComponent<PlayerMovement>().staminaSpent = 0;
         }
+        //If the player spents all the stamina they will need to wait one more second to start the refilling
         else if (player.GetComponent<PlayerMovement>().staminaSpent != 0)
         {
             stamina = 0;
@@ -48,6 +52,7 @@ public class StaminaController : MonoBehaviour
             player.GetComponent<PlayerMovement>().hasStamina = false;
             player.GetComponent<PlayerMovement>().staminaSpent = 0;
         }
+        //If one second has passed from the last stamina spent it will start refilling
         if ((Time.fixedTime - staminaTime) > 1.0f && stamina < maxStamina)
         {
             stamina += 0.3f;

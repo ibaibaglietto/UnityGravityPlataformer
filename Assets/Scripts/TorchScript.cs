@@ -30,14 +30,17 @@ public class TorchScript : MonoBehaviour
 
     void Start()
     {
+        //Find all the gameobjects
         player = GameObject.Find("Player");
         if (!bossLight) flame = gameObject.transform.GetChild(1).gameObject;
         torchLight = gameObject.transform.GetChild(0).gameObject.GetComponent<Light2D>();
-        playerNear = false;
         manaBar = GameObject.Find("Manabar");
+        //Initialize the playerNear boolean and the absorb time float
+        playerNear = false;
         absorbTime = Time.fixedTime;
     }
 
+    //If a player enters the trigger the player near boolean will be set to true
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision == player.GetComponent<Collider2D>())
@@ -46,6 +49,7 @@ public class TorchScript : MonoBehaviour
         }
     }
 
+    //If the player stays in the trigger the canAbsorb bool will be set to true
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision == player.GetComponent<Collider2D>())
@@ -54,6 +58,7 @@ public class TorchScript : MonoBehaviour
         }
     }
 
+    //If the player exits the trigger the playerNear and canAbsorb bools will be set to false
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision == player.GetComponent<Collider2D>())
@@ -65,6 +70,7 @@ public class TorchScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        //If a player absorbs the light, the flames scale and the light will decrease. In the case of the kings light only the light will decrease.
         if (player.GetComponent<PlayerMovement>().isAbsorbing && playerNear)
         {
             if (!absorbing)
@@ -94,6 +100,7 @@ public class TorchScript : MonoBehaviour
             if (!bossLight) flame.SetActive(false);
             torchLight.enabled = false;
         }
+        //The blue torches and the boss light will recharge 5 seconds after the last absorbing
         if ((blueTorch || bossLight) && torchLight.pointLightOuterRadius < 4.5f && !player.GetComponent<PlayerMovement>().isAbsorbing && (Time.fixedTime - absorbTime) > 5.0f)
         {
             torchLight.pointLightOuterRadius += 0.006f;
@@ -106,6 +113,7 @@ public class TorchScript : MonoBehaviour
             if(!bossLight) flame.transform.localScale += new Vector3(0.001333f, 0.001333f, 0.001333f);
         }
         else if(blueTorch && torchLight.pointLightOuterRadius == 4.5f && !bossLight) flame.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        //The red torches will recharge when the player sleeps
         if (player.GetComponent<PlayerMovement>().sleeping && !(blueTorch || bossLight) && torchLight.pointLightOuterRadius < 4.5f)
         {
             torchLight.pointLightOuterRadius = 4.5f;

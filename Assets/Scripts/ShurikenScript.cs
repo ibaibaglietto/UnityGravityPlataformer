@@ -20,6 +20,7 @@ public class ShurikenScript : MonoBehaviour
         if (Mathf.Abs(player.transform.position.x - transform.transform.position.x) + Mathf.Abs(player.transform.position.y - transform.transform.position.y) > 25.0f) Destroy(gameObject);
     }
 
+    //If the shuriken hits a button the door will open, if it hits a wall the shuriken will be destroyed
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Button")

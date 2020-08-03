@@ -13,6 +13,7 @@ public class ComboDamageScript : MonoBehaviour
 
     void Start()
     {
+        //find the player
         player = GameObject.Find("Player");
         //Find the healthbar
         healthBar = GameObject.Find("Healthbar");

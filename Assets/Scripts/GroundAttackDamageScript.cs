@@ -12,6 +12,7 @@ public class GroundAttackDamageScript : MonoBehaviour
 
     void Start()
     {
+        //Find the player
         player = GameObject.Find("Player");
         //Find the healthbar
         healthBar = GameObject.Find("Healthbar");

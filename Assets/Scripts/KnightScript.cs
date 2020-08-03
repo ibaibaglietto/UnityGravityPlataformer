@@ -59,7 +59,7 @@ public class KnightScript : MonoBehaviour
     public AudioClip shieldClip;
 
 
-    // Start is called before the first frame update
+    //We find and initialize everything
     void Start()
     {
         player = GameObject.Find("Player");
@@ -73,9 +73,10 @@ public class KnightScript : MonoBehaviour
         shieldTime = Time.fixedTime - 1.5f;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
+        //We respawn the knight if the player sleeps
         if (player.GetComponent<PlayerMovement>().sleeping && gameObject.transform.position != startPos)
         {
             health = 120.0f;
@@ -92,6 +93,7 @@ public class KnightScript : MonoBehaviour
         }
         else
         {
+            //We check if the player is in the fighting area and if she is talking
             if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 2.3f && !fighting && !player.GetComponent<PlayerMovement>().talking && !gameObject.GetComponent<Animator>().GetBool("isDead"))
             {
                 fighting = true;
@@ -109,6 +111,7 @@ public class KnightScript : MonoBehaviour
             }
             else if (player.GetComponent<PlayerMovement>().talking) fighting = false;
 
+            //We dont move the knight if it's not moving or if it's dead
             if (!moving && !gameObject.GetComponent<Animator>().GetBool("isDead"))
             {
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
@@ -125,6 +128,7 @@ public class KnightScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        //If the kinght's life is 0 it dies
         if (health <= 0.0f && !gameObject.GetComponent<Animator>().GetBool("isDead"))
         {
             gameObject.GetComponent<AudioSource>().clip = deathClip;
@@ -133,6 +137,7 @@ public class KnightScript : MonoBehaviour
             combo = 0;
             if(fighting) player.GetComponent<PlayerMovement>().attacked -= 1;
         }
+        //We start the damage animation when it takes damage
         if (damage > 0.0f)
         {
             gameObject.GetComponent<AudioSource>().clip = damageClip;
@@ -140,6 +145,7 @@ public class KnightScript : MonoBehaviour
             health -= damage;
             damage = 0.0f;
         }
+        //If the knight is hit 3 times in a row it jumps
         if (combo > 4 && health > 0.0)
         {            
             combo = 0;
@@ -147,10 +153,12 @@ public class KnightScript : MonoBehaviour
             gameObject.GetComponent<Animator>().SetBool("isAttacking", false);
             gameObject.GetComponent<Animator>().SetBool("isRolling", true);
         }
+        //We stop the shielding 1.5 seconds after it starts
         if(gameObject.GetComponent<Animator>().GetBool("isShielding") && Time.fixedTime - shieldTime > 1.5f)
         {
             gameObject.GetComponent<Animator>().SetBool("isShielding", false);
         }
+        //If the knight is in fighting state and is not rolling nor shielding we check if the player is in attack area, and if so we start the attack animation. If not, the knight moves towards the player
         if (fighting && !gameObject.GetComponent<Animator>().GetBool("isRolling") && health > 0.0 && !gameObject.GetComponent<Animator>().GetBool("isShielding") && !gameObject.GetComponent<Animator>().GetBool("isTakingDamage"))
         {
             if (player.transform.position.x < gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.5f))

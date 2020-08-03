@@ -14,9 +14,11 @@ public class RestScript : MonoBehaviour
 
     void Start()
     {
+        //We find the player
         player = GameObject.Find("Player");
     }
 
+    //If the player enters the collider she can rest
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision == player.GetComponent<Collider2D>())
@@ -27,6 +29,7 @@ public class RestScript : MonoBehaviour
         }
     }
 
+    //If the player exits the collider she cant rest
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision == player.GetComponent<Collider2D>())

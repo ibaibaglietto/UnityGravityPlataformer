@@ -13,16 +13,22 @@ public class SlashScript : MonoBehaviour
 
     private void Start()
     {
+        //We find the player
         player = GameObject.Find("Player");
+        //We initialize the parry time the damage dealt and the spent stamina
         parryTime = Time.fixedTime - 0.6f;
         damageDealt = Mathf.Sqrt(100 * PlayerPrefs.GetInt("dealtDamageLevel")) + 10;
         player.GetComponent<PlayerMovement>().staminaSpent = 10;
     }
 
+    //Function to en the slash
     public void endSlash()
     {
         Destroy(gameObject);
     }
+    //We dealt damage to the enemies when the slash hits them. In the case of the normal enemies, if we hit them 3 consecutive times they will go away.
+    //In the case of the knight, if we hit him we he is shielding he will automatically attack receiving no damage
+    //If the slash hits the die exp we will recover the lost exp
     public void OnTriggerEnter2D(Collider2D collision)
     {        
         if (collision.tag == "HeavyBandit")

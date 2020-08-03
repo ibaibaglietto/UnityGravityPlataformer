@@ -22,6 +22,7 @@ public class DialogueTrigger : MonoBehaviour
 
     void Start()
     {
+        //We find everything
         player = GameObject.Find("Player");
         bossBar = GameObject.Find("BossHealthBar");
         if(player.GetComponent<PlayerMovement>().scene == 3) bossArena = GameObject.Find("Boss platform").GetComponent<Animator>();
@@ -29,6 +30,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Update()
     {
+        //We check if the situational dialogues have already appeared
         if (PlayerPrefs.GetInt("expTutorial") == 1 && gravity1 == 4)
         {
             PlayerPrefs.SetInt("expTutorial", 2);
@@ -47,12 +49,14 @@ public class DialogueTrigger : MonoBehaviour
         }
     }
 
+    //When the player enters the collider the dialogue will start if it havent been seen earlier
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision == player.GetComponent<Collider2D>())
         {
             if (PlayerPrefs.GetInt("lastDialogue") < dialogueNumber || dialogueNumber == 15)
             {
+                //The 15 dialogue is the boss dialogue, so we need to end the approach and start the fight
                 if(dialogueNumber == 15)
                 {
                     bossArena.gameObject.GetComponent<AudioSource>().Play();

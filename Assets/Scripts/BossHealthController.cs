@@ -27,7 +27,7 @@ public class BossHealthController : MonoBehaviour
     //The musicSource
     private AudioSource musicSource;
 
-    // Start is called before the first frame update
+    //We initialize and find everything
     void Start()
     {
         maxHealth = 1500.0f;
@@ -43,7 +43,7 @@ public class BossHealthController : MonoBehaviour
         if (player.GetComponent<PlayerMovement>().scene == 3) bossArena = GameObject.Find("Boss platform").GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    //We check if the battle has started and update the boss health bar
     void Update()
     {
         healthBar.GetComponent<Image>().fillAmount = health / maxHealth;
@@ -57,16 +57,19 @@ public class BossHealthController : MonoBehaviour
         }
     }
 
+    
     void FixedUpdate()
     {
         if (fighting)
         {
+            //We check the life of the boss to deal damage and to enter 2nd fase if he has left less than 1/2 of his life
             if (health > 0.0f)
             {
                 health -= king.GetComponent<KingScript>().damage;
                 king.GetComponent<KingScript>().damage = 0f;
                 if (health < 750.0f && !king.GetComponent<KingScript>().fase2) king.GetComponent<Animator>().SetBool("EnterFase2", true);
             }
+            //When the boss dies we resume the normal music and make dissapear the health bar
             else if(backBar.GetComponent<Image>().enabled)
             {
                 musicSource.clip = normalMusic;

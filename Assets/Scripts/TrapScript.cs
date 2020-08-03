@@ -35,6 +35,7 @@ public class TrapScript : MonoBehaviour
         }
     }
 
+    //We set the die coords when a player touches a trap, in case she dies there
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other == player.GetComponent<Collider2D>())
@@ -45,6 +46,7 @@ public class TrapScript : MonoBehaviour
         }
     }
 
+    //If the player exits the collider the trap bool will be set to false
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other == player.GetComponent<Collider2D>())

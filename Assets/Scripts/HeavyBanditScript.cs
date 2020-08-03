@@ -47,7 +47,7 @@ public class HeavyBanditScript : MonoBehaviour
     public AudioClip jumpClip;
 
 
-    // Start is called before the first frame update
+    //We find and initialize everything
     void Start()
     {
         player = GameObject.Find("Player");
@@ -59,9 +59,10 @@ public class HeavyBanditScript : MonoBehaviour
         lastDamage = Time.fixedTime - 3.0f;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
+        //We respawn the bandit if the player sleeps
         if(player.GetComponent<PlayerMovement>().sleeping && gameObject.transform.position != startPos)
         {
             health = 120.0f;
@@ -77,6 +78,7 @@ public class HeavyBanditScript : MonoBehaviour
         }
         else
         {
+            //We check if the player is in the fighting area and if she is talking
             if (Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) < 8.0f && Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < 2.3f && !gameObject.GetComponent<Animator>().GetBool("IsFighting") && !player.GetComponent<PlayerMovement>().talking && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
             {
                 gameObject.GetComponent<Animator>().SetBool("IsFighting", true);
@@ -93,6 +95,7 @@ public class HeavyBanditScript : MonoBehaviour
                 player.GetComponent<PlayerMovement>().attacked -= 1;
             }
 
+            //We dont move the bandit if it's not moving or if it's dead
             if (!moving && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
             {
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, gameObject.GetComponent<Rigidbody2D>().velocity.y);
@@ -105,6 +108,7 @@ public class HeavyBanditScript : MonoBehaviour
             }
             prevPos = gameObject.transform.position;
         }
+        //If the bandit's life is 0 it dies
         if (health <= 0.0f && !gameObject.GetComponent<Animator>().GetBool("IsDead"))
         {
             gameObject.GetComponent<Animator>().SetBool("IsDead", true);
@@ -113,12 +117,14 @@ public class HeavyBanditScript : MonoBehaviour
             combo = 0;
             if (gameObject.GetComponent<Animator>().GetBool("IsFighting")) player.GetComponent<PlayerMovement>().attacked -= 1;
         }
+        //The bandit stops the jump when it's velocity is 0
         if (gameObject.GetComponent<Animator>().GetBool("IsJumping") && gameObject.GetComponent<Rigidbody2D>().velocity.x == 0.0f && gameObject.GetComponent<Rigidbody2D>().velocity.y == 0.0f && (Time.realtimeSinceStartup - jumpTime) > 0.25f)
         {
             gameObject.GetComponent<Animator>().SetBool("IsJumping", false);
             attacking = false;
             moving = false;
         }
+        //We start the damage animation when it takes damage
         if (damage > 0.0f)
         {
             gameObject.GetComponent<AudioSource>().clip = damageClip;
@@ -126,6 +132,7 @@ public class HeavyBanditScript : MonoBehaviour
             health -= damage;
             damage = 0.0f;
         }
+        //If the bandit is hit 3 times in a row it jumps
         if (combo > 4 && health > 0.0)
         {
             gameObject.GetComponent<AudioSource>().clip = jumpClip;
@@ -140,7 +147,7 @@ public class HeavyBanditScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        //If the bandit is in fighting state and is not jumping we check if the player is in attack area, and if so we start the attack animation. If not, the bandit moves towards the player
         if (gameObject.GetComponent<Animator>().GetBool("IsFighting") && !gameObject.GetComponent<Animator>().GetBool("IsJumping") && health > 0.0)
         {
             if (player.transform.position.x < gameObject.transform.position.x && !attacking && (Time.fixedTime - lastAttack > 1.75f))

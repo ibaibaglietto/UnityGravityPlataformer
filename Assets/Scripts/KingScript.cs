@@ -59,6 +59,7 @@ public class KingScript : MonoBehaviour
     public AudioClip groundClip;
     public AudioClip deathClip;
 
+    //We find and initialize everything
     void Start()
     {
         player = GameObject.Find("Player");
@@ -76,6 +77,7 @@ public class KingScript : MonoBehaviour
         bossLight.SetActive(false);
     }
 
+    //We dont let the king move if he doesnt need to
     private void Update()
     {
         if (!moving)
@@ -86,6 +88,12 @@ public class KingScript : MonoBehaviour
         prevPos = gameObject.transform.position;
     }
 
+    //When the king is fighting he can do 4 actions:
+    // 1.- Move towards the player when she is too far away,
+    // 2.- Teleport when she is in the other level or when finishing an attack
+    // 3.- Attack combo towards the player
+    // 4.- Ground combo in both directions
+    // The attack combo and the ground combo evolve when the boss enters second fase
     void FixedUpdate()
     {
         if (fighting)
@@ -177,6 +185,7 @@ public class KingScript : MonoBehaviour
         transform.localScale = theScale;
     }
 
+    //Function to make the combo 1 appear
     public void Combo1Appear()
     {
         gameObject.GetComponent<AudioSource>().clip = attack1Clip;
@@ -190,6 +199,7 @@ public class KingScript : MonoBehaviour
         Destroy(combo1);
     }
 
+    //Function to make the combo 2 appear
     public void Combo2Appear()
     {
         gameObject.GetComponent<AudioSource>().clip = attack2Clip;
@@ -198,11 +208,13 @@ public class KingScript : MonoBehaviour
         else combo2 = Instantiate(combo2Prefab, new Vector2(transform.position.x - 3.246086f, transform.position.y), Quaternion.identity);
     }
 
+    //Function to make the combo 2 disappear
     public void Combo2Disappear()
     {
         Destroy(combo2);
     }
 
+    //Function to make the ground attack appear
     public void GroundAttackAppear()
     {
         gameObject.GetComponent<AudioSource>().clip = groundClip;
@@ -211,11 +223,13 @@ public class KingScript : MonoBehaviour
         else groundAttack = Instantiate(groundAttackPrefab, new Vector2(transform.position.x + 0.3566999f, transform.position.y), Quaternion.identity);
     }
 
+    //Function to make the ground attack disappear
     public void GroundAttackDisappear()
     {
         Destroy(groundAttack);
     }
 
+    //function to start the teleport sound
     public void TeleportSound()
     {
         gameObject.GetComponent<AudioSource>().clip = teleportClip;
@@ -266,6 +280,7 @@ public class KingScript : MonoBehaviour
         attacking = false;
         lastAttack = Time.fixedTime;
     }
+    //Function to end the ground attack
     public void endGroundAttack()
     {
         gameObject.GetComponent<Animator>().SetBool("IsGroundAttacking", false);

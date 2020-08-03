@@ -77,10 +77,12 @@ public class MenuScript : MonoBehaviour
     private Text LanguageChooseText;
     private Text SaveLanguageText;
     private Dropdown LanguageChooseDropdown;
-    // Start is called before the first frame update
+    
     void Start()
     {
+        //We put the resolution time to 0
         resolutionTime = 0.0f;
+        //We find all the gameobjects
         mainMenu = GameObject.Find("MainMenu");
         LoadButton = GameObject.Find("Load");
         settingsMenu = GameObject.Find("SettingsMenu");
@@ -115,7 +117,7 @@ public class MenuScript : MonoBehaviour
         EffectsSlider = GameObject.Find("EffectsSlider").GetComponent<Slider>();
         settingsMenu.SetActive(false);
         confirmationMenu.SetActive(false);
-        //We initialize all the playerprefs on the awake
+        //We initialize all the playerprefs
         //The resolution width   
         if (!PlayerPrefs.HasKey("resolutionW")) PlayerPrefs.SetInt("resolutionW", 1280);
         //The resolution height
@@ -197,13 +199,16 @@ public class MenuScript : MonoBehaviour
         MasterSlider.value = PlayerPrefs.GetFloat("masterAudio");
         MusicSlider.value = PlayerPrefs.GetFloat("musicAudio");
         EffectsSlider.value = PlayerPrefs.GetFloat("effectsAudio");
+        //We check if the player has choosen the language
         if (PlayerPrefs.GetInt("languageChoosen") == 0)
         {
             LanguageSelectionMenu.SetActive(true);
             PlayerPrefs.SetInt("languageChoosen", 1);
         }else LanguageSelectionMenu.SetActive(false);
+        //We check if the player has a save file
         if (PlayerPrefs.GetInt("lastDialogue") == 0) LoadButton.GetComponent<Button>().interactable = false;
         else LoadButton.GetComponent<Button>().interactable = true;
+        //We check the settings
         if (PlayerPrefs.GetInt("fullScreen") == 0) fullScreen = false;
         else fullScreen = true;
         Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreen, PlayerPrefs.GetInt("framerate"));
@@ -358,9 +363,8 @@ public class MenuScript : MonoBehaviour
             LanguageChooseText.text = "Erabaki zein hizkuntzatan izan nahi duzun jolasa. \nNahi duzunean alda dezakezu ezarpenetan.";
             SaveLanguageText.text = "Hizkuntza gorde";
         }
-
     }
-
+    //A function to start a new game
     public void NewGame()
     {
         //The mana level
@@ -427,6 +431,7 @@ public class MenuScript : MonoBehaviour
     }
     void FixedUpdate()
     {
+        //We check how much time has passed from the moment the player saved the resolution, if the player needs more than 10 seconds to confirm we return to the previous resolution
         if (resolutionTime != 0.0f && (Time.fixedTime - resolutionTime) >= 10)
         {
             resolutionTime = 0.0f;
@@ -440,17 +445,20 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+    //Function to load the saved file
     public void LoadLevel()
     {
         SceneManager.LoadScene(PlayerPrefs.GetInt("respawnscene"));
     }
 
+    //Function to close the game
     public void CloseGame()
     {
         Debug.Log("Closing game");
         Application.Quit();
     }
 
+    //Function to save the settings
     public void OpenSettings()
     {
         mainMenu.SetActive(false);
@@ -461,6 +469,7 @@ public class MenuScript : MonoBehaviour
         prevLanguage = PlayerPrefs.GetInt("language");
     }
 
+    //Function to close the settings without saving. We return the values to their actual value.
     public void CloseNoSave()
     {
         settingsMenu.SetActive(false);
@@ -556,6 +565,7 @@ public class MenuScript : MonoBehaviour
         EffectsSlider.value = prevEffect;
     }
 
+    //Function to save the changes made on the settings
     public void CloseSave()
     {
         prevW = PlayerPrefs.GetInt("resolutionW");
@@ -699,6 +709,7 @@ public class MenuScript : MonoBehaviour
         else if (PlayerPrefs.GetInt("resolutionW") == 2560) Cursor.SetCursor(cursorArrow64, Vector2.zero, CursorMode.ForceSoftware);
         else if (PlayerPrefs.GetInt("resolutionW") == 3840) Cursor.SetCursor(cursorArrow96, Vector2.zero, CursorMode.ForceSoftware);
 
+        //If we change the resolution or the full screen mode we ask the player if them can see the window correctly
         if(prevW == PlayerPrefs.GetInt("resolutionW") && prevH == PlayerPrefs.GetInt("resolutionH") && prevFS == fullScreen)
         {
             settingsMenu.SetActive(false);
@@ -714,6 +725,7 @@ public class MenuScript : MonoBehaviour
         PlayerPrefs.SetFloat("effectsAudio", EffectsSlider.value);
     }
 
+    //Function to confirm that the player can see the resolution changes correctly
     public void ConfirmResolution()
     {
         confirmationMenu.SetActive(false);
@@ -722,6 +734,7 @@ public class MenuScript : MonoBehaviour
         mainMenu.SetActive(true);
     }
 
+    //Function to return to the previous resolution because the player can't see the window correctly
     public void ReturnResolution()
     {
         PlayerPrefs.SetInt("resolutionW", prevW);
@@ -823,6 +836,7 @@ public class MenuScript : MonoBehaviour
         confirmationMenu.SetActive(false);
     }
 
+    //Function to change the language
     public void ChangeLanguage(bool first)
     {
         if (first) PlayerPrefs.SetInt("language", LanguageChooseDropdown.value);
@@ -893,6 +907,7 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+    //Function to close the choose language window
     public void CloseChooseLanguage()
     {
         LanguageSelectionMenu.SetActive(false);

@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class DialogueBoxScript : MonoBehaviour
 {
-
+    //The next button and the text areas
     private GameObject next;
     private Text nameText;
     private Text dialogueText;
 
+    //We find the next button and the text areas
     void Start()
     {
         nameText = GameObject.Find("DialogueName").GetComponent<Text>();
@@ -17,6 +18,7 @@ public class DialogueBoxScript : MonoBehaviour
         next = GameObject.Find("DialogueNext");
     }
 
+    //Function to make the dialogue box appear
     public void appear()
     {
         nameText.enabled = true;
@@ -25,6 +27,7 @@ public class DialogueBoxScript : MonoBehaviour
         next.transform.GetChild(0).gameObject.SetActive(true);
     }
 
+    //Function to make the dialogue box disappear
     public void disappear()
     {
         nameText.enabled = false;

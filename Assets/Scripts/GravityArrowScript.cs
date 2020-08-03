@@ -5,16 +5,19 @@ using UnityEngine.UI;
 
 public class GravityArrowScript : MonoBehaviour
 {
+    //The player
     private GameObject player;
+    //The gravity arrows
     private GameObject gravityDown;
     private GameObject gravityUp;
     private GameObject gravityLeft;
     private GameObject gravityRight;
+    //The white circle around the player
     private GameObject white;
 
-    // Start is called before the first frame update
     void Start()
     {
+        //We find everything
         player = GameObject.Find("Player");
         gravityDown = GameObject.Find("Side0");
         gravityUp = GameObject.Find("Side1");
@@ -23,13 +26,15 @@ public class GravityArrowScript : MonoBehaviour
         white = GameObject.Find("ChangeGravity");
     }
 
-    // Update is called once per frame
+
     void Update()
     {
+        //We activate the arrows and the white circle when the player is changing gravity
         if (player.GetComponent<PlayerMovement>().changingGravity && !player.GetComponent<PlayerMovement>().rotating)
         {
             white.SetActive(true);
             gameObject.transform.position = player.transform.position;
+            //We put the arrows different lengths depending on the gravity in that direction and if it is 0 the arrow disappears
             if (player.GetComponent<PlayerMovement>().prevGravityDown > 0.0f)
             {
                 gravityDown.transform.GetComponent<RectTransform>().anchorMin = new Vector2(0.46925f, 0.4f - 0.0125f* player.GetComponent<PlayerMovement>().prevGravityDown);

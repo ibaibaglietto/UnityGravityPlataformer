@@ -178,6 +178,7 @@ public class UIScript : MonoBehaviour
 
     private void Start()
     {
+        //We initialize and find everything
         swordCursorActive = true;
         resolutionTime = 0.0f;
         player = GameObject.Find("Player");
@@ -240,8 +241,6 @@ public class UIScript : MonoBehaviour
         DamageResistanceDescription = GameObject.Find("DamageResistanceDescription").GetComponent<Text>();
         ExpGainDescription = GameObject.Find("ExpGainDescription").GetComponent<Text>();
         ConfirmUpgradeText = GameObject.Find("ConfirmUpgradeText").GetComponent<Text>();
-
-
         SettingsTitle = GameObject.Find("SettingsTitle").GetComponent<Text>();
         ResolutionText = GameObject.Find("ResolutionText").GetComponent<Text>();
         FullScreenText = GameObject.Find("FullScreenText").GetComponent<Text>();
@@ -263,6 +262,7 @@ public class UIScript : MonoBehaviour
         MusicSlider.value = PlayerPrefs.GetFloat("musicAudio");
         EffectsSlider.value = PlayerPrefs.GetFloat("effectsAudio");
 
+        //We deactivate some interface parts and resize others depending on the level of the player
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
         confirmationMenu.SetActive(false);
@@ -296,6 +296,7 @@ public class UIScript : MonoBehaviour
             staminaBar.GetComponent<StaminaController>().maxStamina = Mathf.Sqrt(2000 * PlayerPrefs.GetInt("staminaLevel")) / 2 + 2.639f;
         }
         finalText = GameObject.Find("Final text");
+        //We put the resolution settings depending on the already choosen settings
         if (PlayerPrefs.GetInt("fullScreen") == 0) fullScreen = false;
         else fullScreen = true;
         Screen.SetResolution(PlayerPrefs.GetInt("resolutionW"), PlayerPrefs.GetInt("resolutionH"), fullScreen, PlayerPrefs.GetInt("framerate"));
@@ -372,6 +373,7 @@ public class UIScript : MonoBehaviour
         fullScreenToggle.GetComponent<Toggle>().isOn = fullScreen;
         setSwordCursor(PlayerPrefs.GetInt("resolutionW"));
 
+        //We put the language depending on the one we have selected
         if (PlayerPrefs.GetInt("language") == 0)
         {
             LanguageDropdown.value = 0;
@@ -394,7 +396,6 @@ public class UIScript : MonoBehaviour
             DamageResistanceDescription.text = "Damage reduction(%):";
             ExpGainDescription.text = "Exp multiplier";
             ConfirmUpgradeText.text = "Confirm changes";
-            //DialogueNextText.text = "Continue >>";
 
             SettingsTitle.text = "Settings";
             ResolutionText.text = "Resolution";
@@ -431,7 +432,6 @@ public class UIScript : MonoBehaviour
             DamageResistanceDescription.text = "Reducción de daño(%):";
             ExpGainDescription.text = "Multiplicador de exp:";
             ConfirmUpgradeText.text = "Confirmar cambios";
-            //DialogueNextText.text = "Continuar >>";
 
             SettingsTitle.text = "Ajustes";
             ResolutionText.text = "Resolución";
@@ -468,7 +468,6 @@ public class UIScript : MonoBehaviour
             DamageResistanceDescription.text = "Min erredukzioa(%):";
             ExpGainDescription.text = "Exp bidertzailea:";
             ConfirmUpgradeText.text = "Aldaketak gorde";
-            //DialogueNextText.text = "Jarraitu >>";
 
             SettingsTitle.text = "Ezarpenak";
             ResolutionText.text = "Erresoluzioa";
@@ -489,6 +488,7 @@ public class UIScript : MonoBehaviour
 
     void Update()
     {
+        //If the player has finished the game we start the credits
         if (player.GetComponent<PlayerMovement>().ended && !finalText.activeSelf)
         {
             setArrowCursor(PlayerPrefs.GetInt("resolutionW"));
@@ -496,6 +496,7 @@ public class UIScript : MonoBehaviour
             PlayerPrefs.SetInt("lastDialogue", 15);
         }
         else if(!player.GetComponent<PlayerMovement>().ended) finalText.SetActive(false);
+        //We open the pause menu if the game is paused
         if (player.GetComponent<PlayerMovement>().paused && (!pauseMenu.activeSelf && !settingsMenu.activeSelf))
         {
             pauseMenu.SetActive(true);
@@ -548,7 +549,7 @@ public class UIScript : MonoBehaviour
         else if (resolutionTime != 0.0f) returnText.text = "Return (" + (10 - (int)(Time.realtimeSinceStartup - resolutionTime)).ToString() + ")";
     }
 
-
+    //Function to manage the level up
     public void lvlUpPlayer(int atrib)
     {
         //Lvl up only if the player has enough light
@@ -601,6 +602,7 @@ public class UIScript : MonoBehaviour
             needExp.text = ((int.Parse(lvl.text) * 10) * (int.Parse(lvl.text) * 3)).ToString();
         }        
     }
+    //Function to manage the level down
     public void lvlDownPlayer(int atrib)
     {
         if (atrib == 1)
@@ -649,6 +651,7 @@ public class UIScript : MonoBehaviour
         needExp.text = ((int.Parse(lvl.text) * 10) * (int.Parse(lvl.text) * 3)).ToString();
         lvlUpExp.text = (int.Parse(lvlUpExp.text) + int.Parse(needExp.text)).ToString();        
     }
+    //Function to close the level up
     public void CloseLvlUp()
     {
         //Save all the changes of the lvl up
@@ -695,12 +698,13 @@ public class UIScript : MonoBehaviour
         lvlUp.SetActive(false);
         setSwordCursor(PlayerPrefs.GetInt("resolutionW"));
     }
+    //Function to load the menu
     public void loadMenu()
     {
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(0);
     }
-
+    //Function to continue the level
     public void continueLevel()
     {
         pauseMenu.SetActive(false);
@@ -709,19 +713,19 @@ public class UIScript : MonoBehaviour
         if(player.GetComponent<PlayerMovement>().changingGravity) Time.timeScale = 0.05f;
         else Time.timeScale = 1.0f;
     }
-
+    //Function to close the game
     public void CloseGame()
     {
         Debug.Log("Closing game");
         Application.Quit();        
     }
-
+    //Function to respawn
     public void Respawn()
     {
         SceneManager.LoadScene(PlayerPrefs.GetInt("respawnscene"));
         player.GetComponent<PlayerMovement>().dead = false;
     }
-
+    //Function to open the settings
     public void OpenSettings()
     {
         pauseMenu.SetActive(false);
@@ -731,7 +735,7 @@ public class UIScript : MonoBehaviour
         prevEffect = PlayerPrefs.GetFloat("effectsAudio");
         prevLanguage = PlayerPrefs.GetInt("language");
     }
-
+    //Function to close the settings without saving
     public void CloseNoSave()
     {
         settingsMenu.SetActive(false);
@@ -826,7 +830,7 @@ public class UIScript : MonoBehaviour
         MusicSlider.value = prevMusic;
         EffectsSlider.value = prevEffect;
     }
-
+    //Function to close the settings saving
     public void CloseSave()
     {
         prevW = PlayerPrefs.GetInt("resolutionW");
@@ -971,7 +975,7 @@ public class UIScript : MonoBehaviour
         PlayerPrefs.SetFloat("musicAudio", MusicSlider.value);
         PlayerPrefs.SetFloat("effectsAudio", EffectsSlider.value);
     }
-
+    //Function to confirm the resolution changes
     public void ConfirmResolution()
     {
         confirmationMenu.SetActive(false);
@@ -979,7 +983,7 @@ public class UIScript : MonoBehaviour
         resolutionTime = 0.0f;
         pauseMenu.SetActive(true);
     }
-
+    //Function to return to the previous resolution
     public void ReturnResolution()
     {
         PlayerPrefs.SetInt("resolutionW", prevW);
@@ -1067,7 +1071,7 @@ public class UIScript : MonoBehaviour
         confirmationMenu.SetActive(false);
     }
 
-
+    //Function to set the arrow cursor
     public void setArrowCursor(int resolutionW)
     {
         Debug.Log("fleicha");
@@ -1087,7 +1091,7 @@ public class UIScript : MonoBehaviour
         else if (resolutionW == 2560) Cursor.SetCursor(cursorArrow64, Vector2.zero, CursorMode.ForceSoftware);
         else if (resolutionW == 3840) Cursor.SetCursor(cursorArrow96, Vector2.zero, CursorMode.ForceSoftware);
     }
-
+    //Function to set the sword cursor
     public void setSwordCursor(int resolutionW)
     {
         Debug.Log("eispada");
@@ -1107,7 +1111,7 @@ public class UIScript : MonoBehaviour
         else if (resolutionW == 2560) Cursor.SetCursor(cursorSword64, Vector2.zero, CursorMode.ForceSoftware);
         else if (resolutionW == 3840) Cursor.SetCursor(cursorSword96, Vector2.zero, CursorMode.ForceSoftware);
     }
-
+    //Function to change the language
     public void ChangeLanguage()
     {
         PlayerPrefs.SetInt("language", LanguageDropdown.value);

@@ -9,12 +9,14 @@ public class ApproachScript : MonoBehaviour
     //The musicSource
     private AudioSource musicSource;
 
+    //We find the player and the music source
     void Start()
     {
         player = GameObject.Find("Player");
         musicSource = GameObject.Find("MusicSource").GetComponent<AudioSource>();
     }
 
+    //When the player enters the collider she will start walking to the right
     public void OnTriggerEnter2D(Collider2D collision)
     {
         musicSource.Stop();

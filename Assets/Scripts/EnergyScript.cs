@@ -9,14 +9,14 @@ public class EnergyScript : MonoBehaviour
     private GameObject player;
 
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         //Save the gameobject of the player
         player = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
+    // We destroy the energy when it comes too close to the player
     void Update()
     {
         if (Mathf.Abs(player.transform.position.x - transform.transform.position.x) < 0.05f) Destroy(gameObject);
